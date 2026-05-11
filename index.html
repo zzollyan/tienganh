@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VocabMaster — THPT 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+      colors: {
+        primary: '#0059bb', 'primary-dark': '#004493', 'primary-light': '#d8e2ff',
+        secondary: '#6339db', 'secondary-light': '#e7deff',
+        tertiary: '#9e3d00', 'tertiary-light': '#ffdbcc',
+        surface: '#f9f9ff', 'surface-low': '#f1f3fe', 'surface-container': '#ebedf9',
+        'surface-high': '#e6e8f3', 'surface-highest': '#e0e2ed',
+        'on-surface': '#181c23', 'on-surface-variant': '#414754',
+        outline: '#717786', 'outline-variant': '#c1c6d7',
+        error: '#ba1a1a', 'error-light': '#ffdad6',
+        success: '#1a7a4a', 'success-light': '#d8f5e6',
+      }
+    }
+  }
+}
+</script>
+<style>
+.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; font-family: 'Material Symbols Outlined'; }
+.fill-icon { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+* { box-sizing: border-box; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+/* Page transitions */
+.page { display: none; animation: fadeUp .25s ease; }
+.page.active { display: block; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(10px) } to { opacity:1; transform:translateY(0) } }
+
+/* Nav active */
+.nav-link.active { background: #ffdbcc; color: #9e3d00; font-weight: 700; }
+.nav-link.active .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+/* =====================================================
+   FLASHCARD FLIP — FIXED
+   Vấn đề cũ: .fc-front bị override thành position:relative
+   ở rule thứ 2, khiến container collapse khi flip.
+   Fix: cả front và back đều absolute, container dùng
+   padding-bottom trick để giữ height ổn định.
+   ===================================================== */
+.fc-card {
+  perspective: 1000px;
+}
+.fc-inner {
+  position: relative;
+  width: 100%;
+  height: 280px; /* explicit height trên container */
+  transition: transform .6s cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+.fc-inner.flipped {
+  transform: rotateY(180deg);
+}
+/* CẢ HAI mặt đều absolute, fill full container */
+.fc-front,
+.fc-back {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+/* Mặt sau xoay 180deg */
+.fc-back {
+  transform: rotateY(180deg);
+}
+/* ===================================================== */
+
+/* Toast */
+#toastBox { position: fixed; bottom: 80px; right: 16px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+@media(min-width:768px) { #toastBox { bottom: 24px; } }
+.toast { padding: 10px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; animation: toastIn .3s ease; max-width: 300px; }
+@keyframes toastIn { from { opacity:0; transform:translateY(12px) } to { opacity:1; transform:translateY(0) } }
+
+/* Badge levels */
+.badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+.b-A1,.b-A2 { background:#d1fae5; color:#065f46; }
+.b-B1,.b-B2 { background:#dbeafe; color:#1e40af; }
+.b-C1,.b-C2 { background:#fef3c7; color:#92400e; }
+
+/* Vocab card */
+.vocab-card { background: white; border: 1.5px solid #e0e2ed; border-radius: 20px; padding: 16px; transition: .2s; cursor: pointer; }
+.vocab-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); transform: translateY(-2px); }
+
+/* Quiz options */
+.quiz-opt { background: white; border: 1.5px solid #e0e2ed; border-radius: 12px; padding: 12px 16px; cursor: pointer; transition: .15s; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.quiz-opt:hover:not(.disabled) { border-color: #0059bb; background: #f1f3fe; }
+.quiz-opt.correct { border-color: #1a7a4a; background: #d8f5e6; }
+.quiz-opt.wrong { border-color: #ba1a1a; background: #ffdad6; }
+.quiz-opt.disabled { cursor: not-allowed; }
+
+/* FIB inputs */
+.fib-input { border: none; border-bottom: 2px solid #0059bb; background: transparent; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; width: 100px; text-align: center; padding: 2px 4px; outline: none; }
+.fib-input.correct { border-color: #1a7a4a; color: #1a7a4a; }
+.fib-input.wrong { border-color: #ba1a1a; color: #ba1a1a; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-thumb { background: #c1c6d7; border-radius: 5px; }
+
+/* Loading spinner */
+.spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(0,89,187,.2); border-top-color: #0059bb; border-radius: 50%; animation: spin .6s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg) } }
+
+/* Print styles */
+@media print {
+  .no-print, nav, header, aside, #toastBox { display: none !important; }
+  .print-area { display: block !important; }
+  body { background: white; }
+  .vocab-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+}
+
+/* Mobile bottom nav */
+.mobile-nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 12px; border-radius: 12px; cursor: pointer; transition: .15s; color: #717786; }
+.mobile-nav-item.active { color: #9e3d00; background: #ffdbcc; }
+.mobile-nav-item span:last-child { font-size: 10px; font-weight: 700; }
+
+/* AI loading */
+.ai-thinking { background: linear-gradient(135deg, #f1f3fe, #e7deff); border-radius: 16px; padding: 24px; text-align: center; }
+
+/* chip selector */
+.chip { padding: 5px 14px; border-radius: 999px; border: 1.5px solid #c1c6d7; font-size: 12px; font-weight: 600; cursor: pointer; transition: .15s; background: white; color: #414754; }
+.chip.sel { background: #0059bb; color: white; border-color: #0059bb; }
+</style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+
+<!-- TOP BAR -->
+<header class="no-print bg-white border-b border-outline-variant sticky top-0 z-50 px-4 md:px-6 h-14 flex items-center justify-between">
+  <div class="flex items-center gap-3">
+    <button class="md:hidden p-1" id="btnMobileMenu">
+      <span class="material-symbols-outlined text-on-surface-variant">menu</span>
+    </button>
+    <h1 class="font-extrabold text-lg text-primary">VocabMaster <span class="font-normal text-outline text-sm">THPT 2026</span></h1>
+  </div>
+  <div class="flex items-center gap-2">
+    <span class="text-xs text-outline-variant bg-surface-high px-3 py-1 rounded-full font-semibold" id="statTotal">0 từ</span>
+    <button onclick="openPrintModal()" class="p-2 rounded-full hover:bg-surface-high transition" title="In / Xuất">
+      <span class="material-symbols-outlined text-on-surface-variant text-xl">print</span>
+    </button>
+  </div>
+</header>
+
+<div class="flex min-h-[calc(100vh-56px)]">
+
+<!-- SIDEBAR (desktop) -->
+<aside class="no-print hidden md:flex w-64 bg-surface-low border-r border-outline-variant flex-col p-4 sticky top-14 h-[calc(100vh-56px)] overflow-y-auto" id="desktopSidebar">
+  <p class="text-xs font-black text-outline uppercase tracking-widest px-3 mb-2 mt-2">Học tập</p>
+  <button class="nav-link active flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition w-full text-left" data-page="vocab">
+    <span class="material-symbols-outlined text-xl">menu_book</span>Từ vựng
+  </button>
+  <button class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition hover:bg-surface-high w-full text-left text-on-surface-variant" data-page="flashcard">
+    <span class="material-symbols-outlined text-xl">style</span>Flashcard
+  </button>
+  <p class="text-xs font-black text-outline uppercase tracking-widest px-3 mb-2 mt-5">Ngữ pháp</p>
+  <button class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition hover:bg-surface-high w-full text-left text-on-surface-variant" data-page="grammar">
+    <span class="material-symbols-outlined text-xl">architecture</span>Ngữ pháp & Cấu trúc
+  </button>
+  <p class="text-xs font-black text-outline uppercase tracking-widest px-3 mb-2 mt-5">Luyện tập</p>
+  <button class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition hover:bg-surface-high w-full text-left text-on-surface-variant" data-page="fib">
+    <span class="material-symbols-outlined text-xl">edit</span>Điền khuyết (AI)
+  </button>
+  <button class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition hover:bg-surface-high w-full text-left text-on-surface-variant" data-page="quiz">
+    <span class="material-symbols-outlined text-xl">task_alt</span>Bài tập (AI)
+  </button>
+  <p class="text-xs font-black text-outline uppercase tracking-widest px-3 mb-2 mt-5">Hệ thống</p>
+  <button class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition hover:bg-surface-high w-full text-left text-on-surface-variant" data-page="settings">
+    <span class="material-symbols-outlined text-xl">settings</span>Cài đặt
+  </button>
+</aside>
+
+<!-- MAIN -->
+<main class="flex-1 p-4 md:p-6 pb-24 md:pb-6 overflow-y-auto">
+
+<!-- ===== VOCAB ===== -->
+<div class="page active" id="page-vocab">
+  <!-- Batch import panel -->
+  <div class="bg-gradient-to-br from-[#fff7f4] to-[#f3eeff] border border-[#fdd8cc] rounded-2xl p-4 mb-5">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="material-symbols-outlined text-[#9e3d00]">bolt</span>
+      <h3 class="font-bold text-sm text-[#9e3d00]">Nhập nhanh hàng loạt</h3>
+    </div>
+    <p class="text-xs text-outline mb-2">Mỗi dòng: <code class="bg-white px-1 rounded text-on-surface">từ vựng (nghĩa tiếng Việt)</code> — Để trống nghĩa, AI sẽ tự nhận biết</p>
+    <textarea id="batchInput" rows="5" class="w-full text-sm border border-outline-variant rounded-xl px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none font-mono" placeholder="plastic debris (mảnh vụn nhựa)&#10;marine ecosystems (hệ sinh thái biển)&#10;surface waste&#10;biodiversity (đa dạng sinh học)"></textarea>
+    <div class="flex gap-2 mt-2 flex-wrap">
+      <button class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full flex items-center gap-1.5 hover:bg-primary-dark transition" id="btnBatchAdd">
+        <span class="material-symbols-outlined text-base">add_circle</span>Thêm hàng loạt
+      </button>
+      <button class="border border-outline-variant text-on-surface-variant text-xs font-bold px-4 py-2 rounded-full hover:bg-surface-high transition" id="btnManualAdd">
+        + Thêm thủ công
+      </button>
+      <button class="border border-error text-error text-xs font-bold px-4 py-2 rounded-full hover:bg-error-light transition" id="btnClearAll">
+        <span class="material-symbols-outlined text-base align-middle">delete_sweep</span> Xóa tất cả
+      </button>
+    </div>
+    <div id="batchStatus" class="text-xs mt-2 min-h-4 font-semibold"></div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="flex gap-2 flex-wrap mb-4 items-center">
+    <input type="text" id="vocabSearch" placeholder="🔍 Tìm từ..." class="flex-1 min-w-[160px] text-sm border border-outline-variant rounded-xl px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-primary/30">
+    <select id="filterTopic" class="text-sm border border-outline-variant rounded-xl px-3 py-2 bg-white focus:outline-none">
+      <option value="all">Tất cả chủ đề</option>
+    </select>
+    <select id="filterLevel" class="text-sm border border-outline-variant rounded-xl px-3 py-2 bg-white focus:outline-none">
+      <option value="all">Mọi cấp độ</option>
+      <option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option><option>C2</option>
+    </select>
+    <button id="btnToggleBlur" class="text-xs font-bold px-3 py-2 border border-outline-variant rounded-xl hover:bg-surface-high transition">👁️ Ẩn nghĩa</button>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="vocabGrid"></div>
+</div>
+
+<!-- ===== FLASHCARD ===== -->
+<div class="page" id="page-flashcard">
+  <div class="flex gap-2 flex-wrap mb-5 items-center">
+    <select id="fcTopic" class="text-sm border border-outline-variant rounded-xl px-3 py-2 bg-white focus:outline-none">
+      <option value="all">Tất cả chủ đề</option>
+    </select>
+    <select id="fcLevel" class="text-sm border border-outline-variant rounded-xl px-3 py-2 bg-white focus:outline-none">
+      <option value="all">Mọi cấp độ</option>
+      <option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option><option>C2</option>
+    </select>
+    <button id="btnFcShuffle" class="text-xs font-bold px-3 py-2 border border-outline-variant rounded-xl hover:bg-surface-high transition">🔀 Xáo trộn</button>
+  </div>
+
+  <div class="flex justify-center">
+    <div class="w-full max-w-lg">
+      <!-- Card wrapper — height cố định 280px, không bị collapse -->
+      <div class="fc-card" style="height:280px;" onclick="fcFlip()">
+        <div class="fc-inner" id="fcInner">
+          <!-- Mặt trước -->
+          <div class="fc-front bg-white border-2 border-outline-variant rounded-3xl p-8 flex flex-col items-center justify-center">
+            <div class="text-2xl font-extrabold text-center mb-3" id="fcEng">—</div>
+            <div class="flex gap-2 flex-wrap justify-center" id="fcBadgesFront"></div>
+            <p class="text-xs text-outline mt-4">Nhấn để lật thẻ</p>
+          </div>
+          <!-- Mặt sau -->
+          <div class="fc-back bg-gradient-to-br from-[#f1f3fe] to-[#e7deff] border-2 border-secondary/30 rounded-3xl p-8 flex flex-col items-center justify-center">
+            <div class="text-lg font-bold text-secondary mb-2" id="fcViet">—</div>
+            <div class="flex gap-2 flex-wrap justify-center mb-2" id="fcBadgesBack"></div>
+            <div class="text-xs text-outline text-center" id="fcSyn"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="mt-3 bg-surface-high rounded-full h-1.5 overflow-hidden">
+        <div class="h-full bg-primary rounded-full transition-all" id="fcFill" style="width:0%"></div>
+      </div>
+      <p class="text-center text-xs text-outline mt-1" id="fcCounter">0 / 0</p>
+
+      <!-- Nav -->
+      <div class="flex gap-3 justify-center mt-4">
+        <button onclick="fcNav(-1)" class="px-5 py-2.5 border border-outline-variant rounded-full text-sm font-semibold hover:bg-surface-high transition">← Trước</button>
+        <button onclick="fcFlip()" class="px-5 py-2.5 bg-primary text-white rounded-full text-sm font-semibold hover:bg-primary-dark transition">👁️ Lật</button>
+        <button onclick="fcNav(1)" class="px-5 py-2.5 border border-outline-variant rounded-full text-sm font-semibold hover:bg-surface-high transition">Sau →</button>
+      </div>
+      <p class="text-center text-xs text-outline mt-3">Space/Enter để lật · ← → để chuyển</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== GRAMMAR ===== -->
+<div class="page" id="page-grammar">
+  <div class="flex gap-0 border-b border-outline-variant mb-5 overflow-x-auto" id="grammarTabs">
+    <button class="grammar-tab text-sm font-bold px-5 py-3 border-b-2 border-primary text-primary whitespace-nowrap" data-gtab="tenses">12 Thì</button>
+    <button class="grammar-tab text-sm font-semibold px-5 py-3 border-b-2 border-transparent text-outline whitespace-nowrap" data-gtab="structures">Cấu trúc câu</button>
+    <button class="grammar-tab text-sm font-semibold px-5 py-3 border-b-2 border-transparent text-outline whitespace-nowrap" data-gtab="wordform">Dạng từ</button>
+  </div>
+  <div id="gpane-tenses"></div>
+  <div id="gpane-structures" style="display:none"></div>
+  <div id="gpane-wordform" style="display:none"></div>
+</div>
+
+<!-- ===== FILL IN BLANK (AI) ===== -->
+<div class="page" id="page-fib">
+  <div class="bg-white border border-outline-variant rounded-2xl p-5 mb-4">
+    <h3 class="font-bold text-base mb-3 flex items-center gap-2">
+      <span class="material-symbols-outlined text-secondary">psychology</span>
+      Luyện điền khuyết bằng AI
+    </h3>
+    <div class="mb-3">
+      <label class="text-xs font-bold text-on-surface-variant mb-1 block">Dán đoạn văn hoặc để trống để AI tự tạo từ từ vựng của bạn:</label>
+      <textarea id="fibInput" rows="4" class="w-full text-sm border border-outline-variant rounded-xl px-3 py-2 bg-surface-low focus:outline-none focus:ring-2 focus:ring-secondary/30 resize-none" placeholder="Để trống → AI sẽ tự tạo đoạn văn từ từ vựng bạn đã học..."></textarea>
+    </div>
+    <div class="flex gap-2 flex-wrap items-center">
+      <select id="fibCount" class="text-sm border border-outline-variant rounded-xl px-3 py-2 bg-white focus:outline-none">
+        <option value="3">Ẩn 3 từ</option>
+        <option value="5">Ẩn 5 từ</option>
+        <option value="7">Ẩn 7 từ</option>
+      </select>
+      <button id="btnGenFib" class="bg-secondary text-white text-sm font-bold px-5 py-2 rounded-full flex items-center gap-1.5 hover:opacity-90 transition">
+        <span class="material-symbols-outlined text-base">auto_fix_high</span>Tạo bài (AI)
+      </button>
+      <button id="btnCheckFib" class="hidden border border-success text-success text-sm font-bold px-4 py-2 rounded-full hover:bg-success-light transition">✅ Kiểm tra</button>
+      <button id="btnRevealFib" class="hidden border border-outline-variant text-on-surface-variant text-sm font-bold px-4 py-2 rounded-full hover:bg-surface-high transition">👁️ Đáp án</button>
+    </div>
+  </div>
+  <div id="fibOutput" class="hidden">
+    <div class="bg-white border border-outline-variant rounded-2xl p-5">
+      <div class="text-sm leading-9" id="fibArea"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== QUIZ (AI) ===== -->
+<div class="page" id="page-quiz">
+  <div class="bg-white border border-outline-variant rounded-2xl p-5 mb-4" id="quizConfig">
+    <h3 class="font-bold text-base mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary">quiz</span>
+      Tạo bài tập bằng AI
+    </h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div>
+        <label class="text-xs font-bold text-on-surface-variant mb-2 block">Loại bài tập</label>
+        <div class="flex flex-wrap gap-2" id="quizTypeSel">
+          <span class="chip sel" data-v="vocab">Từ vựng</span>
+          <span class="chip sel" data-v="grammar">Ngữ pháp</span>
+          <span class="chip sel" data-v="wordform">Dạng từ</span>
+        </div>
+      </div>
+      <div>
+        <label class="text-xs font-bold text-on-surface-variant mb-2 block">Số câu</label>
+        <select id="quizCount" class="text-sm border border-outline-variant rounded-xl px-3 py-2 bg-white focus:outline-none w-full">
+          <option value="5">5 câu</option>
+          <option value="10" selected>10 câu</option>
+          <option value="15">15 câu</option>
+        </select>
+      </div>
+    </div>
+    <div class="flex gap-2 flex-wrap">
+      <button id="btnLocalQuiz" class="bg-success-light text-success border border-success/30 text-sm font-bold px-5 py-2.5 rounded-full flex items-center gap-1.5 hover:opacity-90 transition">
+        ⚡ Tạo ngay (local)
+      </button>
+      <button id="btnAIQuiz" class="bg-secondary text-white text-sm font-bold px-5 py-2.5 rounded-full flex items-center gap-1.5 hover:opacity-90 transition">
+        <span class="material-symbols-outlined text-base">psychology</span>Tạo bằng AI Claude
+      </button>
+    </div>
+  </div>
+  <div id="quizArea" class="hidden"></div>
+</div>
+
+<!-- ===== SETTINGS ===== -->
+<div class="page" id="page-settings">
+  <div class="bg-white border border-outline-variant rounded-2xl p-5 mb-4">
+    <h3 class="font-bold text-base mb-3">📦 Dữ liệu</h3>
+    <div class="flex flex-wrap gap-2">
+      <button id="btnExport" class="text-sm font-bold px-4 py-2 border border-outline-variant rounded-full hover:bg-surface-high transition">📤 Xuất JSON</button>
+      <button id="btnExportPrint" class="text-sm font-bold px-4 py-2 border border-outline-variant rounded-full hover:bg-surface-high transition">🖨️ In / Xuất PDF</button>
+      <button id="btnImport" class="text-sm font-bold px-4 py-2 border border-outline-variant rounded-full hover:bg-surface-high transition">📥 Nhập JSON</button>
+      <button id="btnReset" class="text-sm font-bold px-4 py-2 border border-error text-error rounded-full hover:bg-error-light transition">🗑️ Xóa tất cả & Reset</button>
+    </div>
+    <input type="file" id="importFile" accept=".json" class="hidden">
+  </div>
+  <div class="bg-white border border-outline-variant rounded-2xl p-5">
+    <h3 class="font-bold text-base mb-2">ℹ️ Về ứng dụng</h3>
+    <p class="text-sm text-on-surface-variant leading-6">
+      <strong>VocabMaster THPT 2026</strong><br>
+      Dịch tự động: MyMemory API · Đồng/Trái nghĩa: Datamuse API<br>
+      Bài tập AI: Claude (Anthropic) · Dữ liệu: localStorage
+    </p>
+  </div>
+</div>
+
+</main>
+</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="no-print md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-outline-variant flex justify-around items-center py-2 z-50">
+  <button class="mobile-nav-item active" data-page="vocab">
+    <span class="material-symbols-outlined text-xl">menu_book</span>
+    <span>Từ vựng</span>
+  </button>
+  <button class="mobile-nav-item" data-page="flashcard">
+    <span class="material-symbols-outlined text-xl">style</span>
+    <span>Flashcard</span>
+  </button>
+  <button class="mobile-nav-item" data-page="grammar">
+    <span class="material-symbols-outlined text-xl">architecture</span>
+    <span>Ngữ pháp</span>
+  </button>
+  <button class="mobile-nav-item" data-page="fib">
+    <span class="material-symbols-outlined text-xl">edit</span>
+    <span>Điền khuyết</span>
+  </button>
+  <button class="mobile-nav-item" data-page="quiz">
+    <span class="material-symbols-outlined text-xl">task_alt</span>
+    <span>Bài tập</span>
+  </button>
+</nav>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[200] flex items-end md:items-center justify-center p-4">
+  <div id="modalContent" class="bg-white rounded-3xl p-6 w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-2xl"></div>
+</div>
+
+<!-- PRINT MODAL -->
+<div id="printModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[200] flex items-center justify-center p-4">
+  <div class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl">
+    <h3 class="font-bold text-base mb-4">🖨️ In / Xuất để học</h3>
+    <div class="space-y-3 mb-5">
+      <label class="text-xs font-bold text-on-surface-variant block mb-1">Chọn chủ đề</label>
+      <select id="printTopic" class="w-full text-sm border border-outline-variant rounded-xl px-3 py-2 bg-white focus:outline-none">
+        <option value="all">Tất cả chủ đề</option>
+      </select>
+      <label class="text-xs font-bold text-on-surface-variant block mb-1">Kiểu in</label>
+      <div class="flex gap-2">
+        <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="printStyle" value="list" checked> Danh sách</label>
+        <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="printStyle" value="cards"> Thẻ flashcard</label>
+        <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="radio" name="printStyle" value="quiz"> Bài kiểm tra</label>
+      </div>
+    </div>
+    <div class="flex gap-2 justify-end">
+      <button onclick="closePrintModal()" class="px-4 py-2 border border-outline-variant rounded-full text-sm font-semibold hover:bg-surface-high">Hủy</button>
+      <button onclick="doPrint()" class="px-5 py-2 bg-primary text-white rounded-full text-sm font-bold hover:bg-primary-dark">🖨️ In ngay</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toastBox"></div>
+
+<script>
+(function() {
+'use strict';
+
+// ═══════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════
+const TOPICS = [
+  {id:'t1',vi:'Môi trường & Ô nhiễm',en:'ENVIRONMENT'},
+  {id:'t2',vi:'Công nghệ & MXH',en:'TECHNOLOGY'},
+  {id:'t3',vi:'Giáo dục & Học tập',en:'EDUCATION'},
+  {id:'t4',vi:'Sức khỏe & Tâm lý',en:'HEALTH'},
+  {id:'t5',vi:'Đô thị & Cộng đồng',en:'URBAN'},
+  {id:'t6',vi:'Nghề nghiệp & Công việc',en:'CAREER'},
+  {id:'t7',vi:'Cảm xúc & Thái độ',en:'EMOTIONS'},
+  {id:'t8',vi:'Du lịch & Khám phá',en:'TRAVEL'},
+  {id:'t9',vi:'Lịch sử & Kiến trúc',en:'HISTORY'},
+  {id:'t10',vi:'Từ vựng chung',en:'GENERAL'},
+];
+
+const TOPIC_KEYWORDS = {
+  t1:['plastic','marine','environment','pollution','ocean','ecosystem','waste','landfill','contamination','runoff','biodiversity','green','air','synthetic','aquatic','emission','carbon','recycle','greenhouse','deforestation'],
+  t2:['social media','technology','internet','online','digital','cyber','viral','platform','network','app','content','news','forum','post','smartphone','artificial intelligence','robot','automation'],
+  t3:['education','study','exam','school','learn','training','tutor','academic','university','knowledge','skill','curriculum','scholarship','classroom'],
+  t4:['health','tired','sick','overweight','stress','body','mental','exercise','fitness','sleep','wellbeing','diet','nutrition','obesity','depression','anxiety'],
+  t5:['city','urban','community','neighborhood','commute','transport','bike','walk','zone','planning','local','infrastructure','suburb','pedestrian'],
+  t6:['career','job','work','chef','skill','professional','employee','business','salary','reputation','entrepreneur','employer','resume','workplace'],
+  t7:['emotion','feeling','stress','anxiety','resilience','toxic','frustrat','mock','shame','insecur','confident','happiness','mood','anger'],
+  t8:['travel','tourism','wonder','landscape','visitor','trip','monument','tourist','explore','destination','heritage','sightseeing'],
+  t9:['history','architecture','dynasty','ancient','construct','wall','fortress','civilisation','heritage','artifact','archaeological','medieval'],
+  t10:[],
+};
+
+const LEVEL_MAP = {
+  A1:['tired','rest','sick','make','walk','city','job','work','trip','post','share','big','small','good','bad'],
+  A2:['social','learn','school','travel','friend','community','skill','event','meet','important','people'],
+  B1:['environment','technology','education','tourism','career','resilience','urban','stress','exercise','innovation','significant','remarkable','coastal','marine','plastic'],
+  B2:['biodiversity','ecosystem','contamination','perseverance','collectively','sophisticated','prominent','prevalent','landscape','monument','heritage','microplastic','runoff'],
+  C1:['pernicious','maliciously','fortresses','paradigm','juxtaposition','grandeur','testament','infrastructure','electromagnetic'],
+  C2:['ephemeral','clandestine','heuristic','solipsistic','perspicacious','obfuscation'],
+};
+
+const SEED_VOCAB = [
+  {english:'plastic debris',vietnamese:'mảnh vụn nhựa',topicId:'t1',level:'B1',synonyms:[],antonyms:[]},
+  {english:'marine ecosystems',vietnamese:'hệ sinh thái biển',topicId:'t1',level:'B2',synonyms:[],antonyms:[]},
+  {english:'coastal pollution',vietnamese:'ô nhiễm ven biển',topicId:'t1',level:'B1',synonyms:[],antonyms:[]},
+  {english:'microplastic contamination',vietnamese:'ô nhiễm vi nhựa',topicId:'t1',level:'C1',synonyms:[],antonyms:[]},
+  {english:'urban runoff',vietnamese:'dòng chảy đô thị',topicId:'t1',level:'B2',synonyms:[],antonyms:[]},
+  {english:'biodiversity',vietnamese:'đa dạng sinh học',topicId:'t1',level:'B2',synonyms:['variety','diversity'],antonyms:['uniformity']},
+  {english:'pernicious threat',vietnamese:'mối đe dọa nguy hại',topicId:'t1',level:'C1',synonyms:['harmful','deadly'],antonyms:['benign']},
+  {english:'green spaces',vietnamese:'không gian xanh',topicId:'t1',level:'B1',synonyms:['parks','gardens'],antonyms:[]},
+  {english:'social media',vietnamese:'mạng xã hội',topicId:'t2',level:'A2',synonyms:['online platforms'],antonyms:[]},
+  {english:'go viral',vietnamese:'lan truyền mạnh',topicId:'t2',level:'B1',synonyms:['spread widely'],antonyms:[]},
+  {english:'public awareness',vietnamese:'nhận thức cộng đồng',topicId:'t2',level:'B2',synonyms:['public knowledge'],antonyms:['ignorance']},
+  {english:'resilience',vietnamese:'sự kiên cường',topicId:'t7',level:'B2',synonyms:['toughness','tenacity'],antonyms:['fragility']},
+  {english:'remarkable',vietnamese:'đáng chú ý',topicId:'t10',level:'B1',synonyms:['notable','extraordinary'],antonyms:['ordinary']},
+  {english:'grandeur',vietnamese:'sự hùng vĩ',topicId:'t8',level:'C1',synonyms:['magnificence','splendour'],antonyms:['insignificance']},
+  {english:'testament',vietnamese:'minh chứng',topicId:'t9',level:'C1',synonyms:['proof','evidence'],antonyms:[]},
+  {english:'innovation',vietnamese:'sự đổi mới/sáng tạo',topicId:'t10',level:'B2',synonyms:['advancement','novelty'],antonyms:['tradition']},
+];
+
+const TENSES = [
+  {name:'Hiện tại đơn',formula:'S + V(s/es) / am/is/are',use:'Sự thật, thói quen, lịch trình',signals:'always, usually, often, sometimes, every day, on Mondays'},
+  {name:'Hiện tại tiếp diễn',formula:'S + am/is/are + V-ing',use:'Hành động đang xảy ra, kế hoạch tương lai gần',signals:'now, at the moment, currently, look!, listen!'},
+  {name:'Hiện tại hoàn thành',formula:'S + have/has + V3',use:'Hành động vừa xảy ra, kinh nghiệm, chưa hoàn thành',signals:'already, yet, just, ever, never, since, for, recently'},
+  {name:'Hiện tại hoàn thành tiếp diễn',formula:'S + have/has + been + V-ing',use:'Hành động bắt đầu quá khứ, vẫn tiếp diễn',signals:'since, for, all day, how long?'},
+  {name:'Quá khứ đơn',formula:'S + V2/ed',use:'Hành động hoàn thành tại thời điểm xác định trong quá khứ',signals:'yesterday, last week, ago, in 2020, when'},
+  {name:'Quá khứ tiếp diễn',formula:'S + was/were + V-ing',use:'Hành động đang diễn ra tại thời điểm quá khứ',signals:'at this time yesterday, while, when, at 8 pm last night'},
+  {name:'Quá khứ hoàn thành',formula:'S + had + V3',use:'Hành động xảy ra trước một hành động khác trong quá khứ',signals:'before, after, by the time, already, when'},
+  {name:'Quá khứ hoàn thành tiếp diễn',formula:'S + had + been + V-ing',use:'Hành động kéo dài đến trước một thời điểm trong quá khứ',signals:'for, since, before, until, by the time'},
+  {name:'Tương lai đơn',formula:'S + will + V',use:'Quyết định tức thời, dự đoán, lời hứa',signals:'tomorrow, next week, in the future, I think, probably'},
+  {name:'Tương lai gần (be going to)',formula:'S + am/is/are + going to + V',use:'Kế hoạch đã định sẵn, dự đoán có bằng chứng',signals:'look, I can see, tonight, next Monday'},
+  {name:'Tương lai tiếp diễn',formula:'S + will + be + V-ing',use:'Hành động đang diễn ra tại thời điểm tương lai',signals:'at this time tomorrow, at 8 pm tonight'},
+  {name:'Tương lai hoàn thành',formula:'S + will + have + V3',use:'Hành động hoàn thành trước một thời điểm tương lai',signals:'by next year, by the time, before + future time'},
+];
+
+const STRUCTURES = [
+  {name:'Câu điều kiện loại 0',formula:'If + S + V (HT), S + V (HT)',example:'If you heat ice, it melts.'},
+  {name:'Câu điều kiện loại 1',formula:'If + S + V (HT), S + will + V',example:'If it rains, I will stay home.'},
+  {name:'Câu điều kiện loại 2',formula:'If + S + V-ed, S + would + V',example:'If I had time, I would help you.'},
+  {name:'Câu điều kiện loại 3',formula:'If + S + had + V3, S + would have + V3',example:'If she had studied, she would have passed.'},
+  {name:'Câu bị động',formula:'S + be + V3 (by O)',example:'The wall was built by workers.'},
+  {name:'Câu so sánh hơn',formula:'S + V + adj-er + than / more adj than',example:'She is smarter than him.'},
+  {name:'Câu so sánh nhất',formula:'S + V + the adj-est / the most adj',example:'This is the most beautiful place.'},
+  {name:'Wish (hiện tại)',formula:'S + wish(es) + S + V2/were',example:'I wish I were taller.'},
+  {name:'Wish (quá khứ)',formula:'S + wished + S + had + V3',example:'She wished she had studied harder.'},
+  {name:'Used to',formula:'S + used to + V',example:'He used to play football every day.'},
+  {name:'Have something done',formula:'S + have/get + O + V3',example:'I had my hair cut yesterday.'},
+  {name:'It is adj + to V',formula:'It + is + adj + to + V',example:'It is important to study regularly.'},
+];
+
+const SUFFIXES = [
+  {suffix:'-tion/-sion',type:'Danh từ',root:'educate → education',meaning:'hành động/kết quả'},
+  {suffix:'-ment',type:'Danh từ',root:'develop → development',meaning:'trạng thái/hành động'},
+  {suffix:'-ness',type:'Danh từ',root:'happy → happiness',meaning:'trạng thái'},
+  {suffix:'-er/-or',type:'Danh từ',root:'teach → teacher',meaning:'người làm gì đó'},
+  {suffix:'-ity/-ty',type:'Danh từ',root:'creative → creativity',meaning:'tính chất'},
+  {suffix:'-ful',type:'Tính từ',root:'beauty → beautiful',meaning:'có đặc điểm tích cực'},
+  {suffix:'-less',type:'Tính từ',root:'care → careless',meaning:'không có'},
+  {suffix:'-ous/-ious',type:'Tính từ',root:'danger → dangerous',meaning:'đặc trưng bởi'},
+  {suffix:'-ive/-ative',type:'Tính từ',root:'create → creative',meaning:'có xu hướng'},
+  {suffix:'-able/-ible',type:'Tính từ',root:'read → readable',meaning:'có thể làm được'},
+  {suffix:'-ly',type:'Trạng từ',root:'quick → quickly',meaning:'cách thức'},
+  {suffix:'-ize/-ise',type:'Động từ',root:'modern → modernize',meaning:'làm cho trở nên'},
+];
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+let state = { vocab: [], blurAll: false, fcIndex: 0, fcList: [], fcFlipped: false };
+
+function save() {
+  localStorage.setItem('vm2_vocab', JSON.stringify(state.vocab));
+  localStorage.setItem('vm2_blur', state.blurAll);
+}
+function load() {
+  const v = localStorage.getItem('vm2_vocab');
+  state.vocab = v ? JSON.parse(v) : JSON.parse(JSON.stringify(SEED_VOCAB));
+  state.blurAll = localStorage.getItem('vm2_blur') === 'true';
+}
+
+// ═══════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════
+function guessTopic(eng) {
+  const w = eng.toLowerCase();
+  for (const [tid, keys] of Object.entries(TOPIC_KEYWORDS)) {
+    if (keys.some(k => w.includes(k))) return tid;
+  }
+  return 't10';
+}
+function guessLevel(eng) {
+  const w = eng.toLowerCase();
+  for (const [lvl, words] of Object.entries(LEVEL_MAP)) {
+    if (words.some(k => w.includes(k))) return lvl;
+  }
+  const len = eng.replace(/\s/g,'').length;
+  if (len <= 4) return 'A1';
+  if (len <= 7) return 'A2';
+  if (len <= 10) return 'B1';
+  if (len <= 14) return 'B2';
+  return 'C1';
+}
+function topicById(id) { return TOPICS.find(t => t.id === id) || {vi:'Chung',en:'GENERAL'}; }
+function shuffle(arr) { let a=[...arr]; for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function rand(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
+function esc(s='') { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ═══════════════════════════════════════════════════════════
+// APIS
+// ═══════════════════════════════════════════════════════════
+async function translate(word) {
+  try {
+    const r = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=en|vi`);
+    const d = await r.json();
+    if (d.responseStatus === 200) return d.responseData.translatedText;
+  } catch(e) {}
+  return '';
+}
+async function getSynAnt(word) {
+  try {
+    const [sR,aR] = await Promise.all([
+      fetch(`https://api.datamuse.com/words?rel_syn=${encodeURIComponent(word)}&max=3`),
+      fetch(`https://api.datamuse.com/words?rel_ant=${encodeURIComponent(word)}&max=3`)
+    ]);
+    return { synonyms:(await sR.json()).map(x=>x.word), antonyms:(await aR.json()).map(x=>x.word) };
+  } catch(e) { return {synonyms:[],antonyms:[]}; }
+}
+
+// ═══════════════════════════════════════════════════════════
+// CLAUDE AI — FIXED: thêm header bắt buộc cho browser calls
+// ═══════════════════════════════════════════════════════════
+async function callClaude(prompt) {
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'anthropic-dangerous-direct-browser-access': 'true'   // ← BẮT BUỘC cho browser
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+  if (!r.ok) {
+    const errBody = await r.text();
+    throw new Error(`API error ${r.status}: ${errBody}`);
+  }
+  const d = await r.json();
+  return d.content?.[0]?.text || '';
+}
+
+// ═══════════════════════════════════════════════════════════
+// TOPIC SELECTS
+// ═══════════════════════════════════════════════════════════
+function fillTopicSelects() {
+  const opts = '<option value="all">Tất cả chủ đề</option>' + TOPICS.map(t=>`<option value="${t.id}">${t.vi}</option>`).join('');
+  ['filterTopic','fcTopic','printTopic'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = opts;
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER VOCAB
+// ═══════════════════════════════════════════════════════════
+function renderVocab() {
+  const grid = document.getElementById('vocabGrid');
+  const search = document.getElementById('vocabSearch').value.toLowerCase();
+  const topic = document.getElementById('filterTopic').value;
+  const level = document.getElementById('filterLevel').value;
+
+  let list = state.vocab.filter(v => {
+    if (topic !== 'all' && v.topicId !== topic) return false;
+    if (level !== 'all' && v.level !== level) return false;
+    if (search && !v.english.toLowerCase().includes(search) && !v.vietnamese.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  if (!list.length) {
+    grid.innerHTML = `<div class="col-span-full text-center py-16 text-on-surface-variant">
+      <div class="text-4xl mb-2">📭</div>
+      <p class="text-sm">Không có từ nào. Hãy thêm từ mới!</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(v => {
+    const tp = topicById(v.topicId);
+    const syns = v.synonyms?.length ? `<div class="mt-2"><span class="text-[10px] text-success font-bold">≈ </span>${v.synonyms.map(s=>`<span class="text-[10px] bg-success-light text-success px-1.5 py-0.5 rounded-full mr-1">${esc(s)}</span>`).join('')}</div>` : '';
+    const ants = v.antonyms?.length ? `<div class="mt-1"><span class="text-[10px] text-error font-bold">≠ </span>${v.antonyms.map(s=>`<span class="text-[10px] bg-error-light text-error px-1.5 py-0.5 rounded-full mr-1">${esc(s)}</span>`).join('')}</div>` : '';
+    return `<div class="vocab-card" data-eng="${esc(v.english)}">
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <div class="font-bold text-sm leading-snug flex-1">${esc(v.english)}</div>
+        <div class="flex gap-1 items-center flex-shrink-0">
+          <span class="badge b-${v.level}">${v.level}</span>
+          <button class="del-btn text-outline hover:text-error transition text-xs p-1" data-eng="${esc(v.english)}">✕</button>
+        </div>
+      </div>
+      <div class="text-xs font-semibold text-on-surface-variant bg-surface-low px-2 py-0.5 rounded-full inline-block mb-2">${tp.vi}</div>
+      <div class="viet-text text-sm text-on-surface-variant italic${state.blurAll?' blur-sm select-none':''}">${esc(v.vietnamese)}</div>
+      ${syns}${ants}
+    </div>`;
+  }).join('');
+
+  grid.querySelectorAll('.vocab-card').forEach(card => {
+    card.addEventListener('click', e => {
+      if (e.target.classList.contains('del-btn')) {
+        const eng = e.target.dataset.eng;
+        if (confirm(`Xóa từ "${eng}"?`)) {
+          state.vocab = state.vocab.filter(v => v.english !== eng);
+          save(); renderVocab(); updateStats();
+        }
+        return;
+      }
+      card.querySelector('.viet-text').classList.toggle('blur-sm');
+      card.querySelector('.viet-text').classList.toggle('select-none');
+    });
+  });
+}
+
+function updateStats() {
+  document.getElementById('statTotal').textContent = `${state.vocab.length} từ`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// BATCH ADD
+// ═══════════════════════════════════════════════════════════
+async function batchAdd() {
+  const raw = document.getElementById('batchInput').value.trim();
+  if (!raw) { showToast('Vui lòng nhập từ vựng', 'err'); return; }
+
+  const lines = raw.split('\n').map(l => l.trim()).filter(l => l);
+  const status = document.getElementById('batchStatus');
+
+  let newCount = 0, skipCount = 0, dupeList = [];
+
+  status.className = 'text-xs mt-2 font-semibold text-blue-600';
+  status.innerHTML = `<span class="spinner"></span> Đang xử lý ${lines.length} từ...`;
+
+  for (const line of lines) {
+    const match = line.match(/^(.+?)\s*\((.+?)\)\s*$/);
+    let english, vietnamese;
+
+    if (match) {
+      english = match[1].trim();
+      vietnamese = match[2].trim();
+    } else {
+      english = line.trim();
+      vietnamese = '';
+    }
+
+    if (!english) continue;
+
+    const exists = state.vocab.find(v => v.english.toLowerCase() === english.toLowerCase());
+    if (exists) {
+      skipCount++;
+      dupeList.push(english);
+      continue;
+    }
+
+    if (!vietnamese) {
+      vietnamese = await translate(english);
+      if (!vietnamese) vietnamese = english;
+    }
+
+    const topicId = guessTopic(english);
+    const level = guessLevel(english);
+    const synAnt = await getSynAnt(english.split(' ')[0]);
+
+    state.vocab.push({ english, vietnamese, topicId, level, synonyms: synAnt.synonyms, antonyms: synAnt.antonyms });
+    newCount++;
+  }
+
+  save(); renderVocab(); updateStats();
+
+  const dupeStr = dupeList.length ? ` (${dupeList.join(', ')})` : '';
+  status.className = 'text-xs mt-2 font-semibold';
+  status.innerHTML = `<span class="text-green-600">✅ Mới: <strong>${newCount}</strong></span> &nbsp; <span class="text-orange-500">⚠️ Đã có trước đó: <strong>${skipCount}</strong>${esc(dupeStr)}</span>`;
+  document.getElementById('batchInput').value = '';
+}
+
+// ═══════════════════════════════════════════════════════════
+// MANUAL ADD MODAL
+// ═══════════════════════════════════════════════════════════
+function openManualModal() {
+  const topicOpts = TOPICS.map(t => `<option value="${t.id}">${t.vi}</option>`).join('');
+  document.getElementById('modalContent').innerHTML = `
+    <h3 class="font-bold text-base mb-4">➕ Thêm từ thủ công</h3>
+    <div class="space-y-3">
+      <div><label class="text-xs font-bold text-on-surface-variant block mb-1">Từ tiếng Anh *</label>
+        <input id="mEng" type="text" placeholder="plastic debris" class="w-full text-sm border border-outline-variant rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30"></div>
+      <div><label class="text-xs font-bold text-on-surface-variant block mb-1">Nghĩa tiếng Việt *</label>
+        <input id="mViet" type="text" placeholder="mảnh vụn nhựa" class="w-full text-sm border border-outline-variant rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30"></div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="text-xs font-bold text-on-surface-variant block mb-1">Chủ đề</label>
+          <select id="mTopic" class="w-full text-sm border border-outline-variant rounded-xl px-3 py-2 focus:outline-none">${topicOpts}</select></div>
+        <div><label class="text-xs font-bold text-on-surface-variant block mb-1">Cấp độ</label>
+          <select id="mLevel" class="w-full text-sm border border-outline-variant rounded-xl px-3 py-2 focus:outline-none">
+            ${['A1','A2','B1','B2','C1','C2'].map(l=>`<option${l==='B1'?' selected':''}>${l}</option>`).join('')}
+          </select></div>
+      </div>
+    </div>
+    <div class="flex gap-2 justify-end mt-5">
+      <button onclick="closeModal()" class="px-4 py-2 border border-outline-variant rounded-full text-sm font-semibold hover:bg-surface-high">Hủy</button>
+      <button id="btnDoManual" class="px-5 py-2 bg-primary text-white rounded-full text-sm font-bold hover:bg-primary-dark">💾 Lưu</button>
+    </div>`;
+  document.getElementById('modalOverlay').classList.remove('hidden');
+  document.getElementById('btnDoManual').onclick = () => {
+    const eng = document.getElementById('mEng').value.trim();
+    const vie = document.getElementById('mViet').value.trim();
+    const tid = document.getElementById('mTopic').value;
+    const lvl = document.getElementById('mLevel').value;
+    if (!eng || !vie) { showToast('Vui lòng điền đủ thông tin','err'); return; }
+    if (state.vocab.find(v => v.english.toLowerCase() === eng.toLowerCase())) { showToast('Từ đã tồn tại','err'); return; }
+    state.vocab.push({ english:eng, vietnamese:vie, topicId:tid, level:lvl, synonyms:[], antonyms:[] });
+    save(); renderVocab(); updateStats(); closeModal(); showToast('✅ Đã thêm từ','ok');
+  };
+}
+
+function closeModal() { document.getElementById('modalOverlay').classList.add('hidden'); }
+
+// ═══════════════════════════════════════════════════════════
+// FLASHCARD
+// ═══════════════════════════════════════════════════════════
+function buildFcList() {
+  const tp = document.getElementById('fcTopic').value;
+  const lv = document.getElementById('fcLevel').value;
+  state.fcList = state.vocab.filter(v => {
+    if (tp !== 'all' && v.topicId !== tp) return false;
+    if (lv !== 'all' && v.level !== lv) return false;
+    return true;
+  });
+  state.fcIndex = 0;
+  renderFc();
+}
+
+function renderFc() {
+  const list = state.fcList;
+  const inner = document.getElementById('fcInner');
+  if (inner.classList.contains('flipped')) inner.classList.remove('flipped');
+  state.fcFlipped = false;
+
+  if (!list.length) {
+    document.getElementById('fcEng').textContent = 'Không có từ nào';
+    document.getElementById('fcViet').textContent = 'Hãy thêm từ vựng';
+    document.getElementById('fcCounter').textContent = '0 / 0';
+    return;
+  }
+  const v = list[state.fcIndex];
+  document.getElementById('fcEng').textContent = v.english;
+  document.getElementById('fcViet').textContent = v.vietnamese;
+  const tp = topicById(v.topicId);
+  const badgeHtml = `<span class="badge b-${v.level}">${v.level}</span><span class="text-xs bg-surface-high text-on-surface-variant px-2 py-0.5 rounded-full">${tp.vi}</span>`;
+  document.getElementById('fcBadgesFront').innerHTML = badgeHtml;
+  document.getElementById('fcBadgesBack').innerHTML = badgeHtml;
+  document.getElementById('fcSyn').textContent = v.synonyms?.length ? '≈ ' + v.synonyms.join(', ') : '';
+  const pct = ((state.fcIndex+1)/list.length*100).toFixed(0);
+  document.getElementById('fcFill').style.width = pct + '%';
+  document.getElementById('fcCounter').textContent = `${state.fcIndex+1} / ${list.length}`;
+}
+
+window.fcFlip = function() {
+  const inner = document.getElementById('fcInner');
+  inner.classList.toggle('flipped');
+  state.fcFlipped = !state.fcFlipped;
+};
+
+window.fcNav = function(dir) {
+  const n = state.fcList.length;
+  if (!n) return;
+  state.fcIndex = (state.fcIndex + dir + n) % n;
+  renderFc();
+};
+
+// ═══════════════════════════════════════════════════════════
+// GRAMMAR
+// ═══════════════════════════════════════════════════════════
+function renderGrammar() {
+  document.getElementById('gpane-tenses').innerHTML =
+    `<div class="grid gap-3">${TENSES.map(t => `
+      <div class="bg-white border border-outline-variant rounded-2xl p-4">
+        <h4 class="font-bold text-sm text-primary mb-2">${t.name}</h4>
+        <div class="bg-on-surface text-white font-mono text-xs px-3 py-2 rounded-xl mb-2">${t.formula}</div>
+        <p class="text-xs text-on-surface-variant mb-1">📌 ${t.use}</p>
+        <div class="bg-[#fffbeb] border border-yellow-200 rounded-lg px-3 py-1.5 text-xs"><strong>Dấu hiệu:</strong> ${t.signals}</div>
+      </div>`).join('')}</div>`;
+
+  document.getElementById('gpane-structures').innerHTML =
+    STRUCTURES.map(s => `
+      <div class="bg-white border border-outline-variant rounded-2xl p-4 mb-3">
+        <h4 class="font-bold text-sm text-secondary mb-2">${s.name}</h4>
+        <div class="bg-secondary-light text-secondary font-mono text-xs px-3 py-2 rounded-xl mb-2">${s.formula}</div>
+        <p class="text-xs text-on-surface-variant italic">Ví dụ: ${s.example}</p>
+      </div>`).join('');
+
+  document.getElementById('gpane-wordform').innerHTML =
+    `<div class="overflow-x-auto"><table class="w-full text-sm">
+      <thead><tr class="bg-surface-high">
+        <th class="text-left px-3 py-2 text-xs font-bold text-on-surface-variant rounded-tl-xl">Hậu tố</th>
+        <th class="text-left px-3 py-2 text-xs font-bold text-on-surface-variant">Loại từ</th>
+        <th class="text-left px-3 py-2 text-xs font-bold text-on-surface-variant">Ví dụ</th>
+        <th class="text-left px-3 py-2 text-xs font-bold text-on-surface-variant rounded-tr-xl">Nghĩa</th>
+      </tr></thead>
+      <tbody>${SUFFIXES.map(s => `<tr class="border-b border-outline-variant/40">
+        <td class="px-3 py-2 font-mono font-bold text-primary">${s.suffix}</td>
+        <td class="px-3 py-2">${s.type}</td>
+        <td class="px-3 py-2 text-xs">${s.root}</td>
+        <td class="px-3 py-2 text-xs text-on-surface-variant">${s.meaning}</td>
+      </tr>`).join('')}</tbody>
+    </table></div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// FILL IN BLANK — AI
+// ═══════════════════════════════════════════════════════════
+let fibData = [];
+
+async function genFibAI() {
+  const userText = document.getElementById('fibInput').value.trim();
+  const count = document.getElementById('fibCount').value;
+  const status = document.getElementById('fibOutput');
+  const area = document.getElementById('fibArea');
+
+  document.getElementById('btnCheckFib').classList.add('hidden');
+  document.getElementById('btnRevealFib').classList.add('hidden');
+  status.classList.remove('hidden');
+  area.innerHTML = `<div class="ai-thinking"><span class="spinner"></span><p class="text-sm text-on-surface-variant mt-2">AI đang tạo bài điền khuyết...</p></div>`;
+
+  let prompt;
+  if (userText) {
+    prompt = `Tạo bài tập điền từ tiếng Anh từ đoạn văn này. Ẩn đúng ${count} từ quan trọng/hay nhất.
+Đoạn văn: "${userText}"
+Trả về JSON ONLY (không markdown, không giải thích):
+{"sentence":"câu với _BLANK_ thay thế từ bị ẩn","blanks":[{"answer":"từ bị ẩn","hint":"chữ cái đầu + số ký tự","position":0}]}
+Với nhiều blank, dùng _BLANK1_, _BLANK2_, ... Trả về object JSON duy nhất.`;
+  } else {
+    const vocabSample = shuffle(state.vocab).slice(0,8).map(v=>v.english).join(', ');
+    prompt = `Tạo một đoạn văn tiếng Anh ngắn (3-4 câu) về chủ đề môi trường hoặc công nghệ, sử dụng một số từ này nếu phù hợp: ${vocabSample}. Sau đó tạo bài tập điền khuyết với ${count} blank.
+Trả về JSON ONLY:
+{"passage":"đoạn văn gốc","sentence":"đoạn văn với _BLANK1_ _BLANK2_ ...","blanks":[{"answer":"từ","hint":"c___ (5)","position":1}]}`;
+  }
+
+  try {
+    const raw = await callClaude(prompt);
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const data = JSON.parse(clean);
+
+    fibData = data.blanks || [];
+    let html = data.sentence || data.passage || userText;
+
+    fibData.forEach((b, i) => {
+      const tag = data.blanks.length > 1 ? `_BLANK${i+1}_` : '_BLANK_';
+      html = html.replace(tag, `<input class="fib-input" data-idx="${i}" data-ans="${esc(b.answer.toLowerCase())}" placeholder="${esc(b.hint)}">`);
+    });
+
+    area.innerHTML = `
+      ${data.passage && userText==='' ? `<p class="text-xs text-on-surface-variant mb-3 italic">📝 Đoạn văn gốc: ${esc(data.passage)}</p>` : ''}
+      <div class="text-sm leading-9">${html}</div>`;
+
+    document.getElementById('btnCheckFib').classList.remove('hidden');
+    document.getElementById('btnRevealFib').classList.remove('hidden');
+  } catch(e) {
+    area.innerHTML = `<p class="text-error text-sm">❌ Lỗi tạo bài: ${esc(e.message)}. Thử lại hoặc nhập đoạn văn thủ công.</p>`;
+  }
+}
+
+function checkFib() {
+  document.querySelectorAll('.fib-input').forEach(inp => {
+    const ans = inp.dataset.ans;
+    const user = inp.value.trim().toLowerCase();
+    inp.classList.remove('correct','wrong');
+    if (user === ans) inp.classList.add('correct');
+    else if (user) inp.classList.add('wrong');
+  });
+}
+function revealFib() {
+  document.querySelectorAll('.fib-input').forEach(inp => {
+    inp.value = inp.dataset.ans;
+    inp.classList.remove('wrong');
+    inp.classList.add('correct');
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// QUIZ — LOCAL
+// ═══════════════════════════════════════════════════════════
+function getChips(id) { return [...document.querySelectorAll(`#${id} .chip.sel`)].map(c=>c.dataset.v); }
+
+let quizQ = [], quizIdx = 0, quizScore = 0, quizAnswered = false;
+
+function buildLocalQuiz() {
+  const types = getChips('quizTypeSel');
+  const count = parseInt(document.getElementById('quizCount').value);
+  if (!types.length) { showToast('Chọn ít nhất 1 loại bài','err'); return; }
+  if (state.vocab.length < 4) { showToast('Cần ít nhất 4 từ vựng','err'); return; }
+
+  const qs = [];
+  const pool = shuffle(state.vocab);
+
+  for (let i = 0; i < Math.min(count, pool.length); i++) {
+    const v = pool[i];
+    const type = rand(types);
+    let q;
+
+    if (type === 'vocab') {
+      const wrongs = shuffle(state.vocab.filter(x=>x.english!==v.english)).slice(0,3).map(x=>x.vietnamese);
+      q = { q:`Từ <strong>"${esc(v.english)}"</strong> có nghĩa là gì?`, opts:shuffle([v.vietnamese,...wrongs]), ans:v.vietnamese };
+    } else if (type === 'grammar') {
+      const t = rand(TENSES);
+      const sig = rand(t.signals.split(', '));
+      q = { q:`Từ tín hiệu <strong>"${sig}"</strong> thường dùng với thì nào?`,
+            opts:shuffle([t.name,...shuffle(TENSES.filter(x=>x.name!==t.name)).slice(0,3).map(x=>x.name)]),
+            ans:t.name };
+    } else {
+      const s = rand(SUFFIXES);
+      const wrongs = shuffle(SUFFIXES.filter(x=>x.suffix!==s.suffix)).slice(0,3).map(x=>x.suffix);
+      q = { q:`Hậu tố <strong>"${s.suffix}"</strong> tạo ra loại từ nào?`, opts:shuffle([s.type,...wrongs.map(()=>rand(['Danh từ','Tính từ','Trạng từ','Động từ'].filter(x=>x!==s.type)))]), ans:s.type };
+    }
+    qs.push(q);
+  }
+
+  quizQ = qs; quizIdx = 0; quizScore = 0; quizAnswered = false;
+  document.getElementById('quizArea').classList.remove('hidden');
+  renderQuizQ();
+}
+
+async function buildAIQuiz() {
+  const types = getChips('quizTypeSel');
+  const count = parseInt(document.getElementById('quizCount').value);
+  const vocabSample = shuffle(state.vocab).slice(0,10).map(v=>v.english).join(', ');
+
+  document.getElementById('quizArea').classList.remove('hidden');
+  document.getElementById('quizArea').innerHTML = `<div class="ai-thinking"><span class="spinner"></span><p class="text-sm text-on-surface-variant mt-3">AI Claude đang tạo ${count} câu hỏi...</p></div>`;
+
+  const prompt = `Tạo ${count} câu hỏi trắc nghiệm tiếng Anh cho học sinh THPT Việt Nam.
+Loại: ${types.join(', ')}. Từ vựng mẫu: ${vocabSample}.
+Trả về JSON ONLY (array, không markdown):
+[{"q":"câu hỏi HTML","opts":["A","B","C","D"],"ans":"đáp án đúng","explain":"giải thích ngắn tiếng Việt"}]`;
+
+  try {
+    const raw = await callClaude(prompt);
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const qs = JSON.parse(clean);
+    quizQ = qs.map(x=>({q:x.q, opts:x.opts, ans:x.ans, explain:x.explain}));
+    quizIdx = 0; quizScore = 0; quizAnswered = false;
+    renderQuizQ();
+  } catch(e) {
+    document.getElementById('quizArea').innerHTML = `<div class="bg-error-light border border-error/30 rounded-2xl p-4 text-error text-sm">❌ Lỗi tạo bài AI: ${esc(e.message)}. Thử lại hoặc dùng bài local.</div>`;
+  }
+}
+
+function renderQuizQ() {
+  const area = document.getElementById('quizArea');
+  if (quizIdx >= quizQ.length) {
+    const pct = Math.round(quizScore/quizQ.length*100);
+    area.innerHTML = `
+      <div class="bg-success-light border border-success/30 rounded-2xl p-6 text-center">
+        <div class="text-4xl font-extrabold text-success mb-1">${quizScore}/${quizQ.length}</div>
+        <div class="text-sm font-bold text-success mb-1">${pct}%</div>
+        <p class="text-sm text-on-surface-variant mb-4">${pct===100?'🎉 Xuất sắc!':pct>=70?'👍 Khá tốt!':'📖 Cần ôn thêm!'}</p>
+        <div class="flex gap-2 justify-center flex-wrap">
+          <button onclick="buildLocalQuiz()" class="bg-success text-white text-sm font-bold px-5 py-2 rounded-full">⚡ Local mới</button>
+          <button onclick="buildAIQuiz()" class="bg-secondary text-white text-sm font-bold px-5 py-2 rounded-full">🤖 AI mới</button>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const q = quizQ[quizIdx];
+  const letters = ['A','B','C','D'];
+  area.innerHTML = `
+    <div class="bg-white border border-outline-variant rounded-2xl p-5">
+      <div class="text-xs text-on-surface-variant mb-3">Câu ${quizIdx+1}/${quizQ.length} · Điểm: ${quizScore}</div>
+      <div class="text-sm font-semibold mb-4 leading-6">${q.q}</div>
+      ${q.opts.map((o,i) => `
+        <div class="quiz-opt" data-opt="${esc(o)}" data-correct="${o===q.ans}">
+          <span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-xs font-bold flex-shrink-0">${letters[i]}</span>
+          <span class="text-sm">${esc(o)}</span>
+        </div>`).join('')}
+    </div>`;
+
+  area.querySelectorAll('.quiz-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      if (quizAnswered) return;
+      quizAnswered = true;
+      const correct = opt.dataset.correct === 'true';
+      if (correct) { opt.classList.add('correct'); quizScore++; }
+      else {
+        opt.classList.add('wrong');
+        area.querySelector('.quiz-opt[data-correct="true"]').classList.add('correct');
+      }
+      area.querySelectorAll('.quiz-opt').forEach(o => o.classList.add('disabled'));
+      if (q.explain) {
+        const exp = document.createElement('div');
+        exp.className = 'mt-3 bg-[#fffbeb] border border-yellow-200 rounded-xl p-3 text-xs text-on-surface';
+        exp.textContent = '💡 ' + q.explain;
+        area.querySelector('.bg-white').appendChild(exp);
+      }
+      setTimeout(() => { quizIdx++; quizAnswered = false; renderQuizQ(); }, 1600);
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// PRINT
+// ═══════════════════════════════════════════════════════════
+window.openPrintModal = function() {
+  fillTopicSelects();
+  document.getElementById('printModal').classList.remove('hidden');
+};
+window.closePrintModal = function() {
+  document.getElementById('printModal').classList.add('hidden');
+};
+window.doPrint = function() {
+  const topic = document.getElementById('printTopic').value;
+  const style = document.querySelector('input[name="printStyle"]:checked').value;
+  let list = topic === 'all' ? state.vocab : state.vocab.filter(v=>v.topicId===topic);
+
+  const win = window.open('','_blank');
+  let body = '';
+
+  if (style === 'list') {
+    body = `<h2 style="font-family:sans-serif;color:#0059bb">VocabMaster — Danh sách từ vựng</h2>
+    <table style="width:100%;border-collapse:collapse;font-family:sans-serif;font-size:13px;">
+      <thead><tr style="background:#ebedf9"><th style="padding:8px;border:1px solid #ddd;text-align:left">Từ tiếng Anh</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Nghĩa</th><th style="padding:8px;border:1px solid #ddd">Cấp độ</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Chủ đề</th></tr></thead>
+      <tbody>${list.map(v=>`<tr><td style="padding:8px;border:1px solid #ddd">${v.english}</td><td style="padding:8px;border:1px solid #ddd">${v.vietnamese}</td><td style="padding:8px;border:1px solid #ddd;text-align:center">${v.level}</td><td style="padding:8px;border:1px solid #ddd">${topicById(v.topicId).vi}</td></tr>`).join('')}</tbody>
+    </table>`;
+  } else if (style === 'cards') {
+    body = `<h2 style="font-family:sans-serif;color:#0059bb">VocabMaster — Thẻ học</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      ${list.map(v=>`<div style="border:1.5px solid #ddd;border-radius:12px;padding:12px;font-family:sans-serif;page-break-inside:avoid">
+        <div style="font-size:14px;font-weight:700;color:#181c23">${v.english}</div>
+        <div style="font-size:12px;font-weight:600;color:#0059bb;margin:4px 0">${v.level} · ${topicById(v.topicId).vi}</div>
+        <div style="border-top:1px dashed #ddd;margin-top:6px;padding-top:6px;font-size:13px;color:#414754;font-style:italic">${v.vietnamese}</div>
+        ${v.synonyms?.length ? `<div style="font-size:11px;color:#1a7a4a;margin-top:4px">≈ ${v.synonyms.join(', ')}</div>` : ''}
+      </div>`).join('')}
+    </div>`;
+  } else {
+    body = `<h2 style="font-family:sans-serif;color:#0059bb">VocabMaster — Bài kiểm tra từ vựng</h2>
+    <p style="font-family:sans-serif;font-size:12px;color:#717786">Họ tên: _________________ &nbsp;&nbsp; Ngày: _________</p>
+    ${shuffle(list).slice(0,20).map((v,i)=>`<div style="font-family:sans-serif;font-size:13px;margin:10px 0;border-bottom:1px solid #f0f0f0;padding-bottom:6px">
+      <strong>${i+1}. ${v.english}</strong> → ___________________________________
+    </div>`).join('')}
+    <hr style="margin-top:20px"><h3 style="font-family:sans-serif">Đáp án:</h3>
+    ${shuffle(list).slice(0,20).map((v,i)=>`<span style="font-family:sans-serif;font-size:12px;margin-right:16px">${i+1}. ${v.vietnamese}</span>`).join('')}`;
+  }
+
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>VocabMaster Print</title>
+    <style>body{margin:24px;background:white}@media print{body{margin:12px}}</style>
+    </head><body>${body}</body></html>`);
+  win.document.close();
+  win.print();
+  closePrintModal();
+};
+
+// ═══════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.mobile-nav-item').forEach(n=>n.classList.remove('active'));
+
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll(`[data-page="${page}"]`).forEach(el=>{
+    el.classList.add('active');
+  });
+
+  if (page === 'vocab') renderVocab();
+  if (page === 'flashcard') { fillTopicSelects(); buildFcList(); }
+  if (page === 'grammar') renderGrammar();
+}
+
+// ═══════════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════════
+function showToast(msg, type='ok') {
+  const box = document.getElementById('toastBox');
+  const t = document.createElement('div');
+  const colors = { ok:'bg-on-surface text-white', err:'bg-error text-white', info:'bg-primary text-white' };
+  t.className = `toast ${colors[type]||colors.ok}`;
+  t.innerHTML = `<span>${type==='ok'?'✓':type==='err'?'✕':'ℹ'}</span>${msg}`;
+  box.appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateY(8px)'; t.style.transition='.3s'; setTimeout(()=>t.remove(),300); },2800);
+}
+
+// ═══════════════════════════════════════════════════════════
+// EVENTS
+// ═══════════════════════════════════════════════════════════
+function setupEvents() {
+  document.querySelectorAll('[data-page]').forEach(btn => {
+    btn.addEventListener('click', () => navigate(btn.dataset.page));
+  });
+
+  document.getElementById('btnBatchAdd').addEventListener('click', batchAdd);
+  document.getElementById('batchInput').addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key === 'Enter') batchAdd();
+  });
+  document.getElementById('btnManualAdd').addEventListener('click', openManualModal);
+  document.getElementById('btnClearAll').addEventListener('click', () => {
+    if (confirm('Xóa TẤT CẢ từ vựng? Không thể hoàn tác!')) {
+      state.vocab = [];
+      save(); renderVocab(); updateStats();
+      showToast('🗑️ Đã xóa tất cả từ vựng', 'info');
+    }
+  });
+  document.getElementById('vocabSearch').addEventListener('input', renderVocab);
+  document.getElementById('filterTopic').addEventListener('change', renderVocab);
+  document.getElementById('filterLevel').addEventListener('change', renderVocab);
+  document.getElementById('btnToggleBlur').addEventListener('click', () => {
+    state.blurAll = !state.blurAll;
+    save(); renderVocab();
+    document.getElementById('btnToggleBlur').textContent = state.blurAll ? '👁️ Hiện nghĩa' : '👁️ Ẩn nghĩa';
+  });
+
+  document.getElementById('fcTopic').addEventListener('change', buildFcList);
+  document.getElementById('fcLevel').addEventListener('change', buildFcList);
+  document.getElementById('btnFcShuffle').addEventListener('click', () => {
+    state.fcList = shuffle(state.fcList); state.fcIndex = 0; renderFc();
+  });
+
+  document.querySelectorAll('.grammar-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.grammar-tab').forEach(t=>{
+        t.classList.remove('text-primary','border-primary');
+        t.classList.add('text-outline','border-transparent');
+      });
+      tab.classList.remove('text-outline','border-transparent');
+      tab.classList.add('text-primary','border-primary');
+      ['tenses','structures','wordform'].forEach(p => {
+        document.getElementById('gpane-'+p).style.display = 'none';
+      });
+      document.getElementById('gpane-'+tab.dataset.gtab).style.display = 'block';
+    });
+  });
+
+  document.getElementById('btnGenFib').addEventListener('click', genFibAI);
+  document.getElementById('btnCheckFib').addEventListener('click', checkFib);
+  document.getElementById('btnRevealFib').addEventListener('click', revealFib);
+
+  document.querySelectorAll('.chip').forEach(c => {
+    c.addEventListener('click', () => c.classList.toggle('sel'));
+  });
+  document.getElementById('btnLocalQuiz').addEventListener('click', buildLocalQuiz);
+  document.getElementById('btnAIQuiz').addEventListener('click', buildAIQuiz);
+
+  document.getElementById('btnExport').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify({vocab:state.vocab},null,2)], {type:'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'vocabmaster-export.json'; a.click();
+  });
+  document.getElementById('btnExportPrint').addEventListener('click', openPrintModal);
+  document.getElementById('btnImport').addEventListener('click', () => document.getElementById('importFile').click());
+  document.getElementById('importFile').addEventListener('change', e => {
+    const f = e.target.files[0]; if (!f) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const d = JSON.parse(ev.target.result);
+        if (d.vocab && Array.isArray(d.vocab)) {
+          const added = d.vocab.filter(v=>!state.vocab.find(x=>x.english===v.english));
+          state.vocab = [...state.vocab, ...added];
+          save(); renderVocab(); updateStats();
+          showToast(`✅ Nhập thành công ${added.length} từ`, 'ok');
+        } else showToast('File không hợp lệ','err');
+      } catch(e) { showToast('Lỗi đọc file','err'); }
+    };
+    reader.readAsText(f);
+  });
+  document.getElementById('btnReset').addEventListener('click', () => {
+    if (confirm('Xóa tất cả và reset về dữ liệu mặc định?')) {
+      localStorage.clear(); load(); renderVocab(); updateStats();
+      showToast('🔄 Đã reset về mặc định', 'info');
+    }
+  });
+
+  document.getElementById('modalOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('page-flashcard').classList.contains('active')) {
+      if (e.key === 'ArrowRight') fcNav(1);
+      if (e.key === 'ArrowLeft') fcNav(-1);
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); fcFlip(); }
+    }
+    if (e.key === 'Escape') closeModal();
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+function init() {
+  load();
+  fillTopicSelects();
+  renderVocab();
+  updateStats();
+  setupEvents();
+  if (state.blurAll) document.getElementById('btnToggleBlur').textContent = '👁️ Hiện nghĩa';
+}
+
+init();
+})();
+</script>
+</body>
+</html>
