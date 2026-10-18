@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>EnglishPro – Học tiếng Anh mỗi ngày</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EDEFFA;--pp:#FFFFFF;--ink:#13132B;--mu:#575A7D;--ln:#13132B;--lk:#13132B;--sd:#13132B;--soft:#E0E3F5;
+--blue:#3A4BFF;--mint:#35D9A0;--sun:#FFCF33;--coral:#FF6A55;--lil:#B89CFF;
+--pri:#3A4BFF;--prif:#FFFFFF;--hero:#FFCF33;--herofg:#13132B;--u:#3A4BFF;--fo:#3A4BFF;
+--t0:#B9C2FF;--t1:#9BEBCB;--t2:#FFE17A;--t3:#FFB4A6;--t4:#D9C7FF;
+--fd:"Bricolage Grotesque","Be Vietnam Pro",system-ui,sans-serif;--fb:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+[data-theme=dark]{--bg:#0D0E21;--pp:#16183A;--ink:#F1F0FF;--mu:#9FA2CC;--ln:#43478F;--lk:#F1F0FF;--sd:#3A4BFF;--soft:#212452;--pri:#FFCF33;--prif:#13132B;--hero:#3A4BFF;--herofg:#FFFFFF;--u:#8C97FF;--fo:#FFCF33}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px;min-height:100vh;padding-bottom:120px;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--fo);outline-offset:3px}
+#top{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(16px,4vw,40px);max-width:1240px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--fd);font-weight:800;font-size:23px;letter-spacing:-.03em;color:var(--ink);text-decoration:none}
+.mark{width:36px;height:36px;border-radius:11px;background:var(--blue);color:#fff;display:grid;place-items:center;font-style:normal;font-size:20px;border:2px solid var(--lk);box-shadow:3px 3px 0 var(--sd);transform:rotate(-7deg)}
+.tools{display:flex;gap:10px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:6px;height:42px;padding:0 15px;border:2px solid var(--lk);border-radius:99px;background:var(--pp);font-weight:700}
+.chip svg{color:var(--coral)}
+.ib{width:42px;height:42px;border-radius:50%;border:2px solid var(--lk);background:var(--pp);display:grid;place-items:center;transition:transform .15s}
+.ib:hover{transform:rotate(-12deg)}
+.ib:active{transform:scale(.9)}
+main{max-width:1240px;margin:0 auto;padding:8px clamp(16px,4vw,40px) 40px}
+h1,h2,h3{font-family:var(--fd);letter-spacing:-.025em;line-height:1.05;font-weight:800}
+h1{font-size:clamp(36px,6.4vw,64px);margin-bottom:12px}
+h2{font-size:clamp(25px,3.6vw,34px);margin:48px 0 18px}
+h3{font-size:20px;line-height:1.2}
+.sub{color:var(--mu);max-width:62ch;margin-bottom:26px}
+.hint{color:var(--mu);font-size:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))}
+.card{background:var(--pp);border:2px solid var(--ln);border-radius:22px;padding:22px}
+.pop{border-color:var(--lk);box-shadow:6px 6px 0 var(--sd)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 26px;border-radius:15px;border:2px solid var(--lk);background:var(--pri);color:var(--prif);font-weight:700;box-shadow:4px 4px 0 var(--sd);transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--sd)}
+.btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--sd)}
+.btn.gh{background:var(--pp);color:var(--ink)}
+.btn.ok{background:var(--mint);color:#13132B}
+.btn.ko{background:var(--coral);color:#13132B}
+.btn.sm{min-height:40px;padding:0 18px;font-size:14px;box-shadow:3px 3px 0 var(--sd)}
+.btn[disabled]{opacity:.4;pointer-events:none;box-shadow:none}
+.bd{display:inline-flex;align-items:center;gap:5px;height:27px;padding:0 11px;border-radius:99px;border:2px solid var(--lk);font-size:13px;font-weight:700;background:var(--pp);color:var(--ink);white-space:nowrap}
+.bd.a1,.bd.a2{background:var(--mint);color:#13132B}
+.bd.b1,.bd.b2{background:var(--sun);color:#13132B}
+.bd.c1,.bd.c2{background:var(--lil);color:#13132B}
+.bd.hot{background:var(--coral);color:#13132B}
+.bd.mid{background:var(--t2);color:#13132B}
+.bd.low{background:var(--soft);color:var(--ink)}
+.m5{display:inline-flex;gap:3px;align-items:flex-end;height:16px;vertical-align:middle;margin-left:4px}
+.m5 i{width:5px;border-radius:2px;background:var(--soft);border:1px solid var(--ln)}
+.m5 i:nth-child(1){height:6px}.m5 i:nth-child(2){height:8px}.m5 i:nth-child(3){height:11px}.m5 i:nth-child(4){height:14px}.m5 i:nth-child(5){height:16px}
+.m5.u i.on{background:var(--u);border-color:var(--u)}
+.m5.x i.on{background:var(--coral);border-color:var(--coral)}
+input[type=text],input[type=search],select{min-height:48px;padding:0 16px;border:2px solid var(--lk);border-radius:15px;background:var(--pp);outline:none;min-width:0;transition:box-shadow .12s}
+input:focus,select:focus{box-shadow:4px 4px 0 var(--sd)}
+#dock{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:50;display:flex;gap:6px;padding:8px;background:var(--pp);border:2px solid var(--lk);border-radius:99px;box-shadow:5px 5px 0 var(--sd);transition:transform .4s cubic-bezier(.3,1,.4,1)}
+#dock.hide{transform:translate(-50%,170%)}
+.dk{position:relative;height:50px;min-width:50px;padding:0 13px;border-radius:99px;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;color:var(--ink);transition:background .2s}
+.dk span{max-width:0;overflow:hidden;white-space:nowrap;transition:max-width .3s}
+.dk.on{background:var(--pri);color:var(--prif);padding:0 18px}
+.dk.on span{max-width:110px}
+.dk:hover:not(.on){background:var(--soft)}
+.dk em{position:absolute;top:-2px;right:-2px;min-width:21px;height:21px;padding:0 4px;border-radius:99px;background:var(--coral);color:#13132B;font-style:normal;font-size:12px;font-weight:800;display:grid;place-items:center;border:2px solid var(--lk)}
+.home{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
+.c4{grid-column:span 4}.c5{grid-column:span 5}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:1/-1}
+.stack{display:grid;gap:22px;align-content:start}
+.hero{background:var(--hero);color:var(--herofg);border:2px solid var(--lk);border-radius:34px;box-shadow:9px 9px 0 var(--sd);padding:clamp(22px,4vw,46px);display:flex;flex-direction:column;gap:22px;min-height:360px;justify-content:space-between}
+.hero .hint{color:inherit;opacity:.8}
+.hero .bd{background:var(--pp);color:var(--ink)}
+.hw{font-family:var(--fd);font-weight:800;font-size:clamp(52px,12vw,128px);letter-spacing:-.045em;line-height:.92;word-break:break-word}
+.hw span{display:inline-block;animation:drop .7s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(var(--i)*60ms)}
+@keyframes drop{from{transform:translateY(-70%) rotate(-10deg);opacity:0}}
+.hvn{font-family:var(--fd);font-weight:700;font-size:clamp(24px,4vw,36px);letter-spacing:-.02em;margin-bottom:14px}
+.hero .btn{background:var(--pri);color:var(--prif)}
+[data-theme=dark] .hero .btn{box-shadow:4px 4px 0 #000}
+.stamps{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.stp{width:32px;height:32px;border-radius:50%;border:2px solid var(--lk);background:var(--pp);display:grid;place-items:center}
+.stp.on{background:var(--mint);color:#13132B}
+.hm{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:14px}
+.hm i{aspect-ratio:1;border-radius:6px;border:2px solid var(--ln);background:var(--pp)}
+.hm i.l1{background:var(--t1)}.hm i.l2{background:var(--mint)}.hm i.l3{background:var(--blue);border-color:var(--lk)}
+.tk{display:grid;grid-template-columns:1fr 92px;border:2px solid var(--lk);border-radius:22px;background:var(--pp);overflow:hidden}
+.tk.due{box-shadow:6px 6px 0 var(--sd)}
+.tk .mn{padding:20px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.tk .mn b{font-size:15px}
+.tk .st{border-left:2px dashed var(--lk);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--fd);font-weight:800;font-size:38px;line-height:1;background:var(--soft)}
+.tk .st small{font-family:var(--fb);font-size:13px;font-weight:600;margin-top:4px}
+.tk.due .st{background:var(--coral);color:#13132B}
+.tk.rdy .st{background:var(--mint);color:#13132B}
+.lv{display:grid;grid-template-columns:44px 1fr 70px;gap:12px;align-items:center;margin:12px 0;font-weight:700;font-size:14px}
+.bar{height:18px;border:2px solid var(--lk);border-radius:99px;background:var(--pp);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--blue);border-right:2px solid var(--lk);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.bar i.z{border:0}
+.bar i.a{background:var(--mint)}.bar i.b{background:var(--sun)}.bar i.c{background:var(--lil)}
+.tiles{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr))}
+.tile{display:flex;flex-direction:column;justify-content:space-between;gap:16px;min-height:158px;padding:18px;border-radius:24px;border:2px solid var(--lk);color:#13132B;text-align:left;transition:transform .15s,box-shadow .15s}
+.tile:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--sd)}
+.tile:active{transform:translate(2px,2px);box-shadow:none}
+.t0{background:var(--t0)}.t1{background:var(--t1)}.t2{background:var(--t2)}.t3{background:var(--t3)}.t4{background:var(--t4)}
+.tile .em{font-size:38px;line-height:1}
+.tile h3{font-size:19px}
+.tile small{font-weight:600;font-size:13.5px}
+.pb{height:9px;border-radius:99px;background:rgba(19,19,43,.2);margin-top:8px;overflow:hidden}
+.pb i{display:block;height:100%;background:#13132B;border-radius:99px}
+.fl{display:flex;gap:8px;overflow-x:auto;padding:6px 3px 12px;scrollbar-width:none}
+.fl::-webkit-scrollbar{display:none}
+.pill{flex-shrink:0;height:40px;padding:0 17px;border-radius:99px;border:2px solid var(--lk);background:var(--pp);font-weight:600;font-size:14px;transition:transform .12s}
+.pill:active{transform:scale(.94)}
+.pill.on{background:var(--pri);color:var(--prif)}
+.vl{display:grid;gap:12px;margin-top:8px}
+.vr{display:grid;grid-template-columns:1fr auto;gap:10px 16px;align-items:center;padding:16px 18px;border:2px solid var(--ln);border-radius:20px;background:var(--pp)}
+.vr.dn{border-color:var(--mint)}
+.vr .w{font-family:var(--fd);font-weight:700;font-size:24px;letter-spacing:-.02em;line-height:1.1}
+.vr .vn{color:var(--mu);font-size:15px;margin-top:2px}
+.vr .mt{display:flex;gap:8px 14px;flex-wrap:wrap;align-items:center;margin-top:10px;font-size:13px;color:var(--mu)}
+.sbtn{width:46px;height:46px;border-radius:50%;border:2px solid var(--lk);background:var(--sun);color:#13132B;display:grid;place-items:center;transition:transform .12s;flex-shrink:0}
+.sbtn:hover{transform:scale(1.1) rotate(-6deg)}
+.sbtn:active{transform:scale(.9)}
+.acc{border:2px solid var(--lk);border-radius:26px;background:var(--pp);margin-bottom:18px;overflow:hidden}
+.acc>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:18px 20px;font-family:var(--fd);font-weight:800;font-size:clamp(19px,3vw,24px);letter-spacing:-.02em}
+.acc>summary::-webkit-details-marker{display:none}
+.acc>summary .ci{width:46px;height:46px;flex-shrink:0;border-radius:15px;border:2px solid var(--lk);display:grid;place-items:center;font-size:22px;color:#13132B}
+.acc>summary::after{content:"+";margin-left:auto;font-size:32px;font-weight:500;transition:transform .25s}
+.acc[open]>summary::after{transform:rotate(45deg)}
+.acc[open]>summary{border-bottom:2px solid var(--lk)}
+.bdy{padding:20px;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.bdy.one{display:block}
+.it{border:2px solid var(--ln);border-radius:20px;padding:18px;background:var(--bg)}
+.it h4{font-family:var(--fd);font-size:19px;font-weight:700;letter-spacing:-.01em;margin-bottom:12px;line-height:1.25}
+.fm{white-space:pre-line;background:#13132B;color:#F1F0FF;border-radius:14px;padding:14px 16px;font-size:14px;margin-bottom:12px;line-height:1.75}
+.us{font-size:15px;margin-bottom:12px;white-space:pre-line}
+.ex{border-left:4px solid var(--blue);padding-left:14px;font-style:italic;color:var(--mu);white-space:pre-line;font-size:15px}
+[data-theme=dark] .ex{border-color:var(--sun)}
+.tw{overflow-x:auto;border:2px solid var(--ln);border-radius:18px;background:var(--pp)}
+table{width:100%;border-collapse:collapse;font-size:15px;min-width:440px}
+th,td{padding:11px 15px;text-align:left;border-bottom:2px solid var(--ln)}
+th{background:var(--soft);font-weight:700;font-size:14px}
+tr:last-child td{border-bottom:0}
+.scene{perspective:1400px;max-width:580px;margin:28px auto 30px}
+.fc{position:relative;height:min(400px,58vh);transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,1.3,.4,1);cursor:pointer}
+.fc.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:2px solid var(--lk);border-radius:30px;box-shadow:8px 8px 0 var(--sd);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:28px;text-align:center;background:var(--pp)}
+.face.back{transform:rotateY(180deg);background:var(--hero);color:var(--herofg)}
+.face .w{font-family:var(--fd);font-weight:800;font-size:clamp(40px,10vw,76px);letter-spacing:-.035em;line-height:1;word-break:break-word}
+.face .m{font-family:var(--fd);font-weight:700;font-size:clamp(28px,6vw,46px);line-height:1.1;letter-spacing:-.02em}
+.face.back .bd{background:var(--pp);color:var(--ink)}
+.acts{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.seg{display:flex;gap:4px;margin:12px 0}
+.seg i{flex:1;height:12px;border-radius:99px;border:2px solid var(--lk);background:var(--pp);min-width:3px}
+.seg i.d{background:var(--mint)}.seg i.w{background:var(--coral)}.seg i.c{background:var(--sun)}
+.qb{max-width:700px;margin:0 auto}
+.qw{font-family:var(--fd);font-weight:800;font-size:clamp(38px,9vw,66px);line-height:1;letter-spacing:-.035em;text-align:center;margin:30px 0 10px;word-break:break-word}
+.opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:14px 16px;margin:12px 0;border-radius:18px;border:2px solid var(--lk);background:var(--pp);font-weight:600;font-size:17px;box-shadow:4px 4px 0 var(--sd);transition:transform .12s,box-shadow .12s,background .2s}
+.opt b{flex:0 0 34px;height:34px;border-radius:11px;background:var(--soft);display:grid;place-items:center;font-family:var(--fd)}
+.opt:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--sd)}
+.opt:disabled{color:var(--ink);cursor:default}
+.opt.ok{background:var(--mint);color:#13132B}
+.opt.ok b,.opt.ko b{background:rgba(19,19,43,.15)}
+.opt.ko{background:var(--coral);color:#13132B;animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.fb{padding:14px 18px;border:2px solid var(--lk);border-radius:16px;margin:16px 0;font-weight:700}
+.fb.ok{background:var(--mint);color:#13132B}
+.fb.ko{background:var(--coral);color:#13132B}
+.res{border:2px solid var(--lk);border-radius:34px;box-shadow:9px 9px 0 var(--sd);padding:clamp(24px,5vw,48px);text-align:center;color:#13132B}
+.res.r1{background:var(--mint)}.res.r2{background:var(--sun)}.res.r3{background:var(--coral)}
+.big{font-family:var(--fd);font-weight:800;font-size:clamp(84px,24vw,170px);line-height:.9;letter-spacing:-.05em}
+.res .tw{text-align:left;margin:22px 0;background:var(--pp);color:var(--ink)}
+.step{display:grid;grid-template-columns:50px 1fr;gap:16px;margin:18px 0}
+.step i{width:50px;height:50px;border-radius:50%;border:2px solid var(--lk);background:var(--sun);color:#13132B;font-family:var(--fd);font-weight:800;font-style:normal;display:grid;place-items:center;font-size:22px}
+.step b{font-size:18px}
+#toast{position:fixed;left:50%;bottom:110px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:14px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:80;max-width:90vw}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:900px){.c4,.c5,.c7,.c8{grid-column:1/-1}.hero{min-height:300px}}
+@media(max-width:520px){.dk{min-width:44px;height:44px;padding:0 10px}.dk.on{padding:0 10px}.dk.on span{max-width:0}#dock{gap:2px;padding:6px}.tk{grid-template-columns:1fr 80px}.brand span{font-size:20px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header id="top">
+<a class="brand" href="#home"><i class="mark">E</i><span>englishpro</span></a>
+<div class="tools">
+<span class="chip" id="stk"></span>
+<button class="ib" id="th" aria-label="Đổi giao diện sáng tối"></button>
+</div>
+</header>
+<main id="main"></main>
+<nav id="dock" aria-label="Điều hướng"></nav>
+<div id="toast" role="status"></div>
+<script>
+const c=(id,t,ic,items)=>({id,t,ic,items});
+const tb=(id,t,ic,h,rows)=>({id,t,ic,h,rows});
+const GRAMMAR=[
+c("tense","Các thì (Tenses)","⏱️",[
+["1. Hiện tại đơn (Present Simple)","(+) S + V(s/es)\n(–) S + do/does not + V\n(?) Do/Does + S + V?\nTo be: am/is/are","Thói quen, sự thật hiển nhiên, lịch trình cố định, cảm xúc/trạng thái.\nDấu hiệu: always, usually, often, sometimes, rarely, never, every day, on Mondays, once a week.","She works in a bank.\nWater boils at 100°C.\nThe train leaves at 7 a.m."],
+["2. Hiện tại tiếp diễn (Present Continuous)","(+) S + am/is/are + V-ing\n(–) S + am/is/are not + V-ing\n(?) Am/Is/Are + S + V-ing?","Hành động đang diễn ra lúc nói, xu hướng tạm thời, kế hoạch đã sắp xếp, phàn nàn với always.\nDấu hiệu: now, at the moment, right now, today, these days, Look!, Listen!","I am studying English now.\nShe is always losing her keys.\nWe are meeting him tomorrow."],
+["3. Hiện tại hoàn thành (Present Perfect)","(+) S + have/has + V3/ed\n(–) S + have/has not + V3/ed\n(?) Have/Has + S + V3/ed?","Hành động bắt đầu trong quá khứ còn liên quan hiện tại; kinh nghiệm; kết quả hiện tại; việc vừa xảy ra.\nDấu hiệu: already, yet, just, ever, never, recently, so far, since + mốc, for + khoảng, this is the first time.","I have lived here for 5 years.\nHave you ever been to Japan?\nShe has just left."],
+["4. Hiện tại hoàn thành tiếp diễn","(+) S + have/has been + V-ing\n(–) S + have/has not been + V-ing\n(?) Have/Has + S + been + V-ing?","Nhấn mạnh quá trình kéo dài đến hiện tại, có thể còn tiếp tục hoặc vừa kết thúc có dấu vết.\nDấu hiệu: all day, all morning, for, since, how long, lately, recently.","I have been waiting for two hours.\nHer eyes are red. She has been crying."],
+["5. Quá khứ đơn (Past Simple)","(+) S + V2/ed\n(–) S + did not + V\n(?) Did + S + V?\nTo be: was/were","Hành động đã xảy ra và kết thúc tại thời điểm xác định trong quá khứ; chuỗi hành động quá khứ.\nDấu hiệu: yesterday, last week, ago, in 2020, when I was a child.","I visited Hue last year.\nHe woke up, brushed his teeth and left."],
+["6. Quá khứ tiếp diễn (Past Continuous)","(+) S + was/were + V-ing\n(–) S + was/were not + V-ing\n(?) Was/Were + S + V-ing?","Hành động đang diễn ra tại một thời điểm quá khứ; hành động đang diễn ra thì bị hành động khác xen vào; hai hành động song song.\nDấu hiệu: at 8 p.m. yesterday, while, when, all evening.","I was cooking when he called.\nWhile she was reading, he was playing games."],
+["7. Quá khứ hoàn thành (Past Perfect)","(+) S + had + V3/ed\n(–) S + had not + V3/ed\n(?) Had + S + V3/ed?","Hành động xảy ra trước một hành động/thời điểm khác trong quá khứ.\nDấu hiệu: before, after, by the time, until, already, just, when.","When I arrived, the film had started.\nShe said she had finished."],
+["8. Quá khứ hoàn thành tiếp diễn","(+) S + had been + V-ing\n(–) S + had not been + V-ing\n(?) Had + S + been + V-ing?","Nhấn mạnh quá trình kéo dài trước một mốc quá khứ khác.\nDấu hiệu: for, since, before, until then, by the time.","He had been working for 5 hours before he took a break."],
+["9. Tương lai đơn (Future Simple)","(+) S + will + V\n(–) S + will not (won't) + V\n(?) Will + S + V?","Quyết định tức thời, dự đoán không căn cứ, lời hứa, đề nghị, đe dọa.\nDấu hiệu: tomorrow, next week, soon, probably, I think, I promise.","I'll help you.\nI think it will rain.\nI promise I won't be late."],
+["10. Tương lai tiếp diễn","(+) S + will be + V-ing\n(–) S + will not be + V-ing\n(?) Will + S + be + V-ing?","Hành động sẽ đang diễn ra tại một thời điểm xác định trong tương lai; hỏi lịch sự về kế hoạch.\nDấu hiệu: at this time tomorrow, at 5 p.m. next Monday.","This time tomorrow I will be flying to Da Nang."],
+["11. Tương lai hoàn thành","(+) S + will have + V3/ed\n(–) S + will not have + V3/ed\n(?) Will + S + have + V3/ed?","Hành động sẽ hoàn thành trước một mốc tương lai.\nDấu hiệu: by + mốc, by the time, before.","By 2030, I will have graduated.\nBy the time you come, I will have cooked."],
+["12. Tương lai hoàn thành tiếp diễn","(+) S + will have been + V-ing\n(–) S + will not have been + V-ing\n(?) Will + S + have been + V-ing?","Nhấn mạnh thời gian kéo dài của hành động tính đến một mốc tương lai.\nDấu hiệu: by ... for + khoảng thời gian.","By next June, I will have been learning English for 3 years."],
+["13. Tương lai gần (be going to)","S + am/is/are + going to + V","Dự định đã có từ trước; dự đoán dựa trên bằng chứng hiện tại.","Look at those clouds! It's going to rain.\nI'm going to study abroad."],
+["14. Tương lai trong quá khứ","S + would / was/were going to + V","Diễn tả việc sẽ xảy ra tính từ một mốc quá khứ (thường dùng trong câu gián tiếp).","He said he would call me later."],
+["15. Dùng thì hiện tại cho tương lai","Present Simple: lịch trình, thời gian biểu\nPresent Continuous: kế hoạch đã sắp xếp","The film starts at 8.\nWe are flying to Seoul on Friday."," "],
+["16. Mệnh đề thời gian","if/when/as soon as/before/after/until/by the time + hiện tại đơn (không dùng will)\nSau when/after/before/as soon as trong quá khứ: dùng quá khứ đơn/hoàn thành","Hiện tại hoàn thành thay hiện tại đơn khi nhấn mạnh sự hoàn tất: As soon as I have finished, I'll call you.","I'll call you when I arrive.\nAfter she had eaten, she left."],
+["17. Hiện tại hoàn thành vs Quá khứ đơn","Present Perfect: không nêu thời gian xác định, còn liên quan hiện tại\nPast Simple: có mốc thời gian đã qua","I have seen that film. (không rõ khi nào)\nI saw that film last night. (có mốc)"," "]
+]),
+c("form","Các dạng chia & quy tắc","🧩",[
+["Quy tắc thêm -s / -es (V ngôi 3 số ít, danh từ số nhiều)","Thêm -es: tận cùng s, x, z, ch, sh, o\nPhụ âm + y → bỏ y thêm -ies\nNguyên âm + y → thêm -s\nf/fe → ves (leaf→leaves, knife→knives)","watch→watches; study→studies; play→plays; go→goes","Danh từ bất quy tắc: man→men, woman→women, child→children, foot→feet, tooth→teeth, mouse→mice, person→people, sheep→sheep, fish→fish."],
+["Quy tắc thêm -ed (quá khứ / V3)","Thường: + ed (work→worked)\nTận cùng e: + d (live→lived)\nPhụ âm + y: y→ied (study→studied)\nNgắn 1 âm tiết CVC: gấp đôi phụ âm cuối (stop→stopped)\nNhiều âm tiết, nhấn âm cuối: gấp đôi (prefer→preferred)","Phát âm -ed: /t/ sau âm vô thanh (worked); /d/ sau âm hữu thanh (played); /id/ sau t, d (wanted, needed).","plan→planned; visit→visited (nhấn âm đầu, không gấp đôi)."],
+["Quy tắc thêm -ing","Thường: + ing (work→working)\nTận cùng e câm: bỏ e (make→making)\nTận cùng ie: ie→ying (die→dying, lie→lying)\nCVC 1 âm tiết: gấp đôi (run→running, sit→sitting)\nTận cùng l sau nguyên âm đơn (Anh-Anh): travel→travelling","see→seeing (ee giữ nguyên); be→being; begin→beginning; open→opening.","Không dùng tiếp diễn với động từ trạng thái: know, like, love, want, need, believe, understand, belong, own, seem."],
+["So sánh: quy tắc chính tả","Tính từ ngắn: + er / est (tall→taller→tallest)\nTận cùng e: + r / st (nice→nicer→nicest)\nCVC: gấp đôi (big→bigger→biggest)\nPhụ âm + y: ied (happy→happier→happiest)\nDài (≥ 3 âm tiết): more / most","Bất quy tắc: good→better→best; bad→worse→worst; far→farther(further)→farthest(furthest); little→less→least; many/much→more→most.","Hai âm tiết tận cùng -y, -er, -ow, -le thường thêm -er/-est (clever→cleverer)."],
+["Hòa hợp chủ ngữ – động từ (Subject-Verb Agreement)","Chủ ngữ số ít + V số ít; số nhiều + V số nhiều\nA and B → số nhiều\nA or B / either A or B / neither A nor B → chia theo B (gần nhất)\nA as well as B / with / together with → chia theo A\nThe number of + N(số nhiều) → số ít; A number of + N(số nhiều) → số nhiều\nEveryone, someone, nobody, each, every + N → số ít\nNews, mathematics, physics, economics, politics → số ít","The police are here. (số nhiều)\nTwo hours is enough. (khoảng thời gian/tiền/khoảng cách → số ít)\nThe team is/are ... (tập thể: Anh-Mỹ số ít, Anh-Anh có thể số nhiều)"," "],
+["Động từ to be / have / do","I am, you are, he/she/it is, we/they are | was/were | been\nI/you/we/they have, he/she/it has | had | had\nI/you/we/they do, he/she/it does | did | done","be: trạng thái, trợ động từ tiếp diễn/bị động\nhave: sở hữu, trợ động từ hoàn thành, have to\ndo: trợ động từ phủ định/nghi vấn, nhấn mạnh","I do like it! (nhấn mạnh)\nShe doesn't have a car."]
+]),
+c("ger","Danh động từ & động từ nguyên mẫu","🔀",[
+["Động từ + V-ing (Gerund)","enjoy, avoid, finish, mind, suggest, practise, consider, keep, risk, admit, deny, delay, postpone, imagine, miss, escape, can't help, can't stand, give up, put off, carry on, go on, look forward to, be used to, feel like, it's no use, it's (not) worth, spend time/money","Sau giới từ luôn dùng V-ing. V-ing có thể làm chủ ngữ hoặc tân ngữ.","She enjoys swimming.\nSwimming is good for health.\nThank you for helping me."],
+["Động từ + to V (Infinitive)","want, decide, hope, plan, agree, refuse, promise, manage, afford, learn, offer, seem, appear, pretend, expect, fail, choose, wish, would like, need, arrange, threaten, tend, happen, prepare, ask, tell + O + to V","Mục đích: to V = in order to V = so as to V. Sau adj: happy to, ready to, easy to.","I decided to leave.\nHe asked me to help him."],
+["Động từ + V nguyên mẫu không to (Bare infinitive)","Sau modal (can, must, should...), let, make, had better, would rather, help (có thể có to), why not\nlet/make/have + O + V\nsee/hear/watch/notice + O + V (thấy trọn hành động) hoặc V-ing (đang diễn ra)","help + O + (to) V đều đúng.","She made me laugh.\nI saw him cross the street. / I saw him crossing the street."],
+["Động từ đổi nghĩa theo V-ing / to V","stop + V-ing: ngừng làm; stop + to V: dừng lại để làm\nremember/forget + V-ing: nhớ/quên việc đã làm; + to V: nhớ/quên việc cần làm\nregret + V-ing: hối hận đã làm; + to V: tiếc phải báo\ntry + V-ing: thử; try + to V: cố gắng\ngo on + V-ing: tiếp tục; go on + to V: chuyển sang việc khác\nmean + V-ing: bao hàm; mean + to V: định\nneed + V-ing = need to be V3 (bị động)","","I stopped smoking.\nI stopped to smoke.\nI forgot to lock the door."],
+["Động từ dùng được cả hai (nghĩa gần như nhau)","like, love, hate, prefer, begin, start, continue, intend, bother, can't bear","like to V: thói quen/lựa chọn; like V-ing: yêu thích chung.\nwould like/love/hate/prefer + to V","I like swimming / to swim.\nI'd like to go home."],
+["Giới từ + V-ing","be interested in, be good at, be afraid of, be fond of, be tired of, be keen on, insist on, depend on, believe in, apologize for, thank for, succeed in, prevent from, stop from, look forward to, object to, be used to, in spite of, instead of, without, before, after, by","Be careful: look forward to / object to / be used to có 'to' là giới từ → V-ing.","I'm looking forward to seeing you.\nHe is good at drawing."],
+["Tính từ + to V / cấu trúc với it","It + be + adj + (for O) + to V\nS + be + adj + to V (happy, glad, ready, willing, easy, difficult, afraid)\nIt takes (O) + time + to V\nIt's + noun + to V","too + adj + (for O) + to V\nadj + enough + (for O) + to V","It's important to sleep well.\nShe is too young to drive.\nHe is old enough to vote."],
+["Phân từ (V-ing / V3) làm tính từ & rút gọn","V-ing: chủ động, đang diễn ra (a running man)\nV3: bị động, đã hoàn tất (a broken window)\nEmotion adj: -ing (gây ra cảm xúc) / -ed (cảm thấy)","boring / bored; interesting / interested; exciting / excited; tiring / tired","The film was boring, so I was bored."],
+["Cấu trúc go + V-ing & các cụm với V-ing","go swimming, go shopping, go running, go fishing, go camping, go hiking, go dancing\nbusy + V-ing; waste time/money + V-ing; have difficulty/trouble + V-ing; it's no use + V-ing; there's no point in + V-ing; can't help + V-ing; be worth + V-ing","","We went camping last weekend.\nIt's no use crying."]
+]),
+c("cond","Câu điều kiện & ước muốn","🔮",[
+["Loại 0 – Sự thật hiển nhiên","If + hiện tại đơn, hiện tại đơn","Quy luật tự nhiên, sự thật khoa học.","If you heat ice, it melts."],
+["Loại 1 – Có thể xảy ra ở tương lai","If + hiện tại đơn, S + will/can/may/must + V","Điều kiện có thật, khả thi ở hiện tại/tương lai.","If it rains, we will stay home."],
+["Loại 2 – Không có thật ở hiện tại","If + quá khứ đơn (were), S + would/could/might + V","Giả định trái với hiện tại. Dùng were cho mọi ngôi.","If I were you, I would study harder.\nIf I had money, I would travel."],
+["Loại 3 – Không có thật ở quá khứ","If + quá khứ hoàn thành, S + would/could/might + have + V3","Giả định trái với quá khứ, nói về tiếc nuối.","If she had studied, she would have passed."],
+["Câu điều kiện hỗn hợp (Mixed)","If + had V3 (quá khứ), S + would + V (hiện tại)\nIf + quá khứ đơn (hiện tại), S + would have V3 (quá khứ)","Điều kiện ở quá khứ → kết quả hiện tại, và ngược lại.","If I had taken that job, I would be rich now."],
+["Đảo ngữ câu điều kiện","Loại 1: Should + S + V, ...\nLoại 2: Were + S + (to V), ...\nLoại 3: Had + S + V3, ...","Trang trọng, bỏ if.","Had I known, I would have told you.\nWere I rich, I would buy it.\nShould you need help, call me."],
+["Từ thay thế if","unless = if ... not\nas long as / so long as / provided that / providing that / on condition that = nếu / miễn là\nin case = phòng khi\nsuppose / supposing = giả sử\nbut for + N = nếu không có\notherwise = nếu không thì","","Unless you hurry, you'll be late.\nI'll lend it as long as you return it."],
+["Wish & If only","wish + quá khứ đơn → ước hiện tại\nwish + had V3 → ước quá khứ\nwish + would V → ước tương lai/phàn nàn\nIf only = wish (nhấn mạnh hơn)","","I wish I were taller.\nI wish I had studied.\nIf only it would stop raining!"]
+]),
+c("pas","Câu bị động (Passive Voice)","🔁",[
+["Công thức tổng quát","S + be + V3/ed (+ by O)","Dùng khi người làm không quan trọng/không rõ, hoặc nhấn mạnh đối tượng chịu tác động.","The window was broken."],
+["Bị động theo các thì","Hiện tại đơn: am/is/are + V3\nHiện tại tiếp diễn: am/is/are being + V3\nHiện tại hoàn thành: have/has been + V3\nQuá khứ đơn: was/were + V3\nQuá khứ tiếp diễn: was/were being + V3\nQuá khứ hoàn thành: had been + V3\nTương lai đơn: will be + V3\nTương lai hoàn thành: will have been + V3\nBe going to: is going to be + V3","","English is spoken worldwide.\nThe road is being repaired.\nThe report will be finished tomorrow."],
+["Bị động với động từ khuyết thiếu","can/could/may/might/must/should + be + V3\nHiện tại hoàn thành: modal + have been + V3","","This must be done today.\nIt should have been cancelled."],
+["Bị động với 2 tân ngữ","give, send, show, offer, tell, lend... → O1 hoặc O2 làm chủ ngữ","","She was given a gift. / A gift was given to her."],
+["Bị động với have/get (Causative)","have + O + V3: nhờ ai làm gì\nget + O + V3\nhave + O + V: nhờ ai (chủ động)\nget + O + to V","","I had my car repaired.\nI got my hair cut.\nShe had him fix the sink."],
+["Bị động tường thuật (Reporting passive)","It is said/believed/thought/reported that + clause\nS + is said/believed/thought + to V / to have V3","Dùng trong văn bản trang trọng, tin tức.","He is said to be rich.\nThey are believed to have left."],
+["Bị động với V-ing & need","need + V-ing = need + to be V3\nbeing + V3 (đang bị)\nI hate being laughed at.","","The room needs cleaning."]
+]),
+c("rep","Câu gián tiếp (Reported Speech)","💬",[
+["Lùi thì (Backshift)","hiện tại đơn → quá khứ đơn\nhiện tại tiếp diễn → quá khứ tiếp diễn\nhiện tại hoàn thành → quá khứ hoàn thành\nquá khứ đơn → quá khứ hoàn thành\nwill → would; can → could; may → might; must → had to/must","Không lùi thì khi động từ tường thuật ở hiện tại hoặc sự thật hiển nhiên.","\"I am tired.\" → She said she was tired."],
+["Đổi trạng từ & đại từ","now → then; today → that day; tomorrow → the next day; yesterday → the day before; ago → before; next week → the following week; here → there; this → that; these → those","Đại từ đổi theo ngữ cảnh người nói.","\"I'll come tomorrow,\" he said. → He said he would come the next day."],
+["Gián tiếp câu hỏi Yes/No","S + asked/wondered + if/whether + S + V (lùi thì, không đảo ngữ)","","\"Do you like tea?\" → She asked if I liked tea."],
+["Gián tiếp câu hỏi Wh-","S + asked + wh-word + S + V (lùi thì)","","\"Where do you live?\" → He asked where I lived."],
+["Gián tiếp câu mệnh lệnh / yêu cầu","tell/ask/order/advise/warn + O + (not) to V","","\"Close the door.\" → She told me to close the door."],
+["Động từ tường thuật theo cấu trúc","admit/deny/suggest/apologize for/accuse of/insist on + V-ing\nagree/promise/offer/refuse/threaten + to V\nadvise/warn/remind/invite/encourage + O + to V\nsay/tell/explain/announce/complain + that","","He admitted breaking the vase.\nShe promised to call."]
+]),
+c("mod","Động từ khuyết thiếu (Modal Verbs)","🎛️",[
+["can / could","can: khả năng, xin phép, khả năng xảy ra\ncould: khả năng quá khứ, xin phép lịch sự, giả định\nbe able to: thay thế ở mọi thì","can't + V: chắc chắn không (suy luận)","I can swim.\nCould you help me?"],
+["may / might","may: xin phép trang trọng, có thể (50%)\nmight: có thể (thấp hơn), quá khứ gián tiếp","may/might + have V3: có lẽ đã","It might rain.\nShe may have left."],
+["must / have to / mustn't / don't have to","must: bắt buộc chủ quan, suy luận chắc chắn\nhave to: bắt buộc khách quan\nmustn't: cấm\ndon't have to / needn't: không cần thiết","must have V3: chắc hẳn đã","You must be tired.\nI have to wear a uniform.\nYou mustn't smoke here."],
+["should / ought to / had better","should/ought to: lời khuyên, bổn phận\nhad better + V: nên (cảnh báo hậu quả)\nshould have V3: lẽ ra đã nên (nhưng không)","","You should see a doctor.\nYou had better hurry.\nI should have called you."],
+["will / would / shall","will: dự đoán, hứa, quyết định\nwould: thói quen quá khứ, đề nghị lịch sự, giả định\nshall: đề nghị (I/we), pháp lý","Would you like ...? / Would you mind + V-ing? / Shall we ...?","Every summer we would go to the sea.\nShall I open the window?"],
+["need / dare","need: needn't + V (không cần); need to V (cần); need + V-ing (bị động)\ndare: dare to V; I daren't + V","","You needn't come.\nHow dare you!"],
+["Modal perfect (suy đoán quá khứ)","must have V3: chắc chắn đã\ncan't/couldn't have V3: chắc chắn không\nmay/might/could have V3: có lẽ đã\nshould have V3: lẽ ra nên\nneedn't have V3: không cần mà đã làm","","He must have missed the bus."],
+["Cấu trúc tương đương modal","be able to, be allowed to, be supposed to, be going to, be bound to, be likely to, be due to, be about to","","He is bound to win.\nI'm about to leave."]
+]),
+c("rel","Mệnh đề quan hệ","🔗",[
+["Đại từ quan hệ cơ bản","who: người (chủ ngữ/tân ngữ)\nwhom: người (tân ngữ)\nwhich: vật\nthat: người/vật (mệnh đề xác định)\nwhose: sở hữu\nwhere: nơi chốn\nwhen: thời gian\nwhy: lý do","","The man who lives next door is a doctor.\nThe house where I was born is old."],
+["Xác định & không xác định","Xác định (defining): cần thiết, không dấu phẩy, dùng được that\nKhông xác định (non-defining): thông tin thêm, có dấu phẩy, không dùng that","","My brother, who lives in Hanoi, is a pilot."],
+["Lược bỏ đại từ quan hệ","Có thể bỏ who/which/that khi làm tân ngữ trong mệnh đề xác định.","","The book (that) I read was great."],
+["Giới từ + quan hệ","preposition + whom/which (trang trọng)\nHoặc giới từ đặt cuối mệnh đề (thông dụng)","","The man to whom I spoke... / The man (who) I spoke to..."],
+["Which thay cho cả mệnh đề","..., which + V: chỉ cả câu trước","","He passed the exam, which surprised everyone."],
+["Rút gọn mệnh đề quan hệ","V-ing: chủ động\nV3: bị động\nto V: sau first, last, only, so sánh nhất\nBỏ who/which + be","","The girl standing there is my sister.\nThe book written by him is famous."],
+["Cụm với số lượng","some/many/most/all/none/both/neither/each of + whom/which","","He has three sons, two of whom are doctors."]
+]),
+c("comp","So sánh","⚖️",[
+["So sánh bằng","as + adj/adv + as\nnot as/so + adj + as\nthe same + N + as\nas many/much + N + as","","She is as tall as her brother."],
+["So sánh hơn","Ngắn: adj-er + than\nDài: more + adj + than\nless + adj + than\nNhấn mạnh: much/far/a lot/slightly/a bit + so sánh hơn","","This test is easier than the last one."],
+["So sánh nhất","the + adj-est / the most + adj (+ in/of ...)","Dùng the. Với trạng từ dài: most carefully.","He is the tallest student in the class."],
+["So sánh kép","the + so sánh hơn + S + V, the + so sánh hơn + S + V\nSo sánh hơn + and + so sánh hơn","","The more you practise, the better you become.\nIt's getting colder and colder."],
+["Bội số, so sánh số lượng","twice/three times + as + adj + as\nhalf as ... as\nthe more/fewer/less + N","","This room is twice as big as that one."],
+["So sánh đặc biệt","as ... as possible; by far the best; one of the most + adj + N(số nhiều); no sooner ... than","","It's one of the most interesting books I've read."]
+]),
+c("art","Mạo từ & lượng từ","📦",[
+["a / an / the / ∅","a/an: lần đầu nhắc đến, danh từ đếm được số ít (an trước nguyên âm: an hour, an umbrella)\nthe: xác định, duy nhất, nhắc lại, so sánh nhất, nhạc cụ, quốc gia số nhiều\n∅: danh từ số nhiều/không đếm được nói chung, bữa ăn, môn học, ngôn ngữ","the sun, the moon, the internet; play the piano; the USA, the Philippines","I saw a dog. The dog was big."],
+["Danh từ đếm được & không đếm được","Đếm được: a/an, many, few, a few, number of\nKhông đếm được: much, little, a little, amount of\nCả hai: some, any, a lot of, lots of, plenty of, enough, no","Không đếm được hay gặp: water, money, information, advice, news, furniture, luggage, weather, homework, traffic, equipment.","a piece of advice; two pieces of information"],
+["few / a few / little / a little","few / little: gần như không có (tiêu cực)\na few / a little: có một ít (tích cực)","","I have few friends. (rất ít, buồn)\nI have a few friends. (đủ dùng)"],
+["some / any / no / every","some: câu khẳng định, lời mời/yêu cầu\nany: phủ định, nghi vấn, if\nno = not any\nevery/each/all/both/either/neither","","Would you like some tea?\nI don't have any money."],
+["Đại từ bất định","someone/anyone/no one/everyone; something/anything/nothing/everything; somewhere/anywhere/nowhere/everywhere","Dùng số ít. Tính từ đứng sau.","Is there anything interesting?"],
+["Sở hữu cách","'s: người, động vật; of: vật\ns' cho số nhiều có s\nmy/your/his/her/its/our/their (tính từ sở hữu)\nmine/yours/his/hers/ours/theirs (đại từ sở hữu)","","This is my book. It's mine.\nthe leg of the table"],
+["Lượng từ chỉ thành phần","all of/most of/some of/none of/both of/each of + the/these/my + N","","Most of my friends live here."]
+]),
+c("prep","Giới từ","📍",[
+["Giới từ thời gian","at + giờ, thời điểm: at 7, at night, at noon, at the weekend (Anh-Anh)\non + ngày: on Monday, on May 5th, on my birthday\nin + tháng, năm, mùa, buổi: in July, in 2025, in summer, in the morning\nfor + khoảng thời gian; since + mốc; during + sự kiện; by + hạn chót; until/till + đến khi; from ... to ...","","See you at 5 pm on Friday."],
+["Giới từ nơi chốn","at: điểm cụ thể (at the bus stop)\nin: bên trong, khu vực (in the box, in Hanoi)\non: trên bề mặt (on the table)\nunder/below, above/over, between (2), among (3+), behind, in front of, next to, opposite, near","","The book is on the table under the lamp."],
+["Giới từ chuyển động","to, into, out of, onto, off, across, through, along, around, past, towards, up, down, over","","He walked across the bridge."],
+["Tính từ + giới từ","good at, bad at, interested in, afraid of, proud of, tired of, fond of, keen on, famous for, responsible for, capable of, different from, similar to, angry with/at, worried about, married to, satisfied with, aware of, accustomed to, sure of","","She is good at math."],
+["Động từ + giới từ","depend on, rely on, listen to, look at, wait for, belong to, agree with, apply for, arrive at/in, believe in, consist of, suffer from, deal with, result in, participate in, complain about, apologize for, insist on, succeed in, search for, worry about, dream of","","This depends on the weather."]
+]),
+c("que","Câu hỏi","❓",[
+["Yes/No question","Be/Do/Does/Did/Have/Modal + S + V?","","Do you speak English? Is she here?"],
+["Wh-question","What, Who, Whom, Whose, Which, Where, When, Why, How (much/many/long/often/far/old)\nWh + trợ động từ + S + V?","Who/What làm chủ ngữ → không đảo: Who called you?","Where did you go? How long have you lived here?"],
+["Câu hỏi đuôi (Tag question)","Khẳng định → phủ định; Phủ định → khẳng định\nI am → aren't I?; Let's → shall we?; Imperative → will you?; There is → isn't there?","Lên giọng = hỏi thật; xuống giọng = xác nhận.","She is a teacher, isn't she?\nYou don't smoke, do you?"],
+["Câu hỏi gián tiếp","Do you know / Could you tell me / I wonder + wh-word + S + V (không đảo)","Lịch sự hơn.","Could you tell me where the station is?"],
+["Câu hỏi phủ định & lựa chọn","Don't you like it? / Why don't we ...? / Which do you prefer, tea or coffee?","","Isn't it beautiful?"]
+]),
+c("conj","Liên từ & mệnh đề","🧵",[
+["Nhượng bộ: although / though / even though / despite / in spite of","Although/Though/Even though + S + V\nDespite/In spite of + N/V-ing\nDespite the fact that + S + V\nHowever / Nevertheless, + câu mới","","Although it rained, we went out.\nDespite the rain, we went out."],
+["Nguyên nhân: because / because of / since / as / due to / owing to","because/since/as + S + V\nbecause of / due to / owing to / thanks to + N/V-ing","","He was late because of the traffic."],
+["Kết quả: so / such ... that","so + adj/adv + that + clause\nsuch + (a/an) + adj + N + that + clause\nso many/much/few/little + N + that","","It was such a good film that I watched it twice."],
+["Mục đích: to / in order to / so as to / so that","to V / in order to V / so as to V\nso that + S + can/could/will/would + V","","I study hard so that I can pass the exam."],
+["too ... to / enough ... to","too + adj + (for O) + to V\nadj + enough + to V\nenough + N + to V","","She is too tired to walk."],
+["Liên từ kết hợp (FANBOYS)","for, and, nor, but, or, yet, so (nối hai mệnh đề độc lập, có dấu phẩy)","","I was tired, but I kept working."],
+["Từ nối trang trọng","however, nevertheless, therefore, thus, consequently, moreover, furthermore, in addition, besides, on the other hand, in contrast, meanwhile, otherwise, as a result, for example, in conclusion","Dùng cho Writing và Speaking IELTS.","The plan was risky; however, it succeeded."],
+["Song song: both ... and / not only ... but also / either ... or / neither ... nor","Hai vế phải cùng loại từ.\nNot only + trợ động từ + S + V, but ... also ... (đảo ngữ)","","She is both smart and kind."],
+["Thời gian: when / while / as / before / after / until / since / as soon as / by the time","while + hành động kéo dài; when + hành động ngắn\nas soon as = ngay khi\nby the time + S + V (hiện tại), S + will have V3","","I'll call you as soon as I get home."]
+]),
+c("spec","Cấu trúc câu đặc biệt","⭐",[
+["used to / be used to / get used to","used to + V: từng (quá khứ, không còn)\nbe/get used to + V-ing/N: quen với","","I used to smoke.\nI'm used to waking up early."],
+["would rather / prefer","would rather + V (+ than + V)\nwould rather + S + V2 (hiện tại/tương lai)\nprefer + V-ing to V-ing\nprefer + to V rather than V","","I'd rather stay home.\nI prefer tea to coffee."],
+["It's (high/about) time","It's time + S + V2\nIt's time + (for O) + to V","","It's time we left."],
+["as if / as though","as if + S + V2 (không có thật hiện tại)\nas if + S + had V3 (không có thật quá khứ)\nas if + S + V (có thể thật)","","He talks as if he knew everything."],
+["Đảo ngữ (Inversion)","Never/Rarely/Seldom/Hardly ever + trợ động từ + S + V\nNo sooner + had + S + V3 + than ...\nHardly/Scarcely + had + S + V3 + when ...\nNot only ... but also\nOnly when/after/if + trợ động từ + S + V\nNot until + ... + trợ động từ + S + V\nUnder no circumstances / On no account + đảo\nSo + adj + be + S + that ...","Đảo ngữ để nhấn mạnh, dùng trong văn viết/trang trọng.","Never have I seen such a view.\nNo sooner had he left than it rained."],
+["Câu chẻ (Cleft sentence)","It is/was + từ nhấn mạnh + that/who + ...\nWhat + S + V + is/was + ...","","It was John who broke the window.\nWhat I need is a rest."],
+["Câu nhờ vả & sai khiến (Causative)","have/get + O + V3; have + O + V; make + O + V; let + O + V; get + O + to V; help + O + (to) V","","The teacher made us rewrite the essay."],
+["suggest / recommend / insist / demand (Subjunctive)","S + suggest/recommend/insist/demand/require + (that) + S + (should) + V\nIt's essential/vital/important/necessary that + S + (should) + V","Động từ nguyên mẫu không to, không chia.","I suggest that he see a doctor."],
+["spend / take / cost / worth","spend + time/money + V-ing\nIt takes + O + time + to V\nS + cost(s) + O + money\nbe worth + V-ing","","It takes me 30 minutes to get to work.\nThe film is worth watching."],
+["So do I / Neither do I","So + trợ động từ + S: tôi cũng vậy (khẳng định)\nNeither/Nor + trợ động từ + S: tôi cũng không","","She likes tea. So do I.\nI don't like it. Neither do I."],
+["There is / There are","There + be + N (chia theo N gần nhất)\nThere + have been / will be / used to be / must be","","There are three books on the table."],
+["Nhấn mạnh với do/does/did","do/does/did + V (khẳng định nhấn mạnh)","","I did tell you!"],
+["Cách nói về sở thích & thói quen","like/love/enjoy/hate + V-ing; be fond of; be into; can't stand; keep + V-ing; tend to V; be keen on","","I can't stand waiting."],
+["Cấu trúc nhờ vả lịch sự","Could/Would you (please) ...? / Would you mind + V-ing? / Do you mind if I + V? / I was wondering if you could ...","","Would you mind opening the window?"],
+["Cấu trúc đề nghị / gợi ý","Let's + V; Shall we + V?; How/What about + V-ing?; Why don't we + V?; suggest + V-ing / that S (should) V","","How about going out for lunch?"],
+["Cấu trúc cảm thán","What + (a/an) + adj + N!\nHow + adj/adv + S + V!","","What a beautiful day! How fast he runs!"]
+]),
+c("part","Mệnh đề phân từ","🧪",[
+["Phân từ hiện tại (V-ing) – chủ động","V-ing ..., S + V: rút gọn mệnh đề cùng chủ ngữ (nguyên nhân, đồng thời)","","Feeling tired, she went to bed.\nWalking home, I met an old friend."],
+["Phân từ quá khứ (V3) – bị động","V3 ..., S + V: rút gọn mệnh đề bị động","","Written in 1990, the book is still popular."],
+["Having + V3 – hành động trước","Having V3 ..., S + V: hành động hoàn tất trước","","Having finished homework, he played games."]
+]),
+c("adj","Tính từ, trạng từ, danh từ & đại từ","🎨",[
+["Trật tự tính từ (OSASCOMP)","Opinion → Size → Age → Shape → Colour → Origin → Material → Purpose + Noun","","a beautiful small old round brown Italian wooden dining table"],
+["Tính từ -ed / -ing","-ed: cảm xúc của người (I'm bored)\n-ing: đặc điểm của sự vật (It's boring)","","The lesson was interesting, so I was interested."],
+["Trạng từ & vị trí","Cách thức: adj + ly (quickly)\nTần suất: trước động từ thường, sau to be (always, usually, often)\nBất quy tắc: good → well; fast → fast; hard → hard; late → late (lately = gần đây)\nBổ nghĩa: very, quite, rather, extremely, fairly, too, so, absolutely","","She always arrives early.\nHe plays well."],
+["Danh từ ghép & tính từ ghép","N + N: a bus stop\nSố + N (số ít) + adj: a five-year-old child; a ten-minute walk","","a three-hour flight"],
+["Đại từ nhân xưng & phản thân","I/me/myself; you/you/yourself; he/him/himself; she/her/herself; it/it/itself; we/us/ourselves; they/them/themselves","Reflexive: chủ ngữ = tân ngữ; by oneself = một mình.","She taught herself English."],
+["Chỉ định & nghi vấn","this/these (gần); that/those (xa); one/ones; each other / one another (lẫn nhau)","","They love each other."],
+["Từ hạn định & số","numbers: one, first; a hundred; hundreds of; dozens of; a couple of; several; a great deal of; a large number of","","hundreds of students"],
+["Danh từ trừu tượng & phái sinh","-tion/-sion, -ment, -ness, -ity, -ship, -hood, -ance/-ence, -ism, -er/-or, -ist","","happy → happiness; develop → development"]
+]),
+c("conf","Từ dễ nhầm lẫn","⚠️",[
+["say / tell / speak / talk","say + something (say hello)\ntell + someone + something\nspeak: ngôn ngữ, phát biểu\ntalk: trò chuyện","","She said that ... / He told me that ... / Speak English!"],
+["make / do","make: tạo ra (a decision, mistake, effort, money, plan, noise, progress)\ndo: làm (homework, housework, business, a favour, one's best, research, exercise)","","make a decision; do homework"],
+["lend / borrow","lend: cho mượn; borrow: mượn","","Can you lend me a pen? / May I borrow your pen?"],
+["bring / take","bring: mang đến nơi người nói; take: mang đi","","Bring it here. Take it there."],
+["look / see / watch","look at: chủ động nhìn; see: nhìn thấy (vô thức); watch: xem (diễn biến)","","I watched a film."],
+["hear / listen","hear: nghe thấy; listen to: lắng nghe","",""],
+["affect / effect","affect (v): ảnh hưởng; effect (n): tác động","","Smoking affects health. It has bad effects."],
+["economic / economical","economic: thuộc kinh tế; economical: tiết kiệm","",""],
+["advice / advise; practice / practise","advice (n); advise (v); practice (n, Anh-Mỹ cả hai); practise (v, Anh-Anh)","",""],
+["since / for / ago","since + mốc; for + khoảng; ago + quá khứ đơn","","I've lived here since 2020 / for 6 years."],
+["lie / lay","lie – lay – lain (nằm); lay – laid – laid (đặt)","",""],
+["rise / raise","rise (nội động); raise (ngoại động)","",""],
+["accept / except","accept (v): chấp nhận; except (prep): ngoại trừ","",""],
+["fun / funny; sensible / sensitive; historic / historical","fun: vui; funny: hài hước; sensible: hợp lý; sensitive: nhạy cảm; historic: có tính lịch sử; historical: thuộc lịch sử","",""]
+]),
+c("wf","Cấu tạo từ (Word Formation)","🧬",[
+["Tiền tố (Prefixes)","un-, in-, im-, il-, ir-, dis-, mis-: phủ định (unhappy, impossible, illegal, irregular, disagree, misunderstand)\nre-: lại; pre-: trước; over-: quá; under-: thiếu; inter-: giữa; sub-: dưới; anti-: chống; co-: cùng; mid-: giữa","",""],
+["Hậu tố (Suffixes)","Danh từ: -tion, -ment, -ness, -ity, -ance, -er, -ist\nTính từ: -ful, -less, -able, -ible, -ive, -al, -ous, -ic, -y\nĐộng từ: -ize, -ify, -en, -ate\nTrạng từ: -ly, -ward, -wise","",""],
+["Họ từ (Word Family)","success (n) – succeed (v) – successful (adj) – successfully (adv)\ndecide – decision – decisive – decisively\ncreate – creation – creative – creatively","Học từ theo họ từ giúp mở rộng vốn từ gấp 4 lần.",""]
+]),
+tb("irr","Bảng động từ bất quy tắc","📒",["V1","V2","V3","Nghĩa"],`be|was/were|been|thì, là
+become|became|become|trở thành
+begin|began|begun|bắt đầu
+break|broke|broken|làm vỡ
+bring|brought|brought|mang
+build|built|built|xây
+buy|bought|bought|mua
+catch|caught|caught|bắt
+choose|chose|chosen|chọn
+come|came|come|đến
+cost|cost|cost|có giá
+cut|cut|cut|cắt
+do|did|done|làm
+draw|drew|drawn|vẽ
+drink|drank|drunk|uống
+drive|drove|driven|lái
+eat|ate|eaten|ăn
+fall|fell|fallen|ngã
+feel|felt|felt|cảm thấy
+fight|fought|fought|đánh nhau
+find|found|found|tìm thấy
+fly|flew|flown|bay
+forget|forgot|forgotten|quên
+forgive|forgave|forgiven|tha thứ
+get|got|got/gotten|nhận, trở nên
+give|gave|given|đưa
+go|went|gone|đi
+grow|grew|grown|mọc, trồng
+hang|hung|hung|treo
+have|had|had|có
+hear|heard|heard|nghe
+hide|hid|hidden|giấu
+hit|hit|hit|đánh
+hold|held|held|cầm
+hurt|hurt|hurt|đau
+keep|kept|kept|giữ
+know|knew|known|biết
+lead|led|led|dẫn
+learn|learnt/learned|learnt/learned|học
+leave|left|left|rời đi
+lend|lent|lent|cho mượn
+let|let|let|để cho
+lie|lay|lain|nằm
+lose|lost|lost|mất
+make|made|made|làm, tạo
+mean|meant|meant|nghĩa là
+meet|met|met|gặp
+pay|paid|paid|trả tiền
+put|put|put|đặt
+read|read|read|đọc
+ride|rode|ridden|cưỡi
+ring|rang|rung|reo
+rise|rose|risen|mọc, tăng
+run|ran|run|chạy
+say|said|said|nói
+see|saw|seen|thấy
+sell|sold|sold|bán
+send|sent|sent|gửi
+set|set|set|đặt, thiết lập
+shake|shook|shaken|lắc
+shine|shone|shone|chiếu sáng
+shoot|shot|shot|bắn
+show|showed|shown|cho xem
+shut|shut|shut|đóng
+sing|sang|sung|hát
+sink|sank|sunk|chìm
+sit|sat|sat|ngồi
+sleep|slept|slept|ngủ
+speak|spoke|spoken|nói
+spend|spent|spent|tiêu, dành
+spread|spread|spread|lan
+stand|stood|stood|đứng
+steal|stole|stolen|ăn cắp
+swim|swam|swum|bơi
+take|took|taken|lấy
+teach|taught|taught|dạy
+tear|tore|torn|xé
+tell|told|told|kể, bảo
+think|thought|thought|nghĩ
+throw|threw|thrown|ném
+understand|understood|understood|hiểu
+wake|woke|woken|thức
+wear|wore|worn|mặc
+win|won|won|thắng
+write|wrote|written|viết
+bet|bet|bet|cá cược
+bite|bit|bitten|cắn
+blow|blew|blown|thổi
+burn|burnt/burned|burnt/burned|đốt
+dig|dug|dug|đào
+feed|fed|fed|cho ăn
+lay|laid|laid|đặt, đẻ
+light|lit|lit|thắp
+overcome|overcame|overcome|vượt qua
+prove|proved|proven|chứng minh
+seek|sought|sought|tìm kiếm
+sweep|swept|swept|quét
+swing|swung|swung|đu đưa
+withdraw|withdrew|withdrawn|rút`),
+tb("phr","Cụm động từ (Phrasal Verbs) thông dụng","🚀",["Cụm","Nghĩa","Ví dụ"],`look up|tra cứu|Look up the word in a dictionary.
+look after|chăm sóc|She looks after her mother.
+look for|tìm kiếm|I'm looking for my keys.
+look forward to|mong đợi|I look forward to meeting you.
+look into|điều tra|They are looking into the problem.
+look out|cẩn thận|Look out! A car is coming.
+give up|từ bỏ|Never give up.
+give in|nhượng bộ|He finally gave in.
+take off|cất cánh / cởi|The plane took off.
+take after|giống (người thân)|She takes after her mother.
+take up|bắt đầu (sở thích)|I took up yoga.
+take on|đảm nhận|She took on more work.
+turn on|bật|Turn on the light.
+turn off|tắt|Turn off the TV.
+turn down|từ chối / vặn nhỏ|He turned down the offer.
+turn up|xuất hiện / vặn to|He turned up late.
+put off|trì hoãn|Don't put off your homework.
+put on|mặc / bật|Put on your coat.
+put up with|chịu đựng|I can't put up with the noise.
+get up|thức dậy|I get up at 6.
+get on|lên xe / hòa thuận|We get on well.
+get over|vượt qua|She got over the flu.
+get along with|hòa hợp với|I get along with my boss.
+get by|xoay xở|We can get by on this salary.
+go on|tiếp tục|Go on with your work.
+go out|ra ngoài|Let's go out tonight.
+go through|trải qua|He went through a hard time.
+come across|tình cờ gặp|I came across an old photo.
+come up with|nghĩ ra|She came up with a great idea.
+come back|quay lại|Come back soon.
+break down|hỏng / suy sụp|My car broke down.
+break up|chia tay / tan vỡ|They broke up last year.
+bring up|nuôi dưỡng / đề cập|She was brought up in Hue.
+carry out|thực hiện|They carried out the plan.
+call off|hủy bỏ|The match was called off.
+check in|làm thủ tục|Check in at the hotel.
+check out|trả phòng / xem thử|Check out this video!
+fill in|điền vào|Fill in the form.
+find out|phát hiện|I found out the truth.
+figure out|hiểu ra|I can't figure it out.
+hold on|chờ|Hold on a second.
+keep up with|theo kịp|Keep up with the class.
+let down|làm thất vọng|Don't let me down.
+make up|bịa ra / làm lành|They made up quickly.
+pick up|đón / nhặt / học được|I'll pick you up at 6.
+point out|chỉ ra|She pointed out the mistake.
+run out of|hết (thứ gì)|We ran out of milk.
+set up|thành lập / thiết lập|He set up a company.
+show up|xuất hiện|He didn't show up.
+sort out|giải quyết / sắp xếp|Let's sort out the problem.
+stand for|viết tắt / đại diện|UN stands for United Nations.
+start over|bắt đầu lại|I want to start over.
+work out|tập thể dục / giải quyết|I work out every day.
+wake up|thức dậy|I woke up late.
+back up|sao lưu / ủng hộ|Back up your files.
+cut down on|giảm bớt|Cut down on sugar.
+drop out|bỏ học|He dropped out of school.
+end up|rốt cuộc|We ended up at home.
+fall apart|tan rã|The plan fell apart.
+log in|đăng nhập|Log in to your account.
+sign up|đăng ký|Sign up for the newsletter.
+throw away|vứt đi|Don't throw it away.
+used up|dùng hết|All the money is used up.`),
+tb("col","Cụm từ cố định (Collocations)","🪢",["Động từ","Cụm thường gặp"],`make|a decision, a mistake, an effort, progress, money, a plan, a suggestion, a phone call, friends, a living, sense, a difference
+do|homework, housework, business, research, exercise, a favour, your best, harm, good, the dishes, damage
+take|a break, a photo, a chance, a look, a shower, a risk, care of, part in, place, advantage of, notes, responsibility
+have|a meeting, a party, lunch, a look, a rest, fun, a chat, a baby, an idea, trouble, a go, a look
+give|advice, a speech, an example, a hand, permission, a presentation, a lift, priority to
+pay|attention, a bill, a visit, a compliment, respect, the price, a fine
+keep|a promise, a secret, in touch, calm, quiet, an eye on, track of
+catch|a cold, a bus, a ball, someone's eye, fire, sight of
+break|a rule, a record, the law, a promise, news, a habit, the ice
+save|time, money, energy, a life, a file, face
+set|a goal, an example, the table, an alarm, a record, the tone, a deadline
+run|a business, a risk, a test, an errand, out of time
+spend|time, money, a holiday, the night, effort`)
+];
+</script>
+<script>
+const VOCAB=[
+["👋","Chào hỏi & giao tiếp",`hello|xin chào|a1|5|3
+goodbye|tạm biệt|a1|5|2
+thanks|cảm ơn|a1|5|3
+please|làm ơn / xin vui lòng|a1|5|3
+sorry|xin lỗi|a1|5|3
+excuse me|xin phép / xin lỗi|a1|4|3
+nice to meet you|rất vui được gặp bạn|a1|4|2
+introduce|giới thiệu|a2|4|4
+conversation|cuộc trò chuyện|a2|4|5
+reply|trả lời|a2|4|4
+agree|đồng ý|a2|5|5
+disagree|không đồng ý|b1|4|5
+suggest|đề xuất|b1|4|5
+apologize|xin lỗi (trang trọng)|b1|3|4
+mention|đề cập|b1|4|5
+express|bày tỏ|b1|4|5
+interrupt|ngắt lời|b2|3|4
+persuade|thuyết phục|b2|3|5
+negotiate|đàm phán|b2|3|5
+articulate|diễn đạt rõ ràng|c1|2|4`],
+["👨‍👩‍👧","Gia đình",`mother|mẹ|a1|5|3
+father|bố|a1|5|3
+parents|bố mẹ|a1|5|4
+brother|anh/em trai|a1|5|3
+sister|chị/em gái|a1|5|3
+grandparents|ông bà|a1|4|3
+uncle|chú/bác/cậu|a1|4|2
+aunt|cô/dì|a1|4|2
+cousin|anh chị em họ|a2|4|3
+husband|chồng|a1|4|3
+wife|vợ|a1|4|3
+relative|họ hàng|a2|4|4
+sibling|anh chị em ruột|b1|3|5
+teenager|thanh thiếu niên|a2|4|5
+generation|thế hệ|b1|4|5
+marriage|hôn nhân|b1|4|5
+divorce|ly hôn|b1|3|4
+raise a child|nuôi dạy con|b1|4|5
+upbringing|sự nuôi dưỡng|b2|3|5
+ancestor|tổ tiên|b2|3|4
+in-law|họ hàng bên vợ/chồng|b2|2|3
+household|hộ gia đình|b2|3|5`],
+["🧍","Bản thân & ngoại hình",`tall|cao|a1|5|3
+short|thấp / ngắn|a1|5|3
+slim|mảnh mai|a2|4|3
+overweight|thừa cân|b1|3|4
+handsome|đẹp trai|a2|4|3
+beautiful|đẹp|a1|5|3
+attractive|hấp dẫn|b1|4|4
+appearance|ngoại hình|b1|4|5
+wrinkle|nếp nhăn|b2|2|3
+hairstyle|kiểu tóc|a2|3|3
+curly|xoăn|a2|3|2
+bald|hói|b1|2|2
+beard|râu|a2|3|2
+fit|cân đối / khỏe mạnh|a2|4|4
+muscular|cơ bắp|b1|2|3
+pale|nhợt nhạt|b1|3|3
+elderly|lớn tuổi|b1|4|5
+youthful|trẻ trung|b2|2|3
+resemble|giống|b2|3|5
+stylish|sành điệu|b1|3|3
+well-built|vạm vỡ|b2|2|3`],
+["😊","Cảm xúc",`happy|vui|a1|5|3
+sad|buồn|a1|5|3
+angry|giận dữ|a1|5|3
+afraid|sợ hãi|a2|5|3
+surprised|ngạc nhiên|a2|5|4
+excited|hào hứng|a2|5|4
+bored|chán|a2|5|4
+tired|mệt|a1|5|3
+worried|lo lắng|a2|5|4
+nervous|căng thẳng|a2|4|4
+lonely|cô đơn|a2|4|4
+proud|tự hào|a2|4|4
+jealous|ghen tị|b1|4|3
+embarrassed|ngượng|b1|4|4
+disappointed|thất vọng|b1|5|5
+anxious|lo âu|b2|4|5
+grateful|biết ơn|b2|4|5
+frustrated|bực bội|b2|4|5
+overwhelmed|choáng ngợp|b2|4|4
+thrilled|cực kỳ phấn khích|b2|3|4
+furious|giận dữ tột độ|b2|3|4
+content|hài lòng|b2|3|4
+mood|tâm trạng|a2|4|4`],
+["🧠","Tính cách",`kind|tốt bụng|a1|5|3
+friendly|thân thiện|a1|5|4
+shy|nhút nhát|a2|4|3
+polite|lịch sự|a2|5|4
+honest|trung thực|a2|5|5
+lazy|lười|a2|5|3
+hard-working|chăm chỉ|a2|5|5
+generous|hào phóng|b1|4|5
+patient|kiên nhẫn|b1|5|5
+creative|sáng tạo|b1|5|5
+ambitious|tham vọng|b1|4|5
+reliable|đáng tin cậy|b1|4|5
+stubborn|bướng bỉnh|b1|3|4
+curious|tò mò|b1|4|4
+confident|tự tin|b1|5|5
+selfish|ích kỷ|b1|4|4
+humble|khiêm tốn|b2|3|4
+optimistic|lạc quan|b2|4|5
+pessimistic|bi quan|b2|3|4
+arrogant|kiêu ngạo|b2|3|4
+mature|chín chắn|b2|4|5
+sociable|hòa đồng|b2|3|4
+trustworthy|đáng tin|b2|3|4`],
+["🏠","Nhà cửa",`house|ngôi nhà|a1|5|3
+apartment|căn hộ|a2|5|5
+bedroom|phòng ngủ|a1|5|3
+kitchen|nhà bếp|a1|5|3
+bathroom|phòng tắm|a1|5|3
+living room|phòng khách|a1|5|3
+furniture|đồ nội thất|a2|4|5
+sofa|ghế sofa|a1|4|2
+window|cửa sổ|a1|5|3
+roof|mái nhà|a2|3|3
+floor|sàn / tầng|a1|5|4
+rent|thuê / tiền thuê|a2|5|5
+landlord|chủ nhà|b1|3|4
+neighborhood|khu phố|b1|4|5
+decorate|trang trí|a2|4|4
+garden|vườn|a1|4|3
+balcony|ban công|a2|3|3
+mortgage|khoản thế chấp|b2|3|4
+utilities|tiện ích (điện nước)|b2|3|4
+tenant|người thuê nhà|b2|3|4
+spacious|rộng rãi|b2|3|5
+cozy|ấm cúng|b1|3|4`],
+["🍜","Đồ ăn thức uống",`rice|cơm / gạo|a1|5|2
+bread|bánh mì|a1|5|3
+meat|thịt|a1|5|3
+fish|cá|a1|5|3
+vegetable|rau củ|a1|5|4
+fruit|trái cây|a1|5|3
+egg|trứng|a1|5|3
+milk|sữa|a1|5|3
+coffee|cà phê|a1|5|3
+noodle|mì / bún|a2|4|2
+soup|súp / canh|a1|4|3
+sugar|đường|a1|4|3
+salt|muối|a1|4|3
+spicy|cay|a2|4|3
+delicious|ngon|a2|5|4
+snack|đồ ăn vặt|a2|4|4
+beverage|đồ uống|b1|3|5
+ingredient|nguyên liệu|b1|4|5
+nutrition|dinh dưỡng|b1|4|5
+vegetarian|người ăn chay|b1|3|4
+diet|chế độ ăn|b1|5|5
+appetite|sự thèm ăn|b2|3|4
+leftovers|đồ ăn thừa|b2|3|3
+cuisine|ẩm thực|b2|4|5`],
+["🍳","Nấu ăn & nhà hàng",`cook|nấu ăn|a1|5|4
+boil|luộc / đun sôi|a2|4|3
+fry|chiên / rán|a2|4|3
+bake|nướng (lò)|a2|4|3
+chop|chặt / thái|b1|3|3
+stir|khuấy|b1|3|3
+recipe|công thức nấu ăn|a2|4|4
+menu|thực đơn|a2|5|4
+order|gọi món / đặt hàng|a2|5|5
+bill|hóa đơn|a2|5|5
+waiter|phục vụ nam|a2|4|4
+reservation|đặt chỗ|b1|4|5
+tip|tiền boa / mẹo|a2|4|4
+appetizer|món khai vị|b1|3|4
+dessert|món tráng miệng|a2|4|4
+main course|món chính|b1|3|4
+serve|phục vụ|a2|5|5
+flavor|hương vị|b1|4|4
+seasoning|gia vị nêm|b2|3|3
+grill|nướng vỉ|b1|3|3
+simmer|ninh nhỏ lửa|b2|2|3
+marinate|ướp|b2|2|3
+portion|khẩu phần|b2|3|5
+takeaway|mang đi|b1|4|4`],
+["🛍️","Mua sắm",`buy|mua|a1|5|4
+sell|bán|a1|5|4
+price|giá|a1|5|5
+cheap|rẻ|a1|5|4
+expensive|đắt|a1|5|4
+discount|giảm giá|a2|5|5
+sale|khuyến mãi|a2|5|4
+receipt|biên lai|a2|4|5
+cash|tiền mặt|a2|4|4
+credit card|thẻ tín dụng|a2|4|5
+customer|khách hàng|a2|5|5
+cashier|thu ngân|a2|3|4
+refund|hoàn tiền|b1|4|5
+bargain|mặc cả / món hời|b1|3|4
+brand|thương hiệu|b1|5|5
+delivery|giao hàng|b1|5|5
+warranty|bảo hành|b2|3|5
+afford|đủ khả năng chi trả|b1|4|5
+purchase|mua hàng|b1|4|5
+retail|bán lẻ|b2|3|5
+coupon|phiếu giảm giá|b1|4|4
+exchange|đổi hàng|b1|4|4
+out of stock|hết hàng|b1|4|5
+checkout|thanh toán|b1|4|4`],
+["👕","Quần áo & thời trang",`shirt|áo sơ mi|a1|5|3
+dress|váy / đầm|a1|5|3
+trousers|quần dài|a1|4|3
+jacket|áo khoác|a1|4|3
+shoes|giày|a1|5|3
+socks|tất|a1|4|2
+hat|mũ|a1|4|2
+coat|áo choàng|a1|4|3
+uniform|đồng phục|a2|4|4
+fashion|thời trang|a2|5|5
+style|phong cách|a2|5|5
+try on|thử đồ|a2|4|4
+size|kích cỡ|a1|5|4
+fabric|vải|b1|3|4
+cotton|vải cotton|a2|3|3
+accessory|phụ kiện|b1|3|4
+trendy|hợp mốt|b1|4|4
+casual|giản dị|b1|4|5
+formal|trang trọng|b1|4|5
+outfit|bộ trang phục|b1|4|4
+wardrobe|tủ quần áo|b1|3|4
+tight|chật|a2|4|3
+loose|rộng / lỏng|a2|4|3`],
+["💪","Sức khỏe",`healthy|khỏe mạnh|a1|5|5
+exercise|tập thể dục|a2|5|5
+sleep|ngủ|a1|5|4
+fever|sốt|a2|4|4
+headache|đau đầu|a2|4|4
+cough|ho|a2|4|3
+medicine|thuốc|a2|5|5
+vitamin|vitamin|a2|4|4
+injury|chấn thương|b1|4|5
+recover|hồi phục|b1|4|5
+symptom|triệu chứng|b1|4|5
+allergy|dị ứng|b1|4|4
+infection|nhiễm trùng|b2|3|4
+immune system|hệ miễn dịch|b2|3|5
+balanced diet|chế độ ăn cân bằng|b1|4|5
+workout|buổi tập|b1|4|4
+fitness|thể lực|b1|4|5
+stress|căng thẳng|b1|5|5
+chronic|mãn tính|b2|3|5
+prevent|ngăn ngừa|b1|4|5
+wellbeing|sức khỏe tổng thể|b2|4|5
+hydrated|đủ nước|b2|3|3
+checkup|khám tổng quát|b1|3|4`],
+["🫀","Cơ thể",`head|đầu|a1|5|3
+hand|bàn tay|a1|5|3
+leg|chân|a1|5|3
+eye|mắt|a1|5|3
+ear|tai|a1|5|3
+nose|mũi|a1|5|3
+mouth|miệng|a1|5|3
+tooth|răng|a1|5|3
+heart|tim|a1|5|4
+stomach|dạ dày / bụng|a2|4|4
+back|lưng|a1|5|3
+shoulder|vai|a2|4|3
+knee|đầu gối|a2|3|3
+finger|ngón tay|a1|4|3
+skin|da|a2|4|4
+brain|não|a2|4|5
+lung|phổi|b1|3|4
+muscle|cơ bắp|b1|4|4
+bone|xương|a2|4|4
+blood|máu|a2|4|4
+throat|cổ họng|a2|3|3
+wrist|cổ tay|b1|2|3
+ankle|mắt cá chân|b1|2|3
+spine|cột sống|b2|2|3`],
+["🎓","Giáo dục",`school|trường học|a1|5|3
+student|học sinh/sinh viên|a1|5|4
+teacher|giáo viên|a1|5|3
+lesson|bài học|a1|5|4
+homework|bài tập về nhà|a1|5|3
+exam|kỳ thi|a2|5|5
+grade|điểm / lớp|a2|5|5
+degree|bằng cấp|b1|4|5
+university|đại học|a2|5|5
+scholarship|học bổng|b1|4|5
+lecture|bài giảng|b1|4|5
+assignment|bài tập lớn|b1|4|5
+deadline|hạn chót|b1|5|5
+curriculum|chương trình học|b2|3|5
+graduate|tốt nghiệp|b1|4|5
+major|chuyên ngành|b1|4|5
+tuition|học phí|b2|3|4
+plagiarism|đạo văn|c1|2|4
+thesis|luận văn|b2|3|5
+seminar|hội thảo|b2|3|4
+revise|ôn tập|b1|4|5
+enroll|đăng ký học|b2|3|5
+certificate|chứng chỉ|b1|4|5
+tutor|gia sư|b1|3|4
+attendance|sự tham dự|b2|3|5`],
+["💼","Công việc",`job|công việc|a1|5|4
+work|làm việc|a1|5|5
+salary|lương|a2|5|5
+boss|sếp|a2|4|4
+colleague|đồng nghiệp|a2|5|5
+interview|phỏng vấn|a2|5|5
+resume|sơ yếu lý lịch|b1|4|5
+apply|ứng tuyển|a2|5|5
+hire|thuê / tuyển|b1|4|5
+promote|thăng chức|b1|4|5
+career|sự nghiệp|b1|5|5
+experience|kinh nghiệm|a2|5|5
+skill|kỹ năng|a2|5|5
+employee|nhân viên|b1|5|5
+employer|nhà tuyển dụng|b1|4|5
+full-time|toàn thời gian|b1|4|5
+part-time|bán thời gian|b1|4|5
+retire|nghỉ hưu|b1|3|4
+resign|từ chức|b2|3|5
+workload|khối lượng công việc|b2|3|5
+qualification|bằng cấp / trình độ|b2|3|5
+internship|thực tập|b2|4|5
+overtime|làm thêm giờ|b2|3|5
+benefits|phúc lợi|b2|4|5
+contract|hợp đồng|b1|4|5`],
+["🏢","Văn phòng & kinh doanh",`meeting|cuộc họp|a2|5|5
+report|báo cáo|a2|5|5
+project|dự án|a2|5|5
+schedule|lịch trình|a2|5|5
+client|khách hàng|b1|5|5
+manager|quản lý|a2|5|5
+proposal|đề xuất|b1|4|5
+budget|ngân sách|b1|5|5
+profit|lợi nhuận|b1|5|5
+revenue|doanh thu|b2|4|5
+invoice|hóa đơn|b2|4|5
+strategy|chiến lược|b2|4|5
+market|thị trường|b1|5|5
+competitor|đối thủ|b2|4|5
+startup|công ty khởi nghiệp|b2|5|4
+shareholder|cổ đông|c1|2|4
+merger|sáp nhập|c1|2|4
+supply chain|chuỗi cung ứng|c1|3|4
+stakeholder|bên liên quan|c1|3|4
+agenda|chương trình nghị sự|b2|3|5
+presentation|bài thuyết trình|b1|5|5
+negotiation|cuộc đàm phán|b2|3|5
+headquarters|trụ sở chính|b2|3|5
+launch|ra mắt|b1|4|5`],
+["💰","Tài chính & ngân hàng",`money|tiền|a1|5|4
+bank|ngân hàng|a1|5|4
+account|tài khoản|a2|5|5
+deposit|gửi tiền|b1|4|5
+withdraw|rút tiền|b1|4|5
+loan|khoản vay|b1|4|5
+interest|lãi suất|b1|4|5
+saving|tiết kiệm|a2|5|5
+invest|đầu tư|b1|5|5
+debt|nợ|b1|4|5
+tax|thuế|b1|5|5
+income|thu nhập|b1|5|5
+expense|chi phí|b1|4|5
+inflation|lạm phát|b2|4|5
+stock|cổ phiếu|b2|4|4
+insurance|bảo hiểm|b1|4|5
+wealth|sự giàu có|b2|3|5
+currency|tiền tệ|b2|4|5
+transfer|chuyển khoản|b1|4|4
+balance|số dư|b1|4|5
+bankrupt|phá sản|b2|3|4
+cryptocurrency|tiền mã hóa|b2|4|3
+portfolio|danh mục đầu tư|c1|3|4
+afford|có đủ tiền|b1|4|5`],
+["💻","Công nghệ & internet",`computer|máy tính|a1|5|4
+phone|điện thoại|a1|5|4
+internet|mạng internet|a1|5|5
+website|trang web|a2|5|5
+software|phần mềm|a2|5|5
+app|ứng dụng|a2|5|5
+download|tải xuống|a2|5|4
+password|mật khẩu|a2|5|4
+data|dữ liệu|a2|5|5
+cloud|điện toán đám mây|b1|4|4
+network|mạng lưới|b1|5|5
+laptop|máy tính xách tay|a2|4|3
+screen|màn hình|a2|5|4
+keyboard|bàn phím|a2|4|3
+wifi|mạng wifi|a2|5|3
+update|cập nhật|a2|5|5
+device|thiết bị|b1|5|5
+cybersecurity|an ninh mạng|b2|4|4
+hacker|tin tặc|b1|3|3
+encryption|mã hóa|c1|3|3
+algorithm|thuật toán|b2|4|4
+database|cơ sở dữ liệu|b2|4|4
+browser|trình duyệt|b1|4|3
+bandwidth|băng thông|c1|2|3
+virtual|ảo|b2|4|5`],
+["🤖","Trí tuệ nhân tạo (AI)",`artificial intelligence|trí tuệ nhân tạo|b1|5|4
+machine learning|học máy|b2|4|4
+chatbot|trợ lý trò chuyện|b1|5|3
+prompt|câu lệnh gợi ý|b1|5|2
+neural network|mạng nơ-ron|c1|3|3
+automation|tự động hóa|b2|4|5
+robot|rô-bốt|a2|4|4
+generate|tạo ra|b2|5|5
+dataset|tập dữ liệu|b2|3|3
+bias|thiên kiến|b2|4|5
+deepfake|video giả mạo AI|b2|4|3
+model|mô hình|b1|5|5
+training|huấn luyện|b1|4|5
+autonomous|tự hành|c1|3|4
+innovation|đổi mới|b2|5|5
+ethics|đạo đức|b2|4|5
+replace|thay thế|b1|5|5
+productivity|năng suất|b2|5|5
+voice assistant|trợ lý giọng nói|b1|4|3
+facial recognition|nhận diện khuôn mặt|b2|3|4
+surveillance|giám sát|c1|3|5
+breakthrough|bước đột phá|c1|3|5
+transparency|sự minh bạch|c1|3|5
+hallucination|ảo giác (của AI)|c1|3|2`],
+["📱","Mạng xã hội",`post|đăng bài|a2|5|4
+share|chia sẻ|a2|5|5
+like|thích|a1|5|4
+comment|bình luận|a2|5|5
+follow|theo dõi|a2|5|4
+follower|người theo dõi|b1|5|3
+hashtag|thẻ hashtag|b1|4|2
+viral|lan truyền|b2|4|4
+influencer|người ảnh hưởng|b2|5|4
+content|nội dung|b1|5|5
+livestream|phát trực tiếp|b1|4|3
+trend|xu hướng|b1|5|5
+feed|bảng tin|b1|4|3
+notification|thông báo|b1|4|4
+unfollow|bỏ theo dõi|b1|3|2
+subscribe|đăng ký kênh|b1|4|4
+engagement|mức tương tác|b2|4|4
+privacy|quyền riêng tư|b2|4|5
+cyberbullying|bắt nạt trên mạng|b2|3|5
+screen time|thời gian dùng màn hình|b1|4|4
+scroll|cuộn trang|b1|4|3
+caption|chú thích ảnh|b1|3|3
+platform|nền tảng|b2|5|5
+creator|người sáng tạo nội dung|b2|4|4
+block|chặn|a2|3|3`],
+["🚗","Giao thông",`car|ô tô|a1|5|3
+bus|xe buýt|a1|5|4
+train|tàu hỏa|a1|5|4
+bike|xe đạp|a1|5|3
+motorbike|xe máy|a2|5|3
+traffic|giao thông|a2|5|5
+road|đường|a1|5|3
+driver|tài xế|a2|5|4
+license|giấy phép|b1|4|5
+pedestrian|người đi bộ|b1|3|4
+crossing|điểm băng qua đường|b1|3|3
+traffic jam|kẹt xe|a2|5|5
+highway|đường cao tốc|b1|4|4
+fuel|nhiên liệu|b1|4|5
+accident|tai nạn|a2|5|5
+park|đỗ xe / công viên|a2|5|4
+helmet|mũ bảo hiểm|a2|4|3
+commute|đi lại hằng ngày|b1|4|5
+public transport|giao thông công cộng|b1|5|5
+subway|tàu điện ngầm|b1|4|4
+intersection|ngã tư|b1|3|3
+speed limit|giới hạn tốc độ|b1|3|4
+vehicle|phương tiện|b1|4|5
+electric vehicle|xe điện|b2|5|4`],
+["✈️","Du lịch",`travel|đi du lịch|a1|5|5
+trip|chuyến đi|a1|5|5
+tour|chuyến tham quan|a2|5|4
+tourist|du khách|a2|5|5
+destination|điểm đến|b1|5|5
+passport|hộ chiếu|a2|4|5
+visa|thị thực|a2|4|4
+luggage|hành lý|a2|5|5
+itinerary|lịch trình chuyến đi|b2|4|5
+sightseeing|ngắm cảnh|b1|4|4
+souvenir|quà lưu niệm|b1|4|4
+backpack|ba lô|a2|4|3
+adventure|cuộc phiêu lưu|b1|4|4
+abroad|ở nước ngoài|b1|5|5
+guide|hướng dẫn viên|a2|4|4
+landmark|địa danh|b2|3|4
+resort|khu nghỉ dưỡng|b1|4|4
+cruise|du thuyền|b2|3|3
+local|địa phương|b1|5|5
+culture shock|cú sốc văn hóa|b2|3|4
+excursion|chuyến đi ngắn|b2|3|4
+booking|đặt chỗ|b1|5|5
+jet lag|mệt do lệch múi giờ|b2|3|3
+attraction|điểm tham quan|b1|4|5`],
+["🏨","Khách sạn & sân bay",`hotel|khách sạn|a1|5|5
+reception|lễ tân|a2|4|5
+check in|nhận phòng / làm thủ tục|a2|5|5
+check out|trả phòng|a2|5|5
+single room|phòng đơn|a2|4|4
+boarding pass|thẻ lên máy bay|b1|4|5
+flight|chuyến bay|a2|5|5
+gate|cổng|a2|4|5
+delay|hoãn / trễ|b1|5|5
+departure|khởi hành|b1|4|5
+arrival|đến nơi|b1|4|5
+customs|hải quan|b1|4|4
+baggage claim|nhận hành lý|b2|3|4
+airline|hãng hàng không|b1|4|5
+terminal|nhà ga|b1|4|4
+layover|quá cảnh|b2|3|3
+security check|kiểm tra an ninh|b1|3|4
+aisle seat|ghế lối đi|b2|2|3
+window seat|ghế cạnh cửa sổ|a2|3|3
+cancel|hủy|a2|5|5
+upgrade|nâng cấp|b1|4|5
+complimentary|miễn phí (tặng kèm)|c1|3|5
+vacancy|phòng trống|b2|3|5
+overbook|nhận đặt quá chỗ|c1|2|4`],
+["☀️","Thời tiết",`sunny|nắng|a1|5|3
+rainy|mưa|a1|5|3
+cloudy|nhiều mây|a1|5|3
+windy|nhiều gió|a1|5|3
+snow|tuyết|a1|4|3
+storm|bão|a2|4|4
+hot|nóng|a1|5|3
+cold|lạnh|a1|5|3
+humid|ẩm ướt|b1|4|4
+forecast|dự báo|b1|5|5
+temperature|nhiệt độ|a2|5|5
+thunder|sấm|a2|3|3
+lightning|sét|b1|3|3
+fog|sương mù|a2|3|3
+drought|hạn hán|b2|3|5
+flood|lũ lụt|b1|4|5
+heatwave|đợt nắng nóng|b2|4|4
+breeze|gió nhẹ|b1|3|3
+drizzle|mưa phùn|b2|2|3
+freezing|rét buốt|b1|3|3
+mild|ôn hòa|b1|3|4
+climate|khí hậu|b1|5|5
+typhoon|bão nhiệt đới|b2|3|4
+overcast|u ám|b2|2|3`],
+["🌍","Môi trường",`pollution|ô nhiễm|b1|5|5
+recycle|tái chế|b1|5|5
+plastic|nhựa|a2|5|5
+waste|rác thải|b1|5|5
+global warming|nóng lên toàn cầu|b1|5|5
+climate change|biến đổi khí hậu|b1|5|5
+greenhouse gas|khí nhà kính|b2|4|5
+renewable energy|năng lượng tái tạo|b2|4|5
+solar|năng lượng mặt trời|b1|4|5
+deforestation|nạn phá rừng|b2|4|5
+endangered|có nguy cơ tuyệt chủng|b2|4|5
+extinction|sự tuyệt chủng|b2|3|5
+conservation|bảo tồn|b2|4|5
+carbon footprint|dấu chân carbon|b2|4|5
+sustainable|bền vững|b2|5|5
+ecosystem|hệ sinh thái|b2|4|5
+emission|khí thải|b2|4|5
+biodiversity|đa dạng sinh học|c1|3|5
+fossil fuel|nhiên liệu hóa thạch|b2|4|5
+landfill|bãi chôn lấp|c1|3|4
+protect|bảo vệ|a2|5|5
+eco-friendly|thân thiện môi trường|b1|4|4
+ozone|tầng ozone|b2|2|4`],
+["🐶","Động vật",`dog|chó|a1|5|3
+cat|mèo|a1|5|3
+bird|chim|a1|5|3
+horse|ngựa|a1|4|3
+cow|bò|a1|4|3
+pig|heo|a1|4|3
+chicken|gà|a1|4|3
+elephant|voi|a1|4|3
+tiger|hổ|a1|4|3
+monkey|khỉ|a1|4|3
+snake|rắn|a1|4|3
+insect|côn trùng|a2|4|4
+pet|thú cưng|a1|5|4
+wild|hoang dã|a2|4|4
+mammal|động vật có vú|b2|3|4
+reptile|bò sát|b2|2|4
+species|loài|b2|4|5
+predator|động vật săn mồi|c1|2|4
+prey|con mồi|c1|2|4
+habitat|môi trường sống|b2|3|5
+herd|bầy đàn|b2|2|3
+migrate|di cư|b2|3|5
+hibernate|ngủ đông|c1|2|3
+livestock|gia súc|c1|2|4
+zoo|sở thú|a1|4|3`],
+["🌳","Thiên nhiên",`tree|cây|a1|5|3
+flower|hoa|a1|5|3
+river|sông|a1|5|4
+mountain|núi|a1|5|4
+sea|biển|a1|5|4
+beach|bãi biển|a1|5|4
+forest|rừng|a2|5|4
+lake|hồ|a2|4|4
+island|đảo|a2|4|4
+desert|sa mạc|a2|4|4
+sky|bầu trời|a1|4|3
+moon|mặt trăng|a1|4|3
+star|ngôi sao|a1|4|3
+earth|trái đất|a1|5|4
+valley|thung lũng|b1|3|4
+waterfall|thác nước|b1|3|3
+volcano|núi lửa|b1|3|4
+coast|bờ biển|b1|4|5
+wildlife|động vật hoang dã|b1|4|5
+scenery|phong cảnh|b1|4|4
+landscape|cảnh quan|b1|4|5
+soil|đất|b1|4|5
+cliff|vách đá|b2|3|3
+jungle|rừng rậm|b1|3|3`],
+["⚽","Thể thao",`football|bóng đá|a1|5|3
+basketball|bóng rổ|a1|4|3
+swimming|bơi lội|a1|5|4
+running|chạy bộ|a1|5|3
+tennis|quần vợt|a1|4|3
+badminton|cầu lông|a2|4|3
+match|trận đấu|a2|5|4
+team|đội|a1|5|5
+player|cầu thủ|a1|5|4
+coach|huấn luyện viên|a2|4|4
+win|thắng|a1|5|4
+lose|thua / mất|a1|5|4
+score|ghi điểm / tỷ số|a2|5|4
+champion|nhà vô địch|a2|4|4
+tournament|giải đấu|b1|4|4
+referee|trọng tài|b1|3|3
+stadium|sân vận động|a2|4|4
+athlete|vận động viên|b1|4|5
+training|tập luyện|b1|4|4
+competition|cuộc thi|b1|5|5
+defeat|đánh bại|b1|3|4
+medal|huy chương|b1|4|4
+fan|người hâm mộ|a2|5|4
+warm up|khởi động|b1|3|3
+record|kỷ lục|b1|4|5`],
+["🧘","Lối sống & sức khỏe tinh thần",`mindfulness|chánh niệm|b2|4|4
+meditation|thiền|b1|4|4
+burnout|kiệt sức|b2|4|4
+anxiety|chứng lo âu|b2|4|5
+self-care|chăm sóc bản thân|b2|4|3
+routine|thói quen hằng ngày|b1|5|5
+habit|thói quen|b1|5|5
+balance|cân bằng|b1|5|5
+motivation|động lực|b1|5|5
+procrastinate|trì hoãn|b2|4|4
+productive|hiệu quả|b2|5|5
+discipline|kỷ luật|b2|4|5
+resilience|khả năng phục hồi|c1|3|5
+boundary|ranh giới|b2|3|4
+mental health|sức khỏe tinh thần|b2|5|5
+relax|thư giãn|a2|5|5
+insomnia|chứng mất ngủ|b2|3|4
+gratitude|lòng biết ơn|b2|3|4
+mindset|tư duy|b2|4|4
+detox|thanh lọc|b2|3|3
+journaling|viết nhật ký|b2|3|2
+work-life balance|cân bằng công việc – cuộc sống|b2|5|5
+overthink|nghĩ quá nhiều|b2|3|2`],
+["🎬","Âm nhạc & phim ảnh",`music|âm nhạc|a1|5|4
+song|bài hát|a1|5|3
+singer|ca sĩ|a1|5|3
+band|ban nhạc|a2|4|3
+concert|buổi hòa nhạc|a2|4|4
+guitar|đàn guitar|a1|4|3
+piano|đàn piano|a1|4|3
+lyrics|lời bài hát|b1|4|2
+melody|giai điệu|b1|3|3
+album|album|a2|4|3
+movie|bộ phim|a1|5|4
+actor|diễn viên|a1|5|4
+director|đạo diễn|a2|4|4
+plot|cốt truyện|b1|4|4
+scene|cảnh phim|a2|4|4
+cinema|rạp chiếu phim|a1|5|4
+genre|thể loại|b1|4|5
+episode|tập phim|b1|4|3
+series|loạt phim|b1|5|4
+subtitle|phụ đề|b1|4|3
+soundtrack|nhạc phim|b2|3|3
+review|bài đánh giá|b1|5|5
+audience|khán giả|b1|5|5
+trailer|đoạn giới thiệu|b1|4|3
+streaming|phát trực tuyến|b1|5|3
+blockbuster|phim bom tấn|b2|3|3`],
+["🎨","Nghệ thuật & văn hóa",`painting|bức tranh|a2|5|4
+sculpture|điêu khắc|b1|3|4
+museum|bảo tàng|a2|5|4
+gallery|phòng trưng bày|b1|4|4
+artist|nghệ sĩ|a2|5|4
+exhibition|triển lãm|b1|4|5
+tradition|truyền thống|b1|5|5
+custom|phong tục|b1|4|5
+festival|lễ hội|a2|5|4
+heritage|di sản|b2|4|5
+folk|dân gian|b2|3|4
+ceremony|nghi lễ|b1|4|4
+craft|nghề thủ công|b1|3|4
+literature|văn học|b1|4|5
+poetry|thơ ca|b1|3|4
+novel|tiểu thuyết|b1|4|4
+author|tác giả|b1|4|5
+theater|nhà hát|a2|4|4
+performance|buổi biểu diễn|b1|5|5
+ancient|cổ xưa|b1|4|5
+masterpiece|kiệt tác|b2|3|4
+cultural|thuộc văn hóa|b1|5|5
+symbol|biểu tượng|b1|4|5
+ritual|nghi thức|b2|3|3
+identity|bản sắc|b2|4|5`],
+["📰","Truyền thông & tin tức",`news|tin tức|a1|5|5
+newspaper|báo giấy|a1|4|4
+journalist|nhà báo|b1|4|5
+headline|tiêu đề|b1|4|4
+article|bài báo|b1|5|5
+report|đưa tin / báo cáo|a2|5|5
+broadcast|phát sóng|b2|3|4
+interview|phỏng vấn|a2|5|5
+media|truyền thông|b1|5|5
+fake news|tin giả|b1|5|4
+source|nguồn|b1|5|5
+rumor|tin đồn|b1|3|4
+press|báo chí|b1|4|4
+editor|biên tập viên|b1|3|4
+publish|xuất bản|b1|4|5
+announce|thông báo|b1|4|5
+coverage|mức độ đưa tin|b2|3|5
+breaking news|tin nóng|b1|4|3
+propaganda|tuyên truyền|c1|2|4
+misinformation|thông tin sai lệch|c1|4|4
+fact-check|kiểm chứng thông tin|b2|3|2
+censorship|kiểm duyệt|c1|3|4
+podcast|chương trình podcast|b1|5|2
+documentary|phim tài liệu|b2|4|4`],
+["🏛️","Chính trị & xã hội",`government|chính phủ|b1|5|5
+president|tổng thống / chủ tịch|a2|5|4
+election|cuộc bầu cử|b1|5|5
+vote|bỏ phiếu|a2|5|4
+law|luật|a2|5|5
+policy|chính sách|b1|5|5
+citizen|công dân|b1|4|5
+society|xã hội|b1|5|5
+community|cộng đồng|b1|5|5
+rights|quyền lợi|b1|5|5
+equality|bình đẳng|b2|4|5
+poverty|nghèo đói|b1|4|5
+unemployment|thất nghiệp|b2|4|5
+immigration|nhập cư|b2|4|5
+democracy|dân chủ|b2|3|5
+protest|biểu tình|b2|3|4
+reform|cải cách|b2|4|5
+minister|bộ trưởng|b1|3|4
+parliament|quốc hội|b2|3|4
+discrimination|phân biệt đối xử|b2|4|5
+welfare|phúc lợi xã hội|b2|3|5
+volunteer|tình nguyện viên|b1|5|5
+charity|từ thiện|b1|4|5
+population|dân số|b1|5|5
+urbanization|đô thị hóa|c1|3|5`],
+["⚖️","Pháp luật",`court|tòa án|b1|4|5
+judge|thẩm phán|b1|4|4
+lawyer|luật sư|a2|4|4
+crime|tội phạm|b1|5|5
+police|cảnh sát|a1|5|4
+arrest|bắt giữ|b1|4|4
+guilty|có tội|b1|4|4
+innocent|vô tội|b1|4|4
+evidence|bằng chứng|b2|5|5
+witness|nhân chứng|b2|3|4
+sentence|bản án / câu|b2|4|5
+prison|nhà tù|b1|4|4
+fine|tiền phạt|b1|4|4
+rule|quy tắc|a2|5|5
+illegal|bất hợp pháp|b1|5|5
+trial|phiên tòa|b2|3|4
+verdict|phán quyết|c1|2|4
+suspect|nghi phạm|b2|3|4
+legal|hợp pháp|b1|5|5
+appeal|kháng cáo / lời kêu gọi|b2|3|5
+lawsuit|vụ kiện|c1|3|4
+violation|sự vi phạm|b2|3|5
+regulation|quy định|b2|4|5
+comply|tuân thủ|c1|3|5`],
+["🔬","Khoa học",`science|khoa học|a1|5|5
+experiment|thí nghiệm|a2|5|5
+research|nghiên cứu|b1|5|5
+theory|lý thuyết|b1|5|5
+scientist|nhà khoa học|a2|5|4
+laboratory|phòng thí nghiệm|b1|4|5
+discovery|phát hiện|b1|4|5
+invention|phát minh|b1|4|5
+hypothesis|giả thuyết|c1|3|5
+chemical|hóa chất|b1|4|5
+physics|vật lý|b1|4|4
+biology|sinh học|b1|4|4
+gene|gen|b2|4|4
+atom|nguyên tử|b2|3|4
+energy|năng lượng|a2|5|5
+gravity|trọng lực|b2|3|4
+planet|hành tinh|a2|4|4
+galaxy|thiên hà|b2|3|3
+space|không gian / vũ trụ|a2|5|4
+telescope|kính viễn vọng|b1|3|3
+microscope|kính hiển vi|b1|3|3
+analyze|phân tích|b2|5|5
+observe|quan sát|b1|4|5
+phenomenon|hiện tượng|c1|4|5`],
+["🏥","Y học & bệnh viện",`doctor|bác sĩ|a1|5|4
+nurse|y tá|a1|4|4
+hospital|bệnh viện|a1|5|5
+patient|bệnh nhân|a2|5|5
+pharmacy|nhà thuốc|a2|4|4
+prescription|đơn thuốc|b1|4|4
+surgery|phẫu thuật|b1|4|4
+diagnosis|chẩn đoán|b2|4|4
+treatment|điều trị|b1|5|5
+vaccine|vắc-xin|b1|5|4
+ambulance|xe cứu thương|b1|3|3
+emergency|khẩn cấp|b1|5|5
+clinic|phòng khám|a2|4|4
+therapy|liệu pháp|b2|4|4
+dose|liều lượng|b2|3|4
+side effect|tác dụng phụ|b2|4|5
+blood pressure|huyết áp|b1|4|4
+X-ray|chụp X-quang|b1|3|3
+cure|chữa khỏi|b1|4|4
+operation|ca mổ|b1|4|4
+wound|vết thương|b1|3|3
+painkiller|thuốc giảm đau|b2|3|3
+outbreak|sự bùng phát|b2|4|4
+pandemic|đại dịch|b2|5|4
+appointment|cuộc hẹn|a2|5|5`],
+["⏰","Thời gian & số lượng",`today|hôm nay|a1|5|4
+tomorrow|ngày mai|a1|5|4
+yesterday|hôm qua|a1|5|4
+week|tuần|a1|5|4
+month|tháng|a1|5|4
+century|thế kỷ|a2|4|4
+early|sớm|a1|5|4
+late|muộn|a1|5|4
+soon|sớm thôi|a1|5|4
+always|luôn luôn|a1|5|5
+never|không bao giờ|a1|5|5
+usually|thường|a2|5|5
+sometimes|thỉnh thoảng|a1|5|5
+often|thường xuyên|a1|5|5
+nowadays|ngày nay|b1|5|5
+recently|gần đây|b1|5|5
+meanwhile|trong khi đó|b2|4|5
+eventually|cuối cùng|b2|4|5
+frequently|thường xuyên|b2|4|5
+permanent|vĩnh viễn|b2|3|5
+temporary|tạm thời|b2|4|5
+several|một vài|b1|5|5
+numerous|nhiều|b2|4|5
+plenty of|rất nhiều|b1|4|5
+half|một nửa|a2|5|4
+double|gấp đôi|b1|4|4`],
+["🎯","Hình dạng, màu sắc & vị trí",`red|đỏ|a1|5|2
+blue|xanh dương|a1|5|2
+green|xanh lá|a1|5|2
+yellow|vàng|a1|5|2
+black|đen|a1|5|2
+white|trắng|a1|5|2
+round|tròn|a2|4|3
+square|vuông|a2|4|3
+triangle|tam giác|a2|3|3
+circle|hình tròn|a2|4|3
+straight|thẳng|a2|4|4
+curved|cong|b1|3|3
+left|trái|a1|5|4
+right|phải|a1|5|4
+above|phía trên|a2|4|4
+below|phía dưới|a2|4|4
+behind|phía sau|a1|5|4
+between|ở giữa|a1|5|5
+opposite|đối diện|a2|4|5
+nearby|gần đó|a2|5|5
+inside|bên trong|a1|5|4
+outside|bên ngoài|a1|5|4
+corner|góc|a2|4|4
+edge|mép|b1|4|4
+width|chiều rộng|b1|3|4
+height|chiều cao|a2|4|5`],
+["🏃","Động từ thông dụng",`make|làm / tạo|a1|5|5
+get|nhận / trở nên|a1|5|5
+take|lấy / mất (thời gian)|a1|5|5
+give|đưa / tặng|a1|5|5
+see|thấy|a1|5|5
+know|biết|a1|5|5
+think|nghĩ|a1|5|5
+want|muốn|a1|5|5
+use|sử dụng|a1|5|5
+find|tìm thấy|a1|5|5
+tell|bảo / kể|a1|5|5
+ask|hỏi|a1|5|5
+try|thử / cố gắng|a1|5|5
+need|cần|a1|5|5
+feel|cảm thấy|a1|5|5
+leave|rời đi|a2|5|5
+call|gọi|a1|5|4
+keep|giữ|a2|5|5
+begin|bắt đầu|a2|5|5
+show|cho xem|a2|5|5
+hear|nghe thấy|a1|5|4
+move|di chuyển|a2|5|5
+believe|tin tưởng|a2|5|5
+bring|mang đến|a2|5|5
+happen|xảy ra|a2|5|5
+learn|học|a1|5|5
+change|thay đổi|a2|5|5
+follow|theo sau|a2|5|5
+stop|dừng|a1|5|5
+spend|tiêu / dành|a2|5|5
+grow|phát triển / trồng|a2|5|5
+offer|đề nghị|b1|5|5
+remember|nhớ|a2|5|5
+consider|cân nhắc|b1|5|5
+appear|xuất hiện|b1|5|5
+reach|đạt tới|b1|5|5
+remain|vẫn còn|b2|4|5
+achieve|đạt được|b1|5|5
+provide|cung cấp|b1|5|5
+require|yêu cầu|b2|5|5`],
+["📝","Từ học thuật (IELTS / TOEIC)",`significant|đáng kể|b2|5|5
+approach|cách tiếp cận|b2|5|5
+analyze|phân tích|b2|5|5
+assume|cho rằng|b2|4|5
+concept|khái niệm|b2|4|5
+consequence|hậu quả|b2|4|5
+contribute|đóng góp|b2|5|5
+criteria|tiêu chí|b2|4|5
+derive|bắt nguồn|c1|3|4
+emphasize|nhấn mạnh|b2|4|5
+evaluate|đánh giá|b2|4|5
+factor|yếu tố|b1|5|5
+impact|tác động|b2|5|5
+indicate|chỉ ra|b2|4|5
+interpret|diễn giải|b2|4|5
+issue|vấn đề|b1|5|5
+maintain|duy trì|b2|5|5
+obtain|đạt được / lấy được|b2|4|5
+occur|xảy ra|b2|4|5
+perspective|góc nhìn|b2|4|5
+prohibit|cấm|c1|3|4
+relevant|liên quan|b2|5|5
+sufficient|đủ|b2|4|5
+tendency|xu hướng|b2|3|5
+undergo|trải qua|c1|3|4
+widespread|phổ biến rộng rãi|b2|4|5
+whereas|trong khi đó|b2|4|5
+nevertheless|tuy nhiên|b2|4|5
+furthermore|hơn nữa|b2|4|5
+consequently|do đó|b2|4|5
+substantial|đáng kể|c1|4|5
+inevitable|không thể tránh|c1|3|5
+mitigate|giảm nhẹ|c1|3|4
+advocate|ủng hộ|c1|3|5
+controversial|gây tranh cãi|c1|4|5
+overwhelming|áp đảo|c1|3|4`],
+["🏡","Làm việc từ xa & freelance",`remote work|làm việc từ xa|b1|5|4
+freelance|làm tự do|b1|5|4
+hybrid|làm kết hợp|b2|5|4
+flexible|linh hoạt|b1|5|5
+collaborate|cộng tác|b2|5|5
+upskill|nâng cao kỹ năng|b2|4|3
+side hustle|công việc tay trái|b2|4|2
+gig economy|nền kinh tế việc làm tự do|c1|3|3
+digital nomad|dân du mục kỹ thuật số|b2|3|2
+time zone|múi giờ|b1|4|3
+coworking|không gian làm việc chung|b2|3|3
+outsource|thuê ngoài|c1|3|4
+self-employed|tự kinh doanh|b2|4|5
+virtual meeting|cuộc họp trực tuyến|b1|5|4
+screen share|chia sẻ màn hình|b1|4|3
+work from home|làm việc tại nhà|b1|5|5
+task management|quản lý công việc|b2|4|4
+online course|khóa học trực tuyến|b1|5|4
+certification|chứng nhận|b2|4|5
+networking|kết nối quan hệ|b2|4|4
+personal brand|thương hiệu cá nhân|b2|4|3
+passive income|thu nhập thụ động|b2|4|2
+entrepreneur|doanh nhân khởi nghiệp|b2|4|5
+deadline|hạn chót|b1|5|5`]
+];
+</script>
+<script>
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const LV=["a1","a2","b1","b2","c1","c2"];
+const INT=[0,1,3,7,14,30,60];
+const pad=n=>String(n).padStart(2,"0");
+const fmt=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const today=()=>fmt(new Date());
+const addDays=(s,n)=>{const d=new Date(s+"T00:00:00");d.setDate(d.getDate()+n);return fmt(d)};
+const diff=(a,b)=>Math.round((new Date(b+"T00:00:00")-new Date(a+"T00:00:00"))/864e5);
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const IC={
+home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+learn:'<rect x="4" y="6" width="13" height="15" rx="2.5"/><path d="M8 3h11a2 2 0 0 1 2 2v12"/>',
+vocab:'<path d="M4 6h16M4 12h16M4 18h10"/>',
+grammar:'<path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4M8 13h8M8 17h5"/>',
+test:'<circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/>',
+method:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+moon:'<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/>',
+speak:'<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/>',
+flame:'<path fill="currentColor" d="M12 2c1 3.5 5.5 5.5 5.5 11a5.5 5.5 0 0 1-11 0c0-2 1-3.5 2.2-4.5 0 2 .8 2.800 2 3 .4-3-.8-5.500 1.300-9.500z"/>',
+check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>'
+};
+const ic=(n,s=24)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]}</svg>`;
+const m5=(n,k)=>`<span class="m5 ${k}">${[1,2,3,4,5].map(i=>`<i class="${i<=n?"on":""}"></i>`).join("")}</span>`;
+const T=VOCAB;
+const W=[];
+T.forEach((t,i)=>t[2].split("\n").forEach((l,j)=>{const p=l.split("|");if(p.length<5)return;W.push({id:i+"-"+j,t:i,w:p[0].trim(),vn:p[1].trim(),lv:p[2].trim(),f:+p[3],e:+p[4],p:+p[3]*.6+ +p[4]*.4})}));
+const WM=Object.fromEntries(W.map(w=>[w.id,w]));
+const KEY="englishpro_v1";
+let S=Object.assign({theme:matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light",goal:10,w:{},days:{},tests:[],streak:0,last:""},JSON.parse(localStorage.getItem(KEY)||"{}"));
+const save=()=>localStorage.setItem(KEY,JSON.stringify(S));
+const prio=w=>w.p>=4.2?["hot","Học trước"]:w.p>=3.4?["mid","Nên học"]:["low","Mở rộng"];
+const speak=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.9;speechSynthesis.speak(u)}catch(e){}};
+const canSpeak=()=>"speechSynthesis" in window;
+const toast=t=>{const e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.k);toast.k=setTimeout(()=>e.classList.remove("on"),2200)};
+const streakUp=()=>{const t=today();if(S.last===t)return;S.streak=S.last&&diff(S.last,t)===1?S.streak+1:1;S.last=t};
+const streakNow=()=>S.last&&diff(S.last,today())<=1?S.streak:0;
+const dueIds=()=>Object.keys(S.w).filter(id=>S.w[id].due<=today());
+const poolDays=n=>{const s=new Set();for(let i=0;i<n;i++)(S.days[addDays(today(),-i)]||[]).forEach(x=>s.add(x));return[...s]};
+const TT={
+d1:{n:"Test cuối ngày",d:"Kiểm tra các từ đã học hôm nay để nhớ sâu trước khi ngủ.",pool:()=>S.days[today()]||[],max:20},
+d3:{n:"Test 3 ngày",d:"Ôn lại các từ của 3 ngày gần nhất. Cứ 3 ngày có 1 bài.",pool:()=>poolDays(3),max:25,gap:3},
+wk:{n:"Test tuần",d:"Tổng kiểm tra 7 ngày gần nhất. Mỗi tuần 1 bài.",pool:()=>poolDays(7),max:40,gap:7},
+srs:{n:"Ôn từ đến hạn",d:"Các từ đến lịch ôn theo chu kỳ 1, 3, 7, 14, 30, 60 ngày.",pool:dueIds,max:30}
+};
+const poolOf=t=>TT[t].pool().filter(id=>S.w[id]);
+const status=t=>{
+const p=poolOf(t).length;
+if(t==="d1"){const done=S.tests.some(x=>x.type==="d1"&&x.date===today());return{p,due:p>0&&!done,txt:done?"Đã làm xong hôm nay":p?"Đến hạn, làm ngay":"Hôm nay chưa học từ nào"}}
+if(t==="srs")return{p,due:p>0,txt:p?p+" từ đến hạn ôn":"Chưa có từ nào đến hạn"};
+if(!Object.keys(S.days).length)return{p,due:false,txt:"Học từ đầu tiên để mở khóa"};
+const lt=[...S.tests].reverse().find(x=>x.type===t);
+const base=lt?lt.date:Object.keys(S.days).sort()[0];
+const left=TT[t].gap-diff(base,today());
+return{p,due:left<=0&&p>0,txt:left<=0?"Đến hạn, làm ngay":"Còn "+left+" ngày nữa"};
+};
+const dueN=()=>["d1","d3","wk","srs"].filter(t=>status(t).due).length;
+let Q=null,L=null,VF={q:"",t:"",lv:new Set(),pr:"",ex:"",st:"",s:"p",lim:100};
+const NAV=[["home","home","Tổng quan"],["learn","learn","Học từ mới"],["vocab","vocab","Kho từ vựng"],["grammar","grammar","Ngữ pháp"],["test","test","Kiểm tra"],["method","method","Phương pháp"]];
+const V={};
+function dock(){
+$("#dock").innerHTML=NAV.map(n=>`<button class="dk" data-go="${n[0]}" data-n="${n[0]}" aria-label="${n[2]}" title="${n[2]}">${ic(n[1])}<span>${n[2]}</span></button>`).join("");
+}
+function badge(){
+const b=$('.dk[data-n="test"]'),n=dueN();let e=$("em",b);
+if(n){if(!e){e=document.createElement("em");b.appendChild(e)}e.textContent=n}else if(e)e.remove();
+}
+function chrome(){
+$("#stk").innerHTML=ic("flame",18)+" "+streakNow();
+$("#th").innerHTML=ic(S.theme==="dark"?"sun":"moon",20);
+badge();
+}
+function render(){
+const v=location.hash.slice(1)||"home";
+const ok=!!V[v];
+const m=$("#main");
+m.innerHTML="";
+(ok?V[v]:V.home)(m);
+$$(".dk[data-n]").forEach(b=>b.classList.toggle("on",b.dataset.n===(ok?v:"home")));
+chrome();
+$("#dock").classList.remove("hide");
+scrollTo(0,0);
+}
+function tickets(){
+return Object.keys(TT).map(t=>{const x=TT[t],s=status(t);return`<div class="tk ${s.due?"due":s.p?"rdy":""}"><div class="mn"><h3>${x.n}</h3><p class="hint">${x.d}</p><b>${s.txt}</b><button class="btn sm ${s.p?"":"gh"}" data-t="${t}" ${s.p?"":"disabled"}>Làm bài</button></div><div class="st">${s.p}<small>từ</small></div></div>`}).join("");
+}
+const wod=()=>{const a=W.filter(w=>w.p>=4.2&&w.w.length<=11&&!w.w.includes(" "));let h=0;for(const c of today())h=(h*31+c.charCodeAt(0))>>>0;return a[h%a.length]};
+V.home=m=>{
+const td=(S.days[today()]||[]).length,w=wod(),p=prio(w);
+const tp=T.map((t,i)=>{const ws=W.filter(x=>x.t===i);return{i,t,un:ws.filter(x=>!S.w[x.id]).length,n:ws.length,p:ws.reduce((a,x)=>a+x.p,0)/ws.length}}).filter(x=>x.un).sort((a,b)=>b.p-a.p).slice(0,4);
+const hm=[];for(let i=13;i>=0;i--){const d=addDays(today(),-i),n=(S.days[d]||[]).length;hm.push(`<i class="${n>=S.goal?"l3":n>=Math.ceil(S.goal/2)?"l2":n>0?"l1":""}" title="${d}: ${n} từ"></i>`)}
+m.innerHTML=`<div class="home">
+<section class="hero c8"><div class="row"><span class="hint">Từ của hôm nay</span><span class="bd ${w.lv}">${w.lv.toUpperCase()}</span><span class="bd ${p[0]}">${p[1]}</span>${S.w[w.id]?`<span class="bd">${ic("check",14)} Đã học</span>`:""}</div>
+<div class="hw" aria-label="${esc(w.w)}">${[...w.w].map((c,i)=>`<span style="--i:${i}">${esc(c)}</span>`).join("")}</div>
+<div><div class="hvn">${esc(w.vn)}</div><div class="row"><button class="sbtn" data-sp="${esc(w.w)}" aria-label="Nghe phát âm">${ic("speak",22)}</button><button class="btn" data-auto>Học ${S.goal} từ hôm nay</button></div></div></section>
+<div class="stack c4"><div class="card"><h3>Hôm nay ${td}/${S.goal} từ</h3><div class="stamps">${Array.from({length:S.goal},(_,i)=>`<span class="stp ${i<td?"on":""}">${i<td?ic("check",16):""}</span>`).join("")}</div></div>
+<div class="card"><h3>Chuỗi ${streakNow()} ngày</h3><p class="hint">14 ngày gần nhất</p><div class="hm">${hm.join("")}</div></div></div>
+</div>
+<h2>Lịch kiểm tra</h2><div class="grid g2">${tickets()}</div>
+<div class="home" style="margin-top:48px"><div class="c5"><h2 style="margin-top:0">Tiến độ theo cấp độ</h2><div class="card">${LV.map(l=>{const a=W.filter(x=>x.lv===l),d=a.filter(x=>S.w[x.id]).length,pc=a.length?Math.round(d/a.length*100):0;return`<div class="lv"><span class="bd ${l}">${l.toUpperCase()}</span><div class="bar"><i class="${l[0]} ${pc?"":"z"}" style="width:${pc}%"></i></div><span>${d}/${a.length}</span></div>`}).join("")}<p class="hint">${Object.keys(S.w).length}/${W.length} từ đã học. Còn ${dueIds().length} từ cần ôn hôm nay.</p></div></div>
+<div class="c7"><h2 style="margin-top:0">Nên học trước</h2><div class="tiles">${tp.map(x=>`<button class="tile t${x.i%5}" data-topic="${x.i}"><span class="em">${x.t[0]}</span><div><h3>${x.t[1]}</h3><small>Còn ${x.un}/${x.n} từ</small></div></button>`).join("")}</div></div></div>`;
+};
+function startLearn(t){
+let c=W.filter(w=>!S.w[w.id]&&(t===null||w.t===t));
+c=t===null?c.sort((a,b)=>LV.indexOf(a.lv)-LV.indexOf(b.lv)||b.p-a.p):c.sort((a,b)=>b.p-a.p||LV.indexOf(a.lv)-LV.indexOf(b.lv));
+c=c.slice(0,S.goal);
+if(!c.length){toast("Bạn đã học hết từ ở mục này");return}
+L={q:c.map(w=>w.id),total:c.length,known:0,done:false};
+if(location.hash==="#learn")render();else location.hash="learn";
+}
+V.learn=m=>{
+if(L&&L.done){m.innerHTML=`<div class="qb"><div class="res r1"><div class="big">${L.total}</div><h2 style="margin:8px 0 6px">từ mới đã vào sổ</h2><p style="margin-bottom:22px">Làm bài test cuối ngày để nhớ sâu hơn.</p><div class="acts"><button class="btn" data-t="d1">Làm test cuối ngày</button><button class="btn gh" data-auto>Học thêm</button></div></div></div>`;L=null;return}
+if(L&&L.q.length){cardView(m);return}
+m.innerHTML=`<h1>Học từ mới</h1><p class="sub">Từ được xếp theo cấp độ và độ ưu tiên: thông dụng trong đời sống cộng với mức xuất hiện trong đề thi.</p>
+<div class="row" style="margin-bottom:8px"><span class="hint">Số từ mỗi lượt</span>${[5,10,15,20,30].map(n=>`<button class="pill ${S.goal===n?"on":""}" data-g="${n}">${n}</button>`).join("")}</div>
+<div style="margin:14px 0 34px"><button class="btn" data-auto>Học gợi ý hôm nay</button></div>
+<h2 style="margin-top:0">Hoặc chọn một chủ đề</h2><div class="tiles">${T.map((t,i)=>{const ws=W.filter(x=>x.t===i),d=ws.filter(x=>S.w[x.id]).length;return`<button class="tile t${i%5}" data-topic="${i}"><span class="em">${t[0]}</span><div><h3>${t[1]}</h3><small>${d}/${ws.length} từ đã học</small><div class="pb"><i style="width:${d/ws.length*100}%"></i></div></div></button>`}).join("")}</div>`;
+$$("[data-g]",m).forEach(b=>b.onclick=()=>{S.goal=+b.dataset.g;save();render()});
+};
+function cardView(m){
+const w=WM[L.q[0]];
+m.innerHTML=`<div class="qb"><div class="row" style="justify-content:space-between"><h2 style="margin:0">${L.known}/${L.total} từ</h2><button class="btn sm gh" id="lx">Thoát</button></div>
+<div class="seg">${Array.from({length:L.total},(_,i)=>`<i class="${i<L.known?"d":i===L.known?"c":""}"></i>`).join("")}</div>
+<div class="scene"><div class="fc" id="fc"><div class="face"><span class="bd ${w.lv}">${w.lv.toUpperCase()}</span><div class="w">${esc(w.w)}</div><button class="sbtn" data-sp="${esc(w.w)}" aria-label="Nghe phát âm">${ic("speak",22)}</button><span class="hint">Chạm vào thẻ để xem nghĩa</span></div><div class="face back"><div class="m">${esc(w.vn)}</div><div class="row" style="justify-content:center"><span class="bd">${T[w.t][0]} ${T[w.t][1]}</span><span class="bd">Thông dụng${m5(w.f,"u")}</span><span class="bd">Đề thi${m5(w.e,"x")}</span></div></div></div></div>
+<div class="acts"><button class="btn ko" id="kb">Chưa nhớ</button><button class="btn ok" id="ok">Đã nhớ</button></div><p class="hint" style="text-align:center;margin-top:16px">Phím tắt: Space lật thẻ, mũi tên trái chưa nhớ, mũi tên phải đã nhớ</p></div>`;
+$("#fc").onclick=e=>{if(e.target.closest("[data-sp]"))return;$("#fc").classList.toggle("flip")};
+$("#lx").onclick=()=>{L=null;render()};
+$("#kb").onclick=()=>{L.q.push(L.q.shift());render()};
+$("#ok").onclick=()=>{
+const id=L.q.shift();
+S.w[id]={box:1,due:addDays(today(),1),ok:0,ko:0};
+(S.days[today()]=S.days[today()]||[]).push(id);
+streakUp();save();L.known++;
+if(!L.q.length)L.done=true;
+render();
+};
+speak(w.w);
+}
+V.vocab=m=>{
+m.innerHTML=`<h1>Kho từ vựng</h1><p class="sub">${W.length} từ trong ${T.length} chủ đề. Lọc theo cấp độ, độ thông dụng và mức xuất hiện trong đề thi.</p>
+<div class="row"><input type="search" id="vq" placeholder="Tìm từ hoặc nghĩa" style="flex:1;min-width:200px" value="${esc(VF.q)}"><select id="vt"><option value="">Tất cả chủ đề</option>${T.map((t,i)=>`<option value="${i}" ${VF.t===String(i)?"selected":""}>${t[0]} ${t[1]}</option>`).join("")}</select></div>
+<div class="row" style="margin-top:12px"><select id="vp"><option value="">Mọi độ ưu tiên</option><option value="hot">Học trước</option><option value="mid">Nên học</option><option value="low">Mở rộng</option></select><select id="ve"><option value="">Mọi mức đề thi</option><option value="h">Đề thi cao (4–5)</option><option value="m">Đề thi trung bình (3)</option><option value="l">Đề thi thấp (1–2)</option></select><select id="vst"><option value="">Tất cả</option><option value="new">Chưa học</option><option value="done">Đã học</option></select><select id="vs"><option value="p">Xếp theo ưu tiên</option><option value="lv">Xếp theo cấp độ</option><option value="f">Xếp theo độ thông dụng</option><option value="e">Xếp theo mức đề thi</option><option value="az">Xếp A đến Z</option></select></div>
+<div class="fl">${LV.map(l=>`<button class="pill ${VF.lv.has(l)?"on":""}" data-lv="${l}">${l.toUpperCase()}</button>`).join("")}</div><p class="hint" id="vc"></p><div class="vl" id="vlist"></div>`;
+$("#vp").value=VF.pr;$("#ve").value=VF.ex;$("#vst").value=VF.st;$("#vs").value=VF.s;
+const draw=()=>{
+const a=W.filter(w=>{
+if(VF.q){const q=VF.q.toLowerCase();if(!w.w.toLowerCase().includes(q)&&!w.vn.toLowerCase().includes(q))return false}
+if(VF.t!==""&&w.t!==+VF.t)return false;
+if(VF.lv.size&&!VF.lv.has(w.lv))return false;
+if(VF.pr&&prio(w)[0]!==VF.pr)return false;
+if(VF.ex==="h"&&w.e<4)return false;if(VF.ex==="m"&&w.e!==3)return false;if(VF.ex==="l"&&w.e>2)return false;
+if(VF.st==="new"&&S.w[w.id])return false;if(VF.st==="done"&&!S.w[w.id])return false;
+return true});
+const so={p:(x,y)=>y.p-x.p||LV.indexOf(x.lv)-LV.indexOf(y.lv),lv:(x,y)=>LV.indexOf(x.lv)-LV.indexOf(y.lv)||y.p-x.p,f:(x,y)=>y.f-x.f||y.e-x.e,e:(x,y)=>y.e-x.e||y.f-x.f,az:(x,y)=>x.w.localeCompare(y.w)};
+a.sort(so[VF.s]);
+$("#vc").textContent=a.length+" từ phù hợp";
+$("#vlist").innerHTML=a.slice(0,VF.lim).map(w=>{const p=prio(w);return`<div class="vr ${S.w[w.id]?"dn":""}"><div><div class="w">${esc(w.w)}</div><div class="vn">${esc(w.vn)}</div><div class="mt"><span class="bd ${w.lv}">${w.lv.toUpperCase()}</span><span class="bd ${p[0]}">${p[1]}</span>${S.w[w.id]?`<span class="bd">${ic("check",14)} Đã học</span>`:""}<span>${T[w.t][0]} ${T[w.t][1]}</span><span>Thông dụng${m5(w.f,"u")}</span><span>Đề thi${m5(w.e,"x")}</span></div></div><button class="sbtn" data-sp="${esc(w.w)}" aria-label="Nghe phát âm">${ic("speak",20)}</button></div>`}).join("")+(a.length>VF.lim?`<div style="text-align:center;padding:16px"><button class="btn gh" id="vm">Xem thêm</button></div>`:"");
+const b=$("#vm");if(b)b.onclick=()=>{VF.lim+=100;draw()};
+};
+$("#vq").oninput=e=>{VF.q=e.target.value;VF.lim=100;draw()};
+$("#vt").onchange=e=>{VF.t=e.target.value;VF.lim=100;draw()};
+$("#vp").onchange=e=>{VF.pr=e.target.value;VF.lim=100;draw()};
+$("#ve").onchange=e=>{VF.ex=e.target.value;VF.lim=100;draw()};
+$("#vst").onchange=e=>{VF.st=e.target.value;VF.lim=100;draw()};
+$("#vs").onchange=e=>{VF.s=e.target.value;draw()};
+$$("[data-lv]",m).forEach(b=>b.onclick=()=>{const l=b.dataset.lv;VF.lv.has(l)?VF.lv.delete(l):VF.lv.add(l);b.classList.toggle("on");VF.lim=100;draw()});
+draw();
+};
+V.grammar=m=>{
+let cat="",q="";
+m.innerHTML=`<h1>Ngữ pháp tổng hợp</h1><p class="sub">12 thì, câu điều kiện, bị động, gián tiếp, danh động từ, đảo ngữ, mệnh đề, động từ bất quy tắc, cụm động từ và collocation.</p><input type="search" id="gq" placeholder="Tìm cấu trúc hoặc từ khóa" style="width:100%"><div class="fl" id="gc">${[["","Tất cả"],...GRAMMAR.map(g=>[g.id,g.ic+" "+g.t])].map(x=>`<button class="pill ${x[0]===""?"on":""}" data-c="${x[0]}">${x[1]}</button>`).join("")}</div><div id="gl"></div>`;
+const draw=()=>{
+const k=q.toLowerCase();
+const h=GRAMMAR.map((g,gi)=>{
+if(cat&&g.id!==cat)return"";
+const head=n=>`<details class="acc" ${k||cat?"open":""}><summary><span class="ci t${gi%5}">${g.ic}</span>${g.t} <span class="bd">${n}</span></summary>`;
+if(g.items){
+const it=g.items.filter(i=>!k||i.join(" ").toLowerCase().includes(k));
+if(!it.length)return"";
+return head(it.length)+`<div class="bdy">${it.map(i=>`<div class="it"><h4>${esc(i[0])}</h4><div class="fm">${esc(i[1])}</div>${i[2]&&i[2].trim()?`<div class="us">${esc(i[2])}</div>`:""}${i[3]&&i[3].trim()?`<div class="ex">${esc(i[3])}</div>`:""}</div>`).join("")}</div></details>`;
+}
+const rows=g.rows.split("\n").map(r=>r.split("|")).filter(r=>!k||r.join(" ").toLowerCase().includes(k));
+if(!rows.length)return"";
+return head(rows.length)+`<div class="bdy one"><div class="tw"><table><thead><tr>${g.h.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((x,i)=>`<td>${i===0?`<b>${esc(x)}</b>`:esc(x)}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div></details>`;
+}).join("");
+$("#gl").innerHTML=h||`<p class="hint">Không tìm thấy kết quả. Thử từ khóa ngắn hơn.</p>`;
+};
+$("#gq").oninput=e=>{q=e.target.value;draw()};
+$$("#gc .pill").forEach(b=>b.onclick=()=>{cat=b.dataset.c;$$("#gc .pill").forEach(x=>x.classList.toggle("on",x===b));draw()});
+draw();
+};
+const norm=s=>s.toLowerCase().replace(/[-_]/g," ").replace(/[^a-z0-9 ]/g,"").replace(/\s+/g," ").trim();
+const opts=w=>{const same=W.filter(x=>x.id!==w.id&&x.lv===w.lv&&x.w!==w.w&&x.vn!==w.vn);const p=same.length>=3?same:W.filter(x=>x.id!==w.id&&x.w!==w.w&&x.vn!==w.vn);return shuffle([w,...shuffle(p).slice(0,3)])};
+function startTest(type,ids){
+const pool=ids||poolOf(type);
+if(!pool.length){toast("Chưa có từ để kiểm tra");return}
+const list=shuffle(pool).slice(0,TT[type]?TT[type].max:30),sp=canSpeak();
+Q={type,list:list.map((id,i)=>({w:WM[id],k:i%4===3&&!sp?2:i%4})),i:0,score:0,res:{}};
+if(location.hash==="#test")render();else location.hash="test";
+}
+V.test=m=>{
+if(Q){showQ(m);return}
+m.innerHTML=`<h1>Kiểm tra</h1><p class="sub">Mỗi bài trộn 4 dạng câu hỏi: chọn nghĩa, chọn từ, gõ từ và nghe rồi gõ lại.</p><div class="grid g2">${tickets()}</div><h2>Lịch sử gần đây</h2>${S.tests.length?`<div class="tw"><table><thead><tr><th>Ngày</th><th>Bài</th><th>Điểm</th></tr></thead><tbody>${[...S.tests].reverse().slice(0,10).map(t=>`<tr><td>${t.date}</td><td>${TT[t.type].n}</td><td><b>${t.score}/${t.total}</b> (${Math.round(t.score/t.total*100)}%)</td></tr>`).join("")}</tbody></table></div>`:`<p class="hint">Chưa có bài test nào. Học vài từ mới rồi làm bài đầu tiên.</p>`}`;
+};
+function showQ(m){
+const q=Q.list[Q.i];
+if(!q){finish(m);return}
+const w=q.w,L4=["A","B","C","D"];
+let h=`<div class="qb"><div class="row" style="justify-content:space-between"><h3>${TT[Q.type]?TT[Q.type].n:"Ôn từ sai"} · câu ${Q.i+1}/${Q.list.length}</h3><button class="btn sm gh" id="qx">Thoát</button></div><div class="seg">${Q.list.map((x,j)=>`<i class="${j<Q.i?(Q.res[x.w.id]?"d":"w"):j===Q.i?"c":""}"></i>`).join("")}</div>`;
+const ol=(arr,key)=>arr.map((o,j)=>`<button class="opt" data-a="${o.id}"><b>${L4[j]}</b><span>${esc(o[key])}</span></button>`).join("");
+if(q.k===0)h+=`<div class="qw">${esc(w.w)}</div><div class="row" style="justify-content:center"><button class="sbtn" data-sp="${esc(w.w)}" aria-label="Nghe phát âm">${ic("speak",22)}</button></div><p class="hint" style="text-align:center;margin-top:10px">Chọn nghĩa đúng</p>`+ol(opts(w),"vn");
+if(q.k===1)h+=`<div class="qw">${esc(w.vn)}</div><p class="hint" style="text-align:center">Chọn từ tiếng Anh đúng</p>`+ol(opts(w),"w");
+if(q.k===2)h+=`<div class="qw">${esc(w.vn)}</div><p class="hint" style="text-align:center;margin-bottom:16px">Gõ từ tiếng Anh tương ứng</p><div class="row"><input type="text" id="ti" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Gõ đáp án" style="flex:1"><button class="btn" id="tc">Kiểm tra</button></div>`;
+if(q.k===3)h+=`<div class="row" style="justify-content:center;margin:34px 0 10px"><button class="sbtn" data-sp="${esc(w.w)}" style="width:84px;height:84px" aria-label="Nghe phát âm">${ic("speak",36)}</button></div><p class="hint" style="text-align:center;margin-bottom:16px">Nghe và gõ lại từ bạn vừa nghe</p><div class="row"><input type="text" id="ti" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Gõ đáp án" style="flex:1"><button class="btn" id="tc">Kiểm tra</button></div>`;
+h+=`<div id="fb"></div></div>`;
+m.innerHTML=h;
+$("#qx").onclick=()=>{Q=null;render()};
+let done=false;
+const ans=ok=>{
+if(done)return;done=true;
+Q.res[w.id]=ok;if(ok)Q.score++;
+$("#fb").innerHTML=`<div class="fb ${ok?"ok":"ko"}">${ok?"Chính xác!":"Đáp án đúng: "+esc(w.w)+" = "+esc(w.vn)}</div><button class="btn" id="nx">${Q.i+1>=Q.list.length?"Xem kết quả":"Câu tiếp"}</button>`;
+const nx=$("#nx");nx.focus();nx.onclick=()=>{Q.i++;render()};
+};
+if(q.k<2)$$(".opt",m).forEach(b=>b.onclick=()=>{const ok=b.dataset.a===w.id;$$(".opt",m).forEach(x=>{x.disabled=true;if(x.dataset.a===w.id)x.classList.add("ok")});if(!ok)b.classList.add("ko");ans(ok)});
+else{
+const ti=$("#ti"),go=()=>{if(!ti.value.trim())return;ti.disabled=true;ans(norm(ti.value)===norm(w.w))};
+$("#tc").onclick=go;ti.onkeydown=e=>{if(e.key==="Enter")go()};ti.focus();
+}
+if(q.k===3)speak(w.w);
+}
+function finish(m){
+const total=Q.list.length,pc=Math.round(Q.score/total*100),wrong=Q.list.filter(q=>!Q.res[q.w.id]).map(q=>q.w);
+if(!Q.fin&&Q.type!=="re"){
+Q.list.forEach(q=>{const id=q.w.id,s=S.w[id];if(!s)return;if(Q.res[id]){s.ok=(s.ok||0)+1;s.box=Math.min(6,s.box+1);s.due=addDays(today(),INT[s.box])}else{s.ko=(s.ko||0)+1;s.box=1;s.due=addDays(today(),1)}});
+S.tests.push({date:today(),type:Q.type,score:Q.score,total});
+}
+Q.fin=1;
+save();
+m.innerHTML=`<div class="qb"><div class="res ${pc>=70?"r1":pc>=50?"r2":"r3"}"><div class="big">${pc}%</div><h2 style="margin:10px 0 4px">${pc>=90?"Xuất sắc!":pc>=70?"Làm tốt lắm!":pc>=50?"Khá ổn, ôn thêm nhé":"Ôn lại ngay để nhớ chắc hơn"}</h2><p>Đúng ${Q.score}/${total} câu</p>${wrong.length?`<div class="tw"><table><thead><tr><th>Từ cần ôn</th><th>Nghĩa</th></tr></thead><tbody>${wrong.map(w=>`<tr><td><b>${esc(w.w)}</b></td><td>${esc(w.vn)}</td></tr>`).join("")}</tbody></table></div>`:`<div style="height:22px"></div>`}<div class="acts">${wrong.length?`<button class="btn" id="rw">Ôn các từ sai</button>`:""}<button class="btn gh" id="bk2">Về trang kiểm tra</button></div></div></div>`;
+$("#bk2").onclick=()=>{Q=null;render()};
+const r=$("#rw");if(r)r.onclick=()=>{const ids=wrong.map(w=>w.id);Q=null;startTest("re",ids)};
+chrome();
+}
+V.method=m=>{
+const tech=[["Quy tắc 80/20","Ưu tiên từ có độ thông dụng và mức xuất hiện trong đề thi cao (nhãn Học trước)."],["Học theo cụm","Học make a decision thay vì make và decision riêng lẻ."],["Học trong ngữ cảnh","Đọc câu ví dụ rồi tự đặt câu. Não nhớ nghĩa gắn với tình huống."],["Học theo họ từ","success, succeed, successful, successfully: 1 gốc, 4 từ."],["Truy hồi chủ động","Che nghĩa và tự nhớ lại trước khi lật thẻ."],["Liên tưởng hình ảnh và âm","Gắn từ với một hình ảnh vui hoặc âm tiếng Việt gần giống."],["Shadowing","Nghe rồi nhại theo đúng ngữ điệu để nhớ cả âm lẫn nghĩa."],["Nhật ký 3 câu","Mỗi tối viết 3 câu dùng từ mới của ngày hôm nay."],["Học theo chủ đề","Gom từ cùng chủ đề để liên kết thành mạng lưới ý nghĩa."],["Ngắn mà đều","20 phút mỗi ngày tốt hơn 3 giờ vào cuối tuần."]];
+m.innerHTML=`<h1>Phương pháp học</h1><p class="sub">Học đúng từ quan trọng, ôn đúng thời điểm và dùng từ trong ngữ cảnh thật.</p>
+<div class="card pop"><h3>Một ngày học (20–30 phút)</h3>
+<div class="step"><i>1</i><div><b>Học ${S.goal} từ mới</b><p class="hint">Chọn từ có nhãn Học trước. Nghe phát âm, đọc to, lật thẻ để nhớ nghĩa.</p></div></div>
+<div class="step"><i>2</i><div><b>Đặt 1 câu của riêng bạn cho mỗi từ</b><p class="hint">Câu gắn với cuộc sống thật sẽ nhớ lâu hơn nhiều so với nghĩa tiếng Việt.</p></div></div>
+<div class="step"><i>3</i><div><b>Làm test cuối ngày</b><p class="hint">Tự nhớ lại ngay trong ngày giúp trí nhớ dài hạn tăng mạnh.</p></div></div>
+<div class="step"><i>4</i><div><b>Ôn các từ đến hạn</b><p class="hint">Hệ thống tự xếp lịch ôn theo chu kỳ lặp lại ngắt quãng.</p></div></div></div>
+<h2>Lịch kiểm tra</h2><div class="tw"><table><thead><tr><th>Bài</th><th>Tần suất</th><th>Phạm vi</th></tr></thead><tbody><tr><td><b>Test cuối ngày</b></td><td>Mỗi ngày</td><td>Từ học hôm nay</td></tr><tr><td><b>Test 3 ngày</b></td><td>Cứ 3 ngày</td><td>Từ của 3 ngày gần nhất</td></tr><tr><td><b>Test tuần</b></td><td>Mỗi 7 ngày</td><td>Từ của 7 ngày gần nhất</td></tr><tr><td><b>Ôn đến hạn</b></td><td>Khi có từ đến hạn</td><td>Từ theo lịch 1, 3, 7, 14, 30, 60 ngày</td></tr></tbody></table></div>
+<p class="hint" style="margin-top:10px">Trả lời đúng thì từ lên hộp kế tiếp và lùi lịch ôn xa hơn. Trả lời sai thì quay về hộp 1 và ôn lại vào ngày mai.</p>
+<h2>10 kỹ thuật ghi nhớ từ vựng</h2><div class="tiles">${tech.map((x,i)=>`<div class="tile t${i%5}" style="cursor:default"><h3>${x[0]}</h3><small>${x[1]}</small></div>`).join("")}</div>
+<h2>Số từ tham khảo theo cấp độ</h2><div class="tw"><table><thead><tr><th>Cấp</th><th>Vốn từ</th><th>Mục tiêu</th></tr></thead><tbody><tr><td><b>A1</b></td><td>~500</td><td>Giao tiếp rất cơ bản</td></tr><tr><td><b>A2</b></td><td>~1.000</td><td>Hội thoại đời thường</td></tr><tr><td><b>B1</b></td><td>~2.000</td><td>Du lịch, công việc cơ bản</td></tr><tr><td><b>B2</b></td><td>~4.000</td><td>IELTS 5.5–6.5, TOEIC 600–800</td></tr><tr><td><b>C1</b></td><td>~8.000</td><td>IELTS 7.0+, học thuật</td></tr><tr><td><b>C2</b></td><td>~16.000</td><td>Thành thạo gần như bản ngữ</td></tr></tbody></table></div>
+<h2>Cách đọc nhãn</h2><div class="grid g2"><div class="card"><h3>Thông dụng${m5(5,"u")}</h3><p class="hint" style="margin-top:8px">Mức độ xuất hiện trong giao tiếp, tin tức và công việc thực tế.</p></div><div class="card"><h3>Đề thi${m5(5,"x")}</h3><p class="hint" style="margin-top:8px">Mức độ xuất hiện trong IELTS, TOEIC và các đề tiếng Anh phổ thông.</p></div><div class="card"><div class="row"><span class="bd hot">Học trước</span><span class="bd mid">Nên học</span><span class="bd low">Mở rộng</span></div><p class="hint" style="margin-top:10px">Điểm ưu tiên = 60% thông dụng + 40% đề thi. Học từ trái sang phải.</p></div></div>
+<div class="row" style="margin-top:40px;justify-content:space-between"><button class="btn" data-auto>Bắt đầu học</button><button class="btn sm gh" id="rs">Đặt lại toàn bộ tiến độ</button></div>`;
+$("#rs").onclick=()=>{if(confirm("Xóa toàn bộ tiến độ học?")){localStorage.removeItem(KEY);location.hash="home";location.reload()}};
+};
+document.addEventListener("click",e=>{
+const t=e.target.closest("[data-go],[data-t],[data-sp],[data-topic],[data-auto]");
+if(!t)return;
+if(t.dataset.sp!==undefined)speak(t.dataset.sp);
+else if(t.dataset.go)location.hash=t.dataset.go;
+else if(t.dataset.t)startTest(t.dataset.t);
+else if(t.dataset.topic!==undefined)startLearn(+t.dataset.topic);
+else if(t.dataset.auto!==undefined)startLearn(null);
+});
+document.addEventListener("keydown",e=>{
+if(!L||!L.q.length||!$("#fc")||e.target.tagName==="INPUT")return;
+if(e.key===" "){e.preventDefault();$("#fc").classList.toggle("flip")}
+if(e.key==="ArrowRight")$("#ok").click();
+if(e.key==="ArrowLeft")$("#kb").click();
+});
+function theme(){document.documentElement.dataset.theme=S.theme;$("#th").innerHTML=ic(S.theme==="dark"?"sun":"moon",20)}
+$("#th").onclick=()=>{S.theme=S.theme==="dark"?"light":"dark";save();theme()};
+let ly=0;
+addEventListener("scroll",()=>{const y=scrollY;$("#dock").classList.toggle("hide",y>ly&&y>180);ly=y},{passive:true});
+theme();dock();
+addEventListener("hashchange",render);
+render();
+</script>
+</body>
+</html>
