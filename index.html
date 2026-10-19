@@ -295,20 +295,11 @@ tr:last-child td{border-bottom:0}
 .sp-t{color:#fff;font-family:var(--fd);font-weight:800;font-size:18px}
 #pg{position:fixed;inset:0;z-index:9000;pointer-events:none;visibility:hidden;overflow:hidden}
 #pg.on{visibility:visible}
-.pgb{position:absolute;top:-15%;bottom:-15%;width:58%;left:-12%;transform:translateX(-170%) skewX(-14deg);border-left:5px solid var(--ink);border-right:5px solid var(--ink)}
+.pgb{position:absolute;top:-15%;bottom:-15%;width:58%;left:-12%;transform:translate3d(-170%,0,0) skewX(-14deg);will-change:transform;backface-visibility:hidden;border-left:5px solid var(--ink);border-right:5px solid var(--ink)}
 .pgb.b1{background:var(--coral);left:-14%}.pgb.b2{background:var(--sun);left:18%}.pgb.b3{background:var(--blue);left:50%}
-#pg.in .pgb{animation:bIn .34s cubic-bezier(.5,0,.3,1) forwards}
-#pg.out .pgb{transform:translateX(0) skewX(-14deg);animation:bOut .36s cubic-bezier(.7,0,.5,1) forwards}
-.pgb.b2{animation-delay:.05s!important}.pgb.b3{animation-delay:.1s!important}
-@keyframes bIn{to{transform:translateX(0) skewX(-14deg)}}
-@keyframes bOut{to{transform:translateX(190%) skewX(-14deg)}}
-.pgburst{position:absolute;left:50%;top:50%;width:min(330px,80vw);aspect-ratio:1;transform:translate(-50%,-50%) scale(0) rotate(-12deg);display:grid;place-items:center}
+.pgburst{position:absolute;left:50%;top:50%;width:min(330px,80vw);aspect-ratio:1;transform:translate(-50%,-50%) scale(0) rotate(-12deg);will-change:transform;display:grid;place-items:center}
 .pgburst svg{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(6px 8px 0 rgba(27,19,64,.9))}
 .pgburst span{position:relative;font-family:var(--fe);font-size:clamp(34px,10vw,52px);line-height:1;letter-spacing:.04em;text-align:center;max-width:62%;color:#fff;text-shadow:3px 0 0 var(--ink),-3px 0 0 var(--ink),0 3px 0 var(--ink),0 -3px 0 var(--ink),2px 2px 0 var(--ink),-2px 2px 0 var(--ink),2px -2px 0 var(--ink),-2px -2px 0 var(--ink)}
-#pg.in .pgburst{animation:bPop .34s .12s cubic-bezier(.3,1.9,.5,1) forwards}
-#pg.out .pgburst{transform:translate(-50%,-50%) scale(1) rotate(-4deg);animation:bGone .3s ease-in forwards}
-@keyframes bPop{to{transform:translate(-50%,-50%) scale(1) rotate(-4deg)}}
-@keyframes bGone{to{transform:translate(-50%,-50%) scale(0) rotate(14deg)}}
 .sk{position:fixed;inset:0;z-index:9800;display:grid;place-items:center;padding:18px;background:rgba(27,19,64,.62);animation:fadeIn .25s}
 .sk[hidden]{display:none}
 @keyframes fadeIn{from{opacity:0}}
@@ -329,6 +320,16 @@ tr:last-child td{border-bottom:0}
 @media(max-width:900px){.c4,.c5,.c7,.c8{grid-column:1/-1}.hero{min-height:290px}.mm{width:112px;flex-basis:112px}}
 @media(max-width:520px){.dk{min-width:40px;height:42px;padding:0 8px}.dk.on{padding:0 8px}.dk.on span{max-width:0}#dock{gap:2px;padding:6px}.brand span{font-size:27px}.brand .bm{width:42px;height:42px}.tk{grid-template-columns:1fr 76px}.chip{padding:0 12px}.sk-n{font-size:88px}.mm{width:96px;flex-basis:96px}.bub{font-size:16px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.hw span{opacity:1}#splash{display:none}}
+
+main.enter{animation:mIn .5s cubic-bezier(.2,.8,.2,1) backwards}
+@keyframes mIn{from{opacity:0;transform:translate3d(0,28px,0)}}
+.cz{font-family:var(--fd);font-weight:800;font-size:clamp(24px,5vw,36px);line-height:1.35;text-align:center;margin:22px 0 10px}
+.cz u{display:inline-block;min-width:96px;border-bottom:5px solid var(--coral);text-decoration:none;color:var(--coral);text-align:center;padding:0 8px;margin:0 4px}
+.cz u.ok{color:#17b57e;border-color:#17b57e}
+.cz u.ko{color:var(--coral)}
+.pat{font-family:var(--fe);font-size:clamp(34px,9vw,56px);letter-spacing:.12em;text-align:center;margin:8px 0 6px;word-break:break-word;color:var(--blue)}
+[data-theme=dark] .pat{color:var(--sun)}
+@media(prefers-reduced-motion:reduce){main.enter{animation:none!important}}
 </style>
 </head>
 <body>
@@ -1696,6 +1697,164 @@ entrepreneur|doanh nhân khởi nghiệp|b2|4|5
 deadline|hạn chót|b1|5|5`]
 ];
 </script>
+<script>const parseQ=(raw,p)=>raw.trim().split("\n").map((l,i)=>{const f=l.split("|");return{id:p+i,s:f[0],a:f[1],o:[f[2],f[3],f[4]],tag:f[5],ex:f[6],t:/\([A-Za-z\s\/]+\)/.test(f[0])}});
+const GQ=parseQ(`
+She ___ to school every day.|goes|go|going|went|Thì|Hiện tại đơn, chủ ngữ ngôi 3 số ít thêm s/es.
+I ___ TV when you called.|was watching|watched|am watching|have watched|Thì|Quá khứ tiếp diễn: hành động đang diễn ra thì bị cắt ngang.
+They ___ in Hanoi since 2020.|have lived|lived|live|are living|Thì|Hiện tại hoàn thành đi với since.
+By the time we arrived, the film ___.|had started|started|has started|was starting|Thì|Quá khứ hoàn thành: xảy ra trước một mốc trong quá khứ.
+This time tomorrow I ___ on the beach.|will be lying|will lie|lie|am lying|Thì|Tương lai tiếp diễn: đang diễn ra tại một thời điểm tương lai.
+By next year she ___ her degree.|will have finished|will finish|finishes|has finished|Thì|Tương lai hoàn thành đi với by next year.
+Look! It ___ now.|is raining|rains|rained|has rained|Thì|Hiện tại tiếp diễn với tín hiệu Look!.
+He ___ for two hours when she came.|had been waiting|has been waiting|waits|will wait|Thì|Quá khứ hoàn thành tiếp diễn: nhấn mạnh quá trình trước mốc quá khứ.
+I ___ my keys. I can't find them.|have lost|lost|had lost|was losing|Thì|Hiện tại hoàn thành: kết quả còn ở hiện tại.
+Yesterday I ___ (meet) an old friend.|met|meet|meets|meeting|Thì|Quá khứ đơn của meet là met.
+Water ___ (boil) at 100 degrees.|boils|boil|boiled|boiling|Thì|Chân lý khoa học dùng hiện tại đơn.
+When he ___ (arrive), call me.|arrives|will arrive|arrived|arriving|Thì|Mệnh đề thời gian dùng hiện tại đơn thay cho tương lai.
+While I ___ (walk) home, it started to rain.|was walking|walked|walk|walks|Thì|While + quá khứ tiếp diễn cho hành động đang diễn ra.
+I will call you as soon as I ___ home.|get|will get|got|am getting|Thì|Sau as soon as dùng hiện tại đơn cho tương lai.
+I ___ him last week.|saw|have seen|had seen|was seeing|Thì|Mốc quá khứ rõ ràng (last week) dùng quá khứ đơn.
+Have you ever ___ sushi?|eaten|ate|eat|eating|Thì|Have you ever + V3.
+She has ___ finished her homework.|already|yet|ago|since|Thì|Already đứng giữa has và V3 trong câu khẳng định.
+I haven't finished ___.|yet|already|ago|still|Thì|Yet dùng trong câu phủ định và nghi vấn.
+They moved here two years ___.|ago|before|since|for|Thì|Ago đi với quá khứ đơn.
+Have you been here ___ Monday?|since|for|from|ago|Thì|Since + mốc thời gian.
+I have worked here ___ five years.|for|since|during|ago|Thì|For + khoảng thời gian.
+If it ___ tomorrow, we will cancel the trip.|rains|will rain|rained|would rain|Câu điều kiện|Loại 1: if + hiện tại đơn, will + V.
+If I ___ rich, I would buy a yacht.|were|am|will be|had been|Câu điều kiện|Loại 2: if + quá khứ, would + V; be dùng were.
+If she had studied, she ___ the exam.|would have passed|would pass|will pass|had passed|Câu điều kiện|Loại 3: if + had V3, would have V3.
+If you heat ice, it ___.|melts|will melt|would melt|melted|Câu điều kiện|Loại 0: sự thật hiển nhiên, cả hai vế hiện tại đơn.
+If I ___ (be) you, I would apologise.|were|am|be|been|Câu điều kiện|Loại 2: be chia là were ở mọi ngôi.
+I wish I ___ more time.|had|have|would have|will have|Câu điều kiện|Wish cho hiện tại: dùng quá khứ đơn.
+I wish I ___ harder last year.|had studied|studied|would study|have studied|Câu điều kiện|Wish cho quá khứ: dùng quá khứ hoàn thành.
+Unless you hurry, you ___ the bus.|will miss|would miss|missed|have missed|Câu điều kiện|Unless = if not, loại 1.
+Had I known, I ___ you.|would have told|will tell|told|would tell|Câu điều kiện|Đảo ngữ loại 3: Had + S + V3, S + would have V3.
+The window ___ by a boy yesterday.|was broken|broke|is broken|has broken|Bị động|Bị động quá khứ đơn: was/were + V3.
+English ___ all over the world.|is spoken|speaks|is speaking|spoke|Bị động|Bị động hiện tại đơn: am/is/are + V3.
+The report ___ by Friday.|will be finished|will finish|finishes|is finishing|Bị động|Bị động tương lai: will be + V3.
+The house ___ at the moment.|is being painted|is painted|paints|has painted|Bị động|Bị động hiện tại tiếp diễn: is/are being + V3.
+This bridge ___ (build) in 1990.|was built|built|is built|has built|Bị động|Quá khứ đơn bị động: was built.
+She said, "I am tired." She said that she ___ tired.|was|is|were|has been|Câu gián tiếp|Lùi thì: am/is thành was.
+He asked me where I ___.|lived|do live|live|did live|Câu gián tiếp|Câu hỏi gián tiếp dùng trật tự câu khẳng định và lùi thì.
+"I will help you," he said. He said he ___ help me.|would|will|shall|can|Câu gián tiếp|Will lùi thành would.
+He asked me where I ___ (live).|lived|live|living|lives|Câu gián tiếp|Câu hỏi gián tiếp lùi thì: live thành lived.
+I enjoy ___ to music.|listening|to listen|listen|listened|Danh động từ|Enjoy + V-ing.
+She decided ___ abroad.|to study|studying|study|studied|Danh động từ|Decide + to V.
+He avoided ___ the question.|answering|to answer|answer|answered|Danh động từ|Avoid + V-ing.
+I'm looking forward to ___ you.|seeing|see|saw|to see|Danh động từ|To trong look forward to là giới từ nên theo sau là V-ing.
+They want ___ a new car.|to buy|buying|buy|bought|Danh động từ|Want + to V.
+She suggested ___ to the cinema.|going|to go|go|went|Danh động từ|Suggest + V-ing.
+I stopped ___ because I was tired.|working|to work|work|worked|Danh động từ|Stop + V-ing nghĩa là ngừng làm việc đó.
+I forgot ___ the door, so a thief came in.|to lock|locking|lock|locked|Danh động từ|Forget + to V nghĩa là quên chưa làm.
+He is used to ___ early.|getting up|get up|got up|to get up|Danh động từ|Be used to + V-ing nghĩa là quen với.
+My boss made me ___ overtime.|work|to work|working|worked|Danh động từ|Make + O + V nguyên mẫu.
+She enjoys ___ (swim) in the sea.|swimming|to swim|swim|swam|Danh động từ|Enjoy + V-ing.
+Let me ___ you.|help|to help|helping|helped|Danh động từ|Let + O + V nguyên mẫu.
+She is too tired ___ anything.|to do|doing|do|for do|Danh động từ|Too + adj + to V.
+He is old enough ___ drive a car.|to|for|that|so|Danh động từ|Adj + enough + to V.
+I'd rather ___ at home tonight.|stay|to stay|staying|stayed|Danh động từ|Would rather + V nguyên mẫu.
+She is ___ honest woman.|an|a|the|(không điền)|Mạo từ|Honest bắt đầu bằng âm nguyên âm nên dùng an.
+I saw ___ elephant at the zoo.|an|a|the|(không điền)|Mạo từ|Elephant bắt đầu bằng nguyên âm.
+___ sun rises in the east.|The|A|An|(không điền)|Mạo từ|Vật duy nhất dùng the.
+He plays ___ guitar very well.|the|a|an|(không điền)|Mạo từ|Nhạc cụ dùng the.
+They have ___ breakfast at seven.|(không điền)|a|the|an|Mạo từ|Bữa ăn thường không dùng mạo từ.
+I'm interested ___ music.|in|on|at|about|Giới từ|Interested in.
+She is good ___ maths.|at|in|on|for|Giới từ|Good at.
+The meeting is ___ Monday.|on|in|at|by|Giới từ|On + thứ trong tuần.
+We will meet ___ 9 o'clock.|at|on|in|by|Giới từ|At + giờ cụ thể.
+He was born ___ 1998.|in|on|at|since|Giới từ|In + năm.
+I'm afraid ___ spiders.|of|from|at|with|Giới từ|Afraid of.
+She is married ___ a doctor.|to|with|by|for|Giới từ|Married to.
+This book is ___ than that one.|more interesting|interestinger|most interesting|more interested|So sánh|Tính từ dài dùng more + adj + than.
+He is the ___ student in class.|tallest|taller|most tall|more tall|So sánh|So sánh nhất của tính từ ngắn: the + adj-est.
+She runs ___ than me.|faster|more fast|fastest|fastly|So sánh|Fast là tính từ và trạng từ; so sánh hơn là faster.
+Today is as hot ___ yesterday.|as|than|so|more|So sánh|So sánh bằng: as + adj + as.
+The more you practice, ___ you become.|the better|better|the best|more better|So sánh|So sánh kép: the + so sánh hơn, the + so sánh hơn.
+The man ___ lives next door is a doctor.|who|which|whose|whom|Mệnh đề quan hệ|Who thay cho người làm chủ ngữ.
+The book ___ I bought is great.|which|who|whose|where|Mệnh đề quan hệ|Which thay cho vật.
+That's the girl ___ bag was stolen.|whose|who|which|whom|Mệnh đề quan hệ|Whose chỉ sở hữu.
+This is the place ___ we first met.|where|which|when|who|Mệnh đề quan hệ|Where thay cho nơi chốn.
+You ___ smoke here. It is forbidden.|mustn't|don't have to|needn't|may|Động từ khuyết thiếu|Mustn't diễn tả sự cấm đoán.
+You ___ come early. The meeting is at noon.|don't have to|mustn't|can't|shouldn't|Động từ khuyết thiếu|Don't have to nghĩa là không cần thiết.
+She ___ be at home. The lights are on.|must|can't|needn't|would|Động từ khuyết thiếu|Must diễn tả suy đoán chắc chắn.
+You look ill. You ___ see a doctor.|should|would|might|can|Động từ khuyết thiếu|Should dùng để khuyên.
+___ you help me, please?|Could|Must|Should|Ought|Động từ khuyết thiếu|Could dùng để nhờ lịch sự.
+___ it was raining, we went out.|Although|Because|So|However|Từ nối|Although mở đầu mệnh đề nhượng bộ.
+He was tired, ___ he kept working.|but|so|because|although|Từ nối|But nối hai ý tương phản.
+She studied hard ___ she could pass the exam.|so that|because|although|despite|Từ nối|So that chỉ mục đích.
+___ the rain, we played football.|Despite|Although|Because|However|Từ nối|Despite + danh từ.
+I was late ___ the traffic.|because of|because|although|despite|Từ nối|Because of + danh từ.
+It was so cold ___ we stayed inside.|that|than|as|which|Từ nối|So + adj + that.
+It was such a good film ___ I watched it twice.|that|so|than|as|Từ nối|Such + a + adj + N + that.
+There isn't ___ milk left.|any|some|many|few|Lượng từ|Câu phủ định dùng any.
+I have ___ friends in this city.|few|little|much|a little|Lượng từ|Few + danh từ đếm được số nhiều, mang nghĩa rất ít.
+How ___ water do you drink?|much|many|few|a few|Lượng từ|Much + danh từ không đếm được.
+___ of my parents are teachers.|Both|Either|Neither|Each|Lượng từ|Both nghĩa là cả hai.
+Neither of them ___ English.|speaks|speak|are speaking|have spoken|Hòa hợp chủ vị|Neither of + số nhiều nhưng động từ chia số ít.
+The news ___ shocking.|is|are|were|have been|Hòa hợp chủ vị|News là danh từ không đếm được.
+Everyone ___ here.|is|are|were|have|Hòa hợp chủ vị|Everyone đi với động từ số ít.
+Each of the students ___ a book.|has|have|are having|having|Hòa hợp chủ vị|Each of + số nhiều nhưng động từ chia số ít.
+She is a teacher, ___?|isn't she|is she|doesn't she|wasn't she|Câu hỏi đuôi|Câu khẳng định thì hỏi đuôi phủ định.
+You don't like coffee, ___?|do you|don't you|are you|did you|Câu hỏi đuôi|Câu phủ định thì hỏi đuôi khẳng định.
+Never ___ such a beautiful view.|have I seen|I have seen|I did see|had I saw|Đảo ngữ|Never ở đầu câu thì đảo trợ động từ lên trước chủ ngữ.
+Not only ___ late, but he also forgot the documents.|did he arrive|he arrived|he did arrive|arrived he|Đảo ngữ|Not only ở đầu câu thì đảo trợ động từ.
+Rarely ___ to the cinema.|does she go|she goes|goes she|she does go|Đảo ngữ|Trạng từ phủ định đầu câu gây đảo ngữ.
+It's important that he ___ on time.|be|is|was|will be|Giả định|Sau it's important that dùng động từ nguyên mẫu.
+I suggest that she ___ a doctor.|see|sees|saw|will see|Giả định|Suggest that + S + V nguyên mẫu.
+It's time we ___ home.|went|go|will go|going|Giả định|It's time + S + V quá khứ đơn.
+She is a very ___ (create) person.|creative|creation|create|creatively|Từ loại|Cần tính từ bổ nghĩa cho danh từ person.
+His ___ (perform) was impressive.|performance|performer|performing|performed|Từ loại|Sau tính từ sở hữu his cần danh từ.
+We were ___ (shock) by the news.|shocked|shocking|shock|shockingly|Từ loại|Tính từ đuôi -ed mô tả cảm xúc của người.
+She speaks English ___ (fluent).|fluently|fluent|fluency|fluence|Từ loại|Trạng từ bổ nghĩa cho động từ.
+The ___ (important) of sleep is clear.|importance|important|importantly|import|Từ loại|Sau the cần danh từ.
+The ___ (child) are playing outside.|children|childs|childrens|child|Từ loại|Số nhiều bất quy tắc của child là children.
+When I was a child, I ___ play outside every day.|used to|use to|am used to|was used to|Thói quen|Used to + V diễn tả thói quen trong quá khứ.
+I need ___ advice.|some|an|a|many|Danh từ không đếm được|Advice không đếm được nên dùng some.
+I ___ (lose) my keys. I can't find them.|have lost|lost|had lost|lose|Thì|Hiện tại hoàn thành vì kết quả còn ở hiện tại.
+We ___ (see) a great film last night.|saw|see|seen|have seen|Thì|Last night là mốc quá khứ, dùng quá khứ đơn.
+By next year she ___ (finish) her degree.|will have finished|will finish|finishes|finished|Thì|Tương lai hoàn thành với by next year.
+`,"g");
+const VQ=parseQ(`
+We need to ___ a decision before Friday.|make|do|take|have|Từ vựng|Collocation: make a decision.
+He has a lot of ___ in teaching.|experience|experiment|expert|expense|Từ vựng|Experience = kinh nghiệm.
+The company will ___ fifty new employees.|hire|fire|tire|wire|Từ vựng|Hire = thuê, tuyển dụng.
+Air ___ is a serious problem in big cities.|pollution|solution|collection|production|Từ vựng|Pollution = ô nhiễm.
+She is very ___ about her future.|optimistic|optimism|optic|option|Từ vựng|Optimistic = lạc quan.
+Regular exercise improves your ___ health.|physical|physics|physician|physically|Từ vựng|Physical health = sức khỏe thể chất.
+I'm really ___ for the opportunity.|grateful|careful|helpful|useful|Từ vựng|Grateful = biết ơn.
+The government plans to ___ taxes.|reduce|produce|introduce|deduce|Từ vựng|Reduce = giảm.
+Our flight was ___ because of bad weather.|delayed|decayed|delivered|delighted|Từ vựng|Delayed = bị hoãn.
+He was ___ of stealing the money.|accused|excused|refused|amused|Từ vựng|Accused of = bị buộc tội.
+It is ___ to wear a seat belt.|essential|potential|financial|official|Từ vựng|Essential = thiết yếu.
+The cost of ___ in Hanoi is high.|living|lives|live|lived|Từ vựng|Cost of living = chi phí sinh hoạt.
+Scientists have made an important ___.|discovery|disaster|discussion|discount|Từ vựng|Discovery = phát hiện.
+Smoking is ___ for your health.|harmful|harmless|helpful|healthy|Từ vựng|Harmful = có hại.
+He is an ___ person; he never tells lies.|honest|honour|honestly|honesty|Từ vựng|Honest = trung thực.
+We should ___ energy to protect the environment.|save|waste|lose|spend|Từ vựng|Save energy = tiết kiệm năng lượng.
+Can you do me a ___?|favour|favourite|flavour|failure|Từ vựng|Do me a favour = giúp tôi một việc.
+She ___ the exam because she studied hard.|passed|missed|lost|failed|Từ vựng|Pass an exam = đỗ kỳ thi.
+He was fined for ___ the speed limit.|exceeding|expecting|exploring|exporting|Từ vựng|Exceed = vượt quá.
+They reached an ___ after hours of talks.|agreement|argument|arrangement|announcement|Từ vựng|Reach an agreement = đạt được thỏa thuận.
+There was a ___ difference between the two results.|significant|silent|simple|single|Từ vựng|Significant = đáng kể.
+My grandmother is very ___; she does everything herself.|independent|dependent|indifferent|innocent|Từ vựng|Independent = độc lập.
+The company ___ a new product last month.|launched|labelled|landed|leaned|Từ vựng|Launch = tung ra, ra mắt.
+Tourism is the main source of ___ in this region.|income|outcome|overcome|intake|Từ vựng|Income = thu nhập.
+I'd like to ___ a table for two at eight.|reserve|reverse|resolve|reward|Từ vựng|Reserve = đặt trước.
+Please ___ me when you arrive.|notify|modify|justify|verify|Từ vựng|Notify = thông báo.
+The ___ between the two cities is about 200 km.|distance|distant|distinct|distract|Từ vựng|Distance = khoảng cách.
+She felt ___ after the long journey.|exhausted|exhausting|exhaust|exhaustion|Từ vựng|Exhausted = kiệt sức.
+He gave a very ___ answer, so everyone understood.|clear|clean|clever|close|Từ vựng|Clear = rõ ràng.
+The new law will ___ into effect next month.|come|go|take|put|Từ vựng|Come into effect = có hiệu lực.
+You must ___ attention to the instructions.|pay|make|do|take|Từ vựng|Pay attention = chú ý.
+He is ___ for managing the whole team.|responsible|reasonable|respectful|reliable|Từ vựng|Responsible for = chịu trách nhiệm về.
+Doctors ___ a new treatment for the disease.|developed|enveloped|devoted|deveined|Từ vựng|Develop = phát triển.
+The meeting was ___ until next week.|postponed|prevented|promoted|protected|Từ vựng|Postpone = hoãn.
+She is ___ to speak three languages.|able|capable|enable|ability|Từ vựng|Be able to = có thể.
+I can't ___ the price of this laptop.|afford|offer|effort|affect|Từ vựng|Afford = đủ khả năng chi trả.
+The teacher ___ us to work in groups.|encouraged|discouraged|encountered|endangered|Từ vựng|Encourage = khuyến khích.
+The ___ of the building took two years.|construction|instruction|destruction|production|Từ vựng|Construction = việc xây dựng.
+`,"v");
+</script>
 <script>const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const LV=["a1","a2","b1","b2","c1","c2"];
@@ -1743,6 +1902,7 @@ const TT={
 d1:{n:"Test cuối ngày",d:"Kiểm tra các từ đã học hôm nay để nhớ sâu trước khi ngủ.",pool:()=>S.days[today()]||[],max:20},
 d3:{n:"Test 3 ngày",d:"Ôn lại các từ của 3 ngày gần nhất. Cứ 3 ngày có 1 bài.",pool:()=>poolDays(3),max:25,gap:3},
 wk:{n:"Test tuần",d:"Tổng kiểm tra 7 ngày gần nhất. Mỗi tuần 1 bài.",pool:()=>poolDays(7),max:40,gap:7},
+gr:{n:"Test ngữ pháp",d:"Điền vào chỗ trống: thì, điều kiện, bị động, giới từ, mạo từ và cả từ vựng.",pool:()=>[],max:25},
 srs:{n:"Ôn từ đến hạn",d:"Các từ đến lịch ôn theo chu kỳ 1, 3, 7, 14, 30, 60 ngày.",pool:dueIds,max:30}
 };
 const poolOf=t=>TT[t].pool().filter(id=>S.w[id]);
@@ -1781,10 +1941,10 @@ m.innerHTML="";
 $$(".dk[data-n]").forEach(b=>b.classList.toggle("on",b.dataset.n===(ok?v:"home")));
 chrome();
 $("#dock").classList.remove("hide");
-scrollTo(0,0);
+scrollTo({top:0,behavior:"instant"});
 }
 function tickets(){
-return Object.keys(TT).map(t=>{const x=TT[t],s=status(t);return`<div class="tk ${s.due?"due":s.p?"rdy":""}"><div class="mn"><h3>${x.n}</h3><p class="hint">${x.d}</p><b>${s.txt}</b><button class="btn sm ${s.p?"":"gh"}" data-t="${t}" ${s.p?"":"disabled"}>Làm bài</button></div><div class="st">${s.p}<small>từ</small></div></div>`}).join("");
+return Object.keys(TT).map(t=>{const x=TT[t],s=status(t);return`<div class="tk ${s.due?"due":s.p?"rdy":""}"><div class="mn"><h3>${x.n}</h3><p class="hint">${x.d}</p><b>${s.txt}</b><button class="btn sm ${s.p?"":"gh"}" data-t="${t}" ${s.p?"":"disabled"}>Làm bài</button></div><div class="st">${s.p}<small>${t==="gr"?"câu":"từ"}</small></div></div>`}).join("");
 }
 const wod=()=>{const a=W.filter(w=>w.p>=4.2&&w.w.length<=11&&!w.w.includes(" "));let h=0;for(const c of today())h=(h*31+c.charCodeAt(0))>>>0;return a[h%a.length]};
 V.home=m=>{
@@ -1819,7 +1979,7 @@ if(L&&L.done){m.innerHTML=`<div class="qb"><div class="res r1"><div class="big">
 if(L&&L.q.length){cardView(m);return}
 m.innerHTML=`<h1>Học từ mới</h1><p class="sub">Từ được xếp theo cấp độ và độ ưu tiên: thông dụng trong đời sống cộng với mức xuất hiện trong đề thi.</p>
 <div class="row" style="margin-bottom:8px"><span class="hint">Số từ mỗi lượt</span>${[5,10,15,20,30].map(n=>`<button class="pill ${S.goal===n?"on":""}" data-g="${n}">${n}</button>`).join("")}</div>
-<div style="margin:14px 0 34px"><button class="btn" data-auto>Học gợi ý hôm nay</button></div>
+<div class="row" style="margin:14px 0 34px"><button class="btn" data-auto>Học gợi ý hôm nay</button><button class="btn sun" data-t="gr">Luyện ngữ pháp và điền từ</button></div>
 <h2 style="margin-top:0">Hoặc chọn một chủ đề</h2><div class="tiles">${T.map((t,i)=>{const ws=W.filter(x=>x.t===i),d=ws.filter(x=>S.w[x.id]).length;return`<button class="tile t${i%5}" data-topic="${i}"><span class="em">${t[0]}</span><div><h3>${t[1]}</h3><small>${d}/${ws.length} từ đã học</small><div class="pb"><i style="width:${d/ws.length*100}%"></i></div></div></button>`}).join("")}</div>`;
 $$("[data-g]",m).forEach(b=>b.onclick=()=>{S.goal=+b.dataset.g;save();render()});
 };
@@ -1878,7 +2038,7 @@ draw();
 };
 V.grammar=m=>{
 let cat="",q="";
-m.innerHTML=`<h1>Ngữ pháp tổng hợp</h1><p class="sub">12 thì, câu điều kiện, bị động, gián tiếp, danh động từ, đảo ngữ, mệnh đề, động từ bất quy tắc, cụm động từ và collocation.</p><input type="search" id="gq" placeholder="Tìm cấu trúc hoặc từ khóa" style="width:100%"><div class="fl" id="gc">${[["","Tất cả"],...GRAMMAR.map(g=>[g.id,g.ic+" "+g.t])].map(x=>`<button class="pill ${x[0]===""?"on":""}" data-c="${x[0]}">${x[1]}</button>`).join("")}</div><div id="gl"></div>`;
+m.innerHTML=`<h1>Ngữ pháp tổng hợp</h1><p class="sub">12 thì, câu điều kiện, bị động, gián tiếp, danh động từ, đảo ngữ, mệnh đề, động từ bất quy tắc, cụm động từ và collocation.</p><div class="row" style="margin-bottom:12px"><button class="btn sun" data-t="gr">Luyện điền từ ngữ pháp</button></div><input type="search" id="gq" placeholder="Tìm cấu trúc hoặc từ khóa" style="width:100%"><div class="fl" id="gc">${[["","Tất cả"],...GRAMMAR.map(g=>[g.id,g.ic+" "+g.t])].map(x=>`<button class="pill ${x[0]===""?"on":""}" data-c="${x[0]}">${x[1]}</button>`).join("")}</div><div id="gl"></div>`;
 const draw=()=>{
 const k=q.toLowerCase();
 const h=GRAMMAR.map((g,gi)=>{
@@ -1901,55 +2061,72 @@ draw();
 };
 const norm=s=>s.toLowerCase().replace(/[-_]/g," ").replace(/[^a-z0-9 ]/g,"").replace(/\s+/g," ").trim();
 const opts=w=>{const same=W.filter(x=>x.id!==w.id&&x.lv===w.lv&&x.w!==w.w&&x.vn!==w.vn);const p=same.length>=3?same:W.filter(x=>x.id!==w.id&&x.w!==w.w&&x.vn!==w.vn);return shuffle([w,...shuffle(p).slice(0,3)])};
+const qid=x=>x.w?x.w.id:x.g.id;
+const czk=g=>g.t&&Math.random()<.5?6:5;
+const blank=(s,a)=>esc(s).replace("___",`<u id="bl">${a?esc(a):"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"}</u>`);
+const pat=w=>[...w.w].map((c,i)=>c===" "?"/":(i===0||i===w.w.length-1)?c:"_").join(" ");
 function startTest(type,ids){
-const pool=ids||poolOf(type);
-if(!pool.length){toast("Chưa có từ để kiểm tra");return}
-const list=shuffle(pool).slice(0,TT[type]?TT[type].max:30),sp=canSpeak();
-Q={type,list:list.map((id,i)=>({w:WM[id],k:i%4===3&&!sp?2:i%4})),i:0,score:0,res:{}};
+const base=ids||poolOf(type),sp=canSpeak();
+if(!base.length&&type!=="gr"){toast("Chưa có từ để kiểm tra");return}
+const vl=type==="gr"?[]:shuffle(base).slice(0,TT[type]?TT[type].max:30).map((id,i)=>{let k=i%5;if(k===3&&!sp)k=4;return{w:WM[id],k}});
+let ex=[];
+if(type==="gr")ex=[...shuffle(GQ).slice(0,16),...shuffle(VQ).slice(0,9)];
+else if(type!=="re"){const n=vl.length;ex=[...shuffle(GQ).slice(0,Math.max(3,Math.round(n*.3))),...shuffle(VQ).slice(0,Math.max(2,Math.round(n*.25)))]}
+Q={type,list:shuffle([...vl,...ex.map(g=>({g,k:czk(g)}))]),i:0,score:0,res:{}};
 if(location.hash==="#test")render();else location.hash="test";
 }
 V.test=m=>{
 if(Q){showQ(m);return}
-m.innerHTML=`<h1>Kiểm tra</h1><p class="sub">Mỗi bài trộn 4 dạng câu hỏi: chọn nghĩa, chọn từ, gõ từ và nghe rồi gõ lại.</p><div class="grid g2">${tickets()}</div><h2>Lịch sử gần đây</h2>${S.tests.length?`<div class="tw"><table><thead><tr><th>Ngày giờ</th><th>Bài</th><th>Điểm</th></tr></thead><tbody>${S.log.filter(x=>x.k==="t").slice(-10).reverse().map(t=>`<tr><td>${dmy(fmt(new Date(t.ts)))}${t.nt?"":" "+hhmm(t.ts)}</td><td>${tn(t.type)}</td><td><b>${t.score}/${t.total}</b> (${Math.round(t.score/t.total*100)}%)</td></tr>`).join("")}</tbody></table></div>`:`<p class="hint">Chưa có bài test nào. Học vài từ mới rồi làm bài đầu tiên.</p>`}`;
+m.innerHTML=`<h1>Kiểm tra</h1><p class="sub">Mỗi bài trộn từ vựng (chọn nghĩa, chọn từ, gõ từ, nghe, điền chữ cái) với câu điền vào chỗ trống về ngữ pháp và từ vựng. Từ vựng chiếm phần lớn.</p><div class="grid g2">${tickets()}</div><h2>Lịch sử gần đây</h2>${S.tests.length?`<div class="tw"><table><thead><tr><th>Ngày giờ</th><th>Bài</th><th>Điểm</th></tr></thead><tbody>${S.log.filter(x=>x.k==="t").slice(-10).reverse().map(t=>`<tr><td>${dmy(fmt(new Date(t.ts)))}${t.nt?"":" "+hhmm(t.ts)}</td><td>${tn(t.type)}</td><td><b>${t.score}/${t.total}</b> (${Math.round(t.score/t.total*100)}%)</td></tr>`).join("")}</tbody></table></div>`:`<p class="hint">Chưa có bài test nào. Thử ngay Test ngữ pháp hoặc học vài từ mới.</p>`}`;
 };
 function showQ(m){
 const q=Q.list[Q.i];
 if(!q){finish(m);return}
-const w=q.w,L4=["A","B","C","D"];
-let h=`<div class="qb"><div class="row" style="justify-content:space-between"><h3>${TT[Q.type]?TT[Q.type].n:"Ôn từ sai"} · câu ${Q.i+1}/${Q.list.length}</h3><button class="btn sm gh" id="qx">Thoát</button></div><div class="seg">${Q.list.map((x,j)=>`<i class="${j<Q.i?(Q.res[x.w.id]?"d":"w"):j===Q.i?"c":""}"></i>`).join("")}</div>`;
+const w=q.w,g=q.g,L4=["A","B","C","D"];
+let h=`<div class="qb"><div class="row" style="justify-content:space-between"><h3>${tn(Q.type)} · câu ${Q.i+1}/${Q.list.length}</h3><button class="btn sm gh" id="qx">Thoát</button></div><div class="seg">${Q.list.map((x,j)=>`<i class="${j<Q.i?(Q.res[qid(x)]?"d":"w"):j===Q.i?"c":""}"></i>`).join("")}</div>`;
 const ol=(arr,key)=>arr.map((o,j)=>`<button class="opt" data-a="${o.id}"><b>${L4[j]}</b><span>${esc(o[key])}</span></button>`).join("");
+const ol2=arr=>arr.map((o,j)=>`<button class="opt" data-v="${esc(o)}"><b>${L4[j]}</b><span>${esc(o)}</span></button>`).join("");
+const typed=`<div class="row"><input type="text" id="ti" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Gõ đáp án" style="flex:1"><button class="btn" id="tc">Kiểm tra</button></div>`;
 if(q.k===0)h+=`<div class="qw">${esc(w.w)}</div><div class="row" style="justify-content:center"><button class="sbtn" data-sp="${esc(w.w)}" aria-label="Nghe phát âm">${ic("speak",22)}</button></div><p class="hint" style="text-align:center;margin-top:10px">Chọn nghĩa đúng</p>`+ol(opts(w),"vn");
 if(q.k===1)h+=`<div class="qw">${esc(w.vn)}</div><p class="hint" style="text-align:center">Chọn từ tiếng Anh đúng</p>`+ol(opts(w),"w");
-if(q.k===2)h+=`<div class="qw">${esc(w.vn)}</div><p class="hint" style="text-align:center;margin-bottom:16px">Gõ từ tiếng Anh tương ứng</p><div class="row"><input type="text" id="ti" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Gõ đáp án" style="flex:1"><button class="btn" id="tc">Kiểm tra</button></div>`;
-if(q.k===3)h+=`<div class="row" style="justify-content:center;margin:34px 0 10px"><button class="sbtn" data-sp="${esc(w.w)}" style="width:84px;height:84px" aria-label="Nghe phát âm">${ic("speak",36)}</button></div><p class="hint" style="text-align:center;margin-bottom:16px">Nghe và gõ lại từ bạn vừa nghe</p><div class="row"><input type="text" id="ti" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Gõ đáp án" style="flex:1"><button class="btn" id="tc">Kiểm tra</button></div>`;
+if(q.k===2)h+=`<div class="qw">${esc(w.vn)}</div><p class="hint" style="text-align:center;margin-bottom:16px">Gõ từ tiếng Anh tương ứng</p>`+typed;
+if(q.k===3)h+=`<div class="row" style="justify-content:center;margin:34px 0 10px"><button class="sbtn" data-sp="${esc(w.w)}" style="width:84px;height:84px" aria-label="Nghe phát âm">${ic("speak",36)}</button></div><p class="hint" style="text-align:center;margin-bottom:16px">Nghe và gõ lại từ bạn vừa nghe</p>`+typed;
+if(q.k===4)h+=`<div class="qw">${esc(w.vn)}</div><div class="pat">${esc(pat(w))}</div><p class="hint" style="text-align:center;margin-bottom:16px">Điền các chữ cái còn thiếu để hoàn thành từ</p>`+typed;
+if(q.k===5)h+=`<div class="row" style="justify-content:center"><span class="bd b1">${esc(g.tag)}</span></div><div class="cz">${blank(g.s)}</div><p class="hint" style="text-align:center">Chọn đáp án điền vào chỗ trống</p>`+ol2(shuffle([g.a,...g.o]));
+if(q.k===6)h+=`<div class="row" style="justify-content:center"><span class="bd b1">${esc(g.tag)}</span></div><div class="cz">${blank(g.s)}</div><p class="hint" style="text-align:center;margin-bottom:16px">Gõ từ hoặc cụm từ điền vào chỗ trống, chia đúng dạng</p>`+typed;
 h+=`<div id="fb"></div></div>`;
 m.innerHTML=h;
 $("#qx").onclick=()=>{Q=null;render()};
 let done=false;
 const ans=ok=>{
 if(done)return;done=true;
-Q.res[w.id]=ok;if(ok)Q.score++;
-{const x=innerWidth/2,y=innerHeight*.4;if(ok){pow(["YES!","NICE!","WOW!","BOOM!"][Math.random()*4|0],x,y);spark(x,y,10)}else pow("OOPS!",x,y,1)}
-$("#fb").innerHTML=`<div class="fb ${ok?"ok":"ko"}">${ok?"Chính xác!":"Đáp án đúng: "+esc(w.w)+" = "+esc(w.vn)}</div><button class="btn" id="nx">${Q.i+1>=Q.list.length?"Xem kết quả":"Câu tiếp"}</button>`;
+Q.res[qid(q)]=ok;if(ok)Q.score++;
+const x=innerWidth/2,y=innerHeight*.4;
+if(ok){pow(["YES!","NICE!","WOW!","BOOM!"][Math.random()*4|0],x,y);spark(x,y,10)}else pow("OOPS!",x,y,1);
+const bl=$("#bl");if(bl){bl.textContent=g.a;bl.className=ok?"ok":"ko"}
+const msg=g?(ok?"Chính xác! ":"Đáp án đúng: "+esc(g.a)+". ")+esc(g.ex):ok?"Chính xác!":"Đáp án đúng: "+esc(w.w)+" = "+esc(w.vn);
+$("#fb").innerHTML=`<div class="fb ${ok?"ok":"ko"}">${msg}</div><button class="btn" id="nx">${Q.i+1>=Q.list.length?"Xem kết quả":"Câu tiếp"}</button>`;
 const nx=$("#nx");nx.focus();nx.onclick=()=>{Q.i++;render()};
 };
 if(q.k<2)$$(".opt",m).forEach(b=>b.onclick=()=>{const ok=b.dataset.a===w.id;$$(".opt",m).forEach(x=>{x.disabled=true;if(x.dataset.a===w.id)x.classList.add("ok")});if(!ok)b.classList.add("ko");ans(ok)});
+else if(q.k===5)$$(".opt",m).forEach(b=>b.onclick=()=>{const ok=b.dataset.v===g.a;$$(".opt",m).forEach(x=>{x.disabled=true;if(x.dataset.v===g.a)x.classList.add("ok")});if(!ok)b.classList.add("ko");ans(ok)});
 else{
-const ti=$("#ti"),go=()=>{if(!ti.value.trim())return;ti.disabled=true;ans(norm(ti.value)===norm(w.w))};
-$("#tc").onclick=go;ti.onkeydown=e=>{if(e.key==="Enter")go()};ti.focus();
+const ti=$("#ti"),go2=()=>{if(!ti.value.trim())return;ti.disabled=true;ans(norm(ti.value)===norm(g?g.a:w.w))};
+$("#tc").onclick=go2;ti.onkeydown=e=>{if(e.key==="Enter")go2()};ti.focus();
 }
 if(q.k===3)speak(w.w);
 }
 function finish(m){
-const total=Q.list.length,pc=Math.round(Q.score/total*100),wrong=Q.list.filter(q=>!Q.res[q.w.id]).map(q=>q.w);
+const total=Q.list.length,pc=Math.round(Q.score/total*100);
+const wrong=Q.list.filter(q=>q.w&&!Q.res[q.w.id]).map(q=>q.w),wg=Q.list.filter(q=>q.g&&!Q.res[q.g.id]).map(q=>q.g);
 if(!Q.fin&&Q.type!=="re"){
-Q.list.forEach(q=>{const id=q.w.id,s=S.w[id];if(!s)return;if(Q.res[id]){s.ok=(s.ok||0)+1;s.box=Math.min(6,s.box+1);s.due=addDays(today(),INT[s.box])}else{s.ko=(s.ko||0)+1;s.box=1;s.due=addDays(today(),1)}});
+Q.list.forEach(q=>{if(!q.w)return;const id=q.w.id,s=S.w[id];if(!s)return;if(Q.res[id]){s.ok=(s.ok||0)+1;s.box=Math.min(6,s.box+1);s.due=addDays(today(),INT[s.box])}else{s.ko=(s.ko||0)+1;s.box=1;s.due=addDays(today(),1)}});
 S.tests.push({date:today(),type:Q.type,score:Q.score,total});
 }
 if(!Q.fin){S.log.push({ts:Date.now(),k:"t",type:Q.type,score:Q.score,total,bad:wrong.map(w=>w.id)});if(pc>=70)setTimeout(()=>confetti(160),300)}
 Q.fin=1;
 save();
-m.innerHTML=`<div class="qb"><div class="res ${pc>=70?"r1":pc>=50?"r2":"r3"}"><div class="mm">${mas(pc>=70?"happy":pc>=50?"ok":"sad")}</div><div class="big">${pc}%</div><h2 style="margin:10px 0 4px">${pc>=90?"Xuất sắc!":pc>=70?"Làm tốt lắm!":pc>=50?"Khá ổn, ôn thêm nhé":"Ôn lại ngay để nhớ chắc hơn"}</h2><p>Đúng ${Q.score}/${total} câu</p>${wrong.length?`<div class="tw"><table><thead><tr><th>Từ cần ôn</th><th>Nghĩa</th></tr></thead><tbody>${wrong.map(w=>`<tr><td><b>${esc(w.w)}</b></td><td>${esc(w.vn)}</td></tr>`).join("")}</tbody></table></div>`:`<div style="height:22px"></div>`}<div class="acts">${wrong.length?`<button class="btn" id="rw">Ôn các từ sai</button>`:""}<button class="btn gh" id="bk2">Về trang kiểm tra</button></div></div></div>`;
+m.innerHTML=`<div class="qb"><div class="res ${pc>=70?"r1":pc>=50?"r2":"r3"}"><div class="mm">${mas(pc>=70?"happy":pc>=50?"ok":"sad")}</div><div class="big">${pc}%</div><h2 style="margin:10px 0 4px">${pc>=90?"Xuất sắc!":pc>=70?"Làm tốt lắm!":pc>=50?"Khá ổn, ôn thêm nhé":"Ôn lại ngay để nhớ chắc hơn"}</h2><p>Đúng ${Q.score}/${total} câu</p>${wrong.length?`<div class="tw"><table><thead><tr><th>Từ cần ôn</th><th>Nghĩa</th></tr></thead><tbody>${wrong.map(w=>`<tr><td><b>${esc(w.w)}</b></td><td>${esc(w.vn)}</td></tr>`).join("")}</tbody></table></div>`:""}${wg.length?`<div class="tw"><table><thead><tr><th>Câu làm sai</th><th>Đáp án</th></tr></thead><tbody>${wg.map(g=>`<tr><td>${esc(g.s)}<br><span class="hint">${esc(g.ex)}</span></td><td><b>${esc(g.a)}</b></td></tr>`).join("")}</tbody></table></div>`:""}${wrong.length||wg.length?"":`<div style="height:22px"></div>`}<div class="acts">${wrong.length?`<button class="btn" id="rw">Ôn các từ sai</button>`:""}<button class="btn gh" id="bk2">Về trang kiểm tra</button></div></div></div>`;
 $("#bk2").onclick=()=>{Q=null;render()};
 const r=$("#rw");if(r)r.onclick=()=>{const ids=wrong.map(w=>w.id);Q=null;startTest("re",ids)};
 chrome();
@@ -2019,12 +2196,25 @@ const WORDS=["POW!","WOW!","YAY!","ZOOM!","BOING!","WHOOSH!","HOORAY!","BAM!"];
 const BC=["#FF6B6B","#3FE0A8","#B28DFF","#FF8FD0","#4F5BFF"];
 let busy=false;
 function go(){
-if(RM||!document.body.classList.contains("live")||busy){render();return}
+const p=$("#pg"),bu=$("#pgb"),bl=[...p.querySelectorAll(".pgb")];
+if(RM||!document.body.classList.contains("live")||busy||!bu.animate){render();return}
 busy=true;
-const p=$("#pg");
-$("#pgb").innerHTML=burstSvg(BC[Math.random()*BC.length|0])+"<span>"+WORDS[Math.random()*WORDS.length|0]+"</span>";
-p.className="on in";
-setTimeout(()=>{render();p.className="on out";setTimeout(()=>{p.className="";busy=false},520)},560);
+bu.innerHTML=burstSvg(BC[Math.random()*BC.length|0])+"<span>"+WORDS[Math.random()*WORDS.length|0]+"</span>";
+p.className="on";
+const E="cubic-bezier(.65,0,.35,1)",sk="skewX(-14deg)";
+const inn=bl.map((b,i)=>b.animate([{transform:"translate3d(-170%,0,0) "+sk},{transform:"translate3d(0,0,0) "+sk}],{duration:360,delay:i*55,easing:E,fill:"forwards"}));
+const pop=bu.animate([{transform:"translate(-50%,-50%) scale(0) rotate(-12deg)"},{transform:"translate(-50%,-50%) scale(1) rotate(-4deg)"}],{duration:340,delay:130,easing:"cubic-bezier(.3,1.7,.5,1)",fill:"forwards"});
+const reset=()=>{p.className="";[...bl,bu].forEach(x=>x.getAnimations().forEach(a=>a.cancel()));busy=false};
+Promise.all([...inn,pop].map(a=>a.finished)).then(()=>{
+render();
+const mn=$("#main");mn.classList.remove("enter");
+requestAnimationFrame(()=>requestAnimationFrame(()=>{
+mn.classList.add("enter");
+const out=bl.map((b,i)=>b.animate([{transform:"translate3d(0,0,0) "+sk},{transform:"translate3d(190%,0,0) "+sk}],{duration:400,delay:i*55,easing:E,fill:"forwards"}));
+bu.animate([{transform:"translate(-50%,-50%) scale(1) rotate(-4deg)"},{transform:"translate(-50%,-50%) scale(0) rotate(14deg)"}],{duration:220,easing:"ease-in",fill:"forwards"});
+Promise.all(out.map(a=>a.finished)).then(reset,reset);
+}));
+}).catch(()=>{reset();render()});
 }
 function doodles(){
 const g=["A","B","C","?","!","★","abc","✎","Aa","♪","Q","Z"],c=["#FF6B6B","#4F5BFF","#3FE0A8","#B28DFF","#FF8FD0"];
